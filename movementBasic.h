@@ -9,9 +9,9 @@
 
 
 class movementBasic {
-    void motorsForwardOn(short int x1, short x2, short x3, short x4);
-    void motorsReverseOn(short int x1, short x2, short x3, short x4);
-    void motorsOff(short int x1, short x2, short x3, short x4);
+    void motorsForwardOn(PWM_pin_Motor1, PWM_pin_Motor2, PWM_pin_Motor3, PWM_pin_Motor4);
+    void motorsReverseOn(PWM_pin_Motor1, PWM_pin_Motor2, PWM_pin_Motor3, PWM_pin_Motor4);
+    void motorsOff(PWM_pin_Motor1, PWM_pin_Motor2, PWM_pin_Motor3, PWM_pin_Motor4);
 };
 
 

@@ -4,17 +4,17 @@
 // Setup functions
 // (Contributors)
 
+#include <Servo.h>
+#include "pinDefinitions.h"
 #include "setup.h"
 
-void motorSetup(short int x1, short x2, short x3, short x4) {
-    pinMode(x1, OUTPUT);
-    pinMode(x2, OUTPUT);
-    pinMode(x3, OUTPUT);
-    pinMode(x4, OUTPUT);
-
-    // Set all motors to off
-    digitalWrite(x1, Low);
-    digitalWrite(x2, Low);
-    digitalWrite(x3, Low);
-    digitalWrite(x4, Low);
+void motorSetup(PWM_pin_Motor1, PWM_pin_Motor2, PWM_pin_Motor3, PWM_pin_Motor4)) {
+    motor1.attach(PWM_pin_Motor1);
+    motor2.attach(PWM_pin_Motor2);
+    motor3.attach(PWM_pin_Motor3);
+    motor4.attach(PWM_pin_Motor4);
+    motor1.write(90);
+    motor2.write(90);
+    motor3.write(90);
+    motor4.write(90);
 }

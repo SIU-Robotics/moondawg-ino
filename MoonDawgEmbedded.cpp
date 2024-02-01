@@ -4,11 +4,14 @@
 // (Description)
 // (Contributors)
 
-#incldue <Wire.h>
-#include <SoftwareSerial.h>
+#include <stdio.h>
+#include <Servo.h>
+#include <cstdint>
+#include "Arduino.h"
 #include "RoboClaw.h"
 #include "setup.h"
 #include "movementBasic.h"
+#include "pinDefinitions.h"
 
 
 void loop(){
@@ -17,11 +20,9 @@ void loop(){
 
 void setup(){
     roboclaw.begin(38400);
-    Serial.begin(9600);
-    Wire.begin(SLAVE_ADDRESS);
-    Wire.onReceive(receiveData);
+
 
     // Motor setup
     // Sets all motor pins to output and sets all motors to off
-    motorSetup(1, 2, 3, 4); // Enter pins here in place of 1, 2, 3, 4
+    motorSetup(); // Enter pins here in place of 1, 2, 3, 4
 }

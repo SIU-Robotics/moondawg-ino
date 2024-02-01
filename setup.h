@@ -7,9 +7,17 @@
 #ifndef EMBEDDED_BERM_BOT_SETUP_H
 #define EMBEDDED_BERM_BOT_SETUP_H
 
+#include <Servo.h>
+#include "pinDefinitions.h"
 
 class setup {
-    void motorSetup(short int x1, short x2, short x3, short x4);
+private:
+    Servo motor1;
+    Servo motor2;
+    Servo motor3;
+    Servo motor4;
+public:
+    void motorSetup(PWM_pin_Motor1, PWM_pin_Motor2, PWM_pin_Motor3, PWM_pin_Motor4);
 };
 
 
