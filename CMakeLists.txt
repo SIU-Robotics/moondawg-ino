@@ -6,14 +6,11 @@ project(embedded-berm-bot)
 # specify the C++ standard
 set(CMAKE_CXX_STANDARD 14)
 
-# find the roboclaw library
-find_package(roboclaw REQUIRED)
+# add the library
+add_library(berm-bot-lib MoonDawgEmbedded.cpp setup.cpp)
 
-# find the Servo library
-find_package(Servo REQUIRED)
+# specify the include directories
+target_include_directories(berm-bot-lib PUBLIC ${CMAKE_CURRENT_SOURCE_DIR})
 
-
-# add the executable
-add_executable(embedded-berm-bot MoonDawgEmbedded.cpp setup.cpp)
-
-target_link_libraries(embedded-berm-bot roboclaw::roboclaw Servo::Servo)
+# specify the libraries that this library depends on
+target_link_libraries(berm-bot-lib PUBLIC Arduino Servo RoboClaw)

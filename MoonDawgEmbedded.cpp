@@ -4,11 +4,11 @@
 // (Description)
 // (Contributors)
 
-#include <stdio.h>
+#include <cstdio>
 #include <Servo.h>
 #include <cstdint>
-#include "Arduino.h"
-#include "RoboClaw.h"
+#include <Arduino.h>
+#include <RoboClaw.h>
 #include "setup.h"
 #include "movementBasic.h"
 #include "pinDefinitions.h"
