@@ -2,7 +2,7 @@
 
 #include <Servo.h>
 
-
+// Defining the pins for motor controllers
 #define LEFT 1
 #define RIGHT 2
 
@@ -13,7 +13,7 @@
 
 #define RUMBLE 8
 
-
+// Classes for the rumble motor
 class rumbleSetup {
   protected:
     Servo motor;
@@ -21,6 +21,7 @@ class rumbleSetup {
     void rumbleMotorSetup(int rumblePin);
 };
 
+// Setup for the rumble motor, will write 
 void rumbleSetup::rumbleMotorSetup(int rumblePin){
   motor.attach(rumblePin);
   motor.write(90);
