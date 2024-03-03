@@ -5,14 +5,17 @@
 // (Contributors)
 
 #include "Movement.h"
-#include "PinDefinitions.h"
-#include <Servo.h>
 #include <Arduino.h>
 
-// Add ramping functions so we don't have to pass speed
+
+// Add ramping functions, so we don't have to pass speed
 // Dig motor movement, will write to the motor, "180" for forward, "0" for backward, "90" for stop
 // Actuator movement, will ...
 // Actuator movement, not yet implemented
+DigMovement::DigMovement() {
+    // Empty constructor
+}
+
 void DigMovement::digSetup(uint8_t diggingPin, uint8_t actuatorPinOne, uint8_t actuatorPinTwo) {
     pinOneAct = actuatorPinOne;
     pinTwoAct = actuatorPinTwo;
@@ -25,7 +28,9 @@ void DigMovement::digSetup(uint8_t diggingPin, uint8_t actuatorPinOne, uint8_t a
 }
 
 void DigMovement::digMotorForward(){
+
     motor.write(180);
+
 }
 
 void DigMovement::digMotorBackward(){
@@ -53,6 +58,10 @@ void DigMovement::digActuatorStop(){
 
 // Add ramping functions so we don't have to pass speed
 // Deposit motor movement, will write to the motor, "180" for forward, "0" for backward, "90" for stop
+DepositMovement::DepositMovement() {
+
+}
+
 void DepositMovement::depositSetup(uint8_t depositPin) {
     motor.attach(depositPin);
     motor.write(90);
@@ -73,6 +82,9 @@ void DepositMovement::depositMotorStop(){
 // Drive motor movement, will write to the motor
 // Haven't decided where input will be taken from yet, once we get the info from what serial and data from that we will be receiving we can decide
 // on how to implement the input, from the RPi which will take input from a controller
+DriveMovement::DriveMovement() {
+    // Empty constructor
+}
 
 void DriveMovement::driveSetup(uint8_t leftPin, uint8_t rightPin, uint8_t actuatorTurnPinOne, uint8_t actuatorTurnPinTwo) {
     motor1.attach(leftPin);
