@@ -45,7 +45,6 @@ void commandProcessing(char* tokens[]) {
 
     switch (cmd) {
         case MOVEMENT:
-
             driving.drive(param1, param2);
             break;
         case MOVEACT:

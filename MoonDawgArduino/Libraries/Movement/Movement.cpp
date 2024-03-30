@@ -7,7 +7,8 @@
 #include "Movement.h"
 #include <Arduino.h>
 
-
+constexpr long rampTime = 1000;
+uint8_t speed = 90;
 // Add ramping functions, so we don't have to pass speed
 // Dig motor movement, will write to the motor, "180" for forward, "0" for backward, "90" for stop
 // Actuator movement, will ...
@@ -27,9 +28,14 @@ void DigMovement::digSetup(uint8_t diggingPin, uint8_t actuatorPinOne, uint8_t a
     motor.write(90);
 }
 
-void DigMovement::digMotorForward(){
-
-    motor.write(180);
+void DigMovement::digMotorForward(uint8_t maxSpeed){
+    unsigned long currentTime = millis();
+    unsigned long previousTime = 0;
+    if (currentTime - previousTime >= rampTime && speed < maxSpeed){
+        speed += 10;
+        motor.write(speed);
+        previousTime = currentTime;
+    }
 
 }
 
