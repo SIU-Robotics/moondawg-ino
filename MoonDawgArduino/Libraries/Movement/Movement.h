@@ -64,18 +64,4 @@ public:
     void actuatorTurnStop();
 };
 
-// Have patience, Nadia made this function
-class DumbAutonomy{
-public:
-    DumbAutonomy();
-    void digForward(); // This allows the bot to dig while driving
-    void digLoop(); // This goes through the entire dig operation
-    void depositSwirlTime();
-    /*
-    Find the amount of time it takes to empty the hopper which determines how long the depositing auger is running
-    using millis()
-    */
-}
-
-
 #endif //Movement_h
