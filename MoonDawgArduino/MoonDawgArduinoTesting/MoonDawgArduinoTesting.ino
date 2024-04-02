@@ -6,7 +6,7 @@
 // 2/18/2024, 7:07 PM
 // 240216-212839-uno
 // The main file that is loaded onto the Arduino, this will call all the functions needed to control the robot.
-// Cameron Schwartzberg, Marco Caliend, Andrew Barnes, Mitchell Wettig, Jared Hillyer
+// Cameron Schwartzberg, Marco Caliendo, Andrew Barnes, Mitchell Wettig, Jared Hillyer
 
 #include <Servo.h>
 #include <Arduino.h>
