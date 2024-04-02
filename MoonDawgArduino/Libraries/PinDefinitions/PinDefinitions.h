@@ -1,8 +1,8 @@
 // Cameron Schwartzberg
 // 2/18/2024, 7:07 PM
 // 240216-212839-uno
-// (Description)
-// (Contributors)
+// This holds all of the pin definitions that the Arduino uses
+// Cameron Schwartzberg, Marco Caliendo
 
 #ifndef PinDefinitions_h
 #define PinDefinitions_h
