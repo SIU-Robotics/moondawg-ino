@@ -1,13 +1,12 @@
 /*
- * This is the Arduino testing code for the MoonDawg rover.
- * This code will be used to test the functionality and viability of the final rover code.
+ * This is the Arduino code for the MoonDawg rover.
  * The code is based off of last year's code, but modified to use the Servo library to control the motors instead of Serial communication.
  */
 // Cameron Schwartzberg
 // 2/18/2024, 7:07 PM
 // 240216-212839-uno
-// (Description)
-// (Contributors)
+// The main file that is loaded onto the Arduino, this will call all the functions needed to control the robot.
+// Cameron Schwartzberg, Marco Caliend, Andrew Barnes, Mitchell Wettig, Jared Hillyer
 
 #include <Servo.h>
 #include <Arduino.h>
@@ -108,8 +107,6 @@ void commandProcessing(char* tokens[]) {
     }
 }
 
-
-bool hold = true;
 
 void setup() {
   // put your setup code here, to run once:
