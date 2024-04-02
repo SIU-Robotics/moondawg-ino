@@ -1,9 +1,8 @@
 // Cameron Schwartzberg
-// Nadia Lafontant
 // 2/18/2024, 7:37 PM
 // 240216-212839-uno
-// (Description)
-// (Contributors)
+// Header file that contains all of the classes and defines all functions for the "Movement.cpp"
+// Cameron Schwartzberg, Marco Caliendo, Andrew Barnes, Nadia Lafontant, Mitchell Wettig
 
 #ifndef Movement_h
 #define Movement_h
