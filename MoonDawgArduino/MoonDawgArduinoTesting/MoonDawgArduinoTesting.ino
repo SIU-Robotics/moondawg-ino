@@ -113,9 +113,9 @@ void setup() {
     // For the serial communication from RPi to Arduino
     Serial.begin(9600);
 
-    driving.driveSetup(LEFT_MOTOR, RIGHT_MOTOR, TURNING_ACTUATOR_ONE, TURNING_ACTUATOR_TWO);
-    depositing.depositSetup(DEPOSIT_MOTOR);
-    digging.digSetup(DIGGING_MOTOR, DIGGING_ACTUATOR_ONE, DIGGING_ACTUATOR_TWO);
+    driving.driveSetup(LEFT_MOTOR, RIGHT_MOTOR);
+    depositing.depositSetup(DEPOSIT_MOTOR, DEPOSIT_VIBRATOR);
+    digging.digSetup(DIGGING_MOTOR, DIGGING_ACTUATOR);
 }
 
 void loop() {
