@@ -43,9 +43,8 @@ public:
     void depositMotorForward();
     void depositMotorBackward();
     void depositMotorStop();
-    void depositVibrateForward();
-    void depositVibrateBackward();
-    void depositVibrateStop();
+    void depositVibrator(int speed);
+    void depositVibratorStop();
 };
 
 // Class for the drive motor movement

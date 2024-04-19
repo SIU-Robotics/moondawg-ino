@@ -67,15 +67,11 @@ void DepositMovement::depositMotorStop(){
     motor1.write(90);
 }
 
-void DepositMovement::depositVibrateForward(){
-    motor2.write(180);
+void DepositMovement::depositVibrator(int speed){
+    motor2.write(speed);
 }
 
-void DepositMovement::depositVibrateBackward(){
-    motor2.write(0);
-}
-
-void DepositMovement::depositVibrateStop(){
+void DepositMovement::depositVibratorStop(){
     motor2.write(90);
 }
 

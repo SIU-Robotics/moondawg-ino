@@ -22,6 +22,7 @@ constexpr char MOVEACT = 't';
 constexpr char DIGBELT = 'b';
 constexpr char DIGACT = 'g';
 constexpr char DEPOSITAUGER = 'd';
+constexpr char VIBRATOR = 'v';
 
 
 // Class constructors
@@ -102,6 +103,13 @@ void commandProcessing(char* tokens[]) {
                 depositing.depositMotorStop();
             }
             break;
+        case VIBRATOR:
+            if (param1) {
+                depositing.depositVibrator(param2);
+            }
+            else {
+                depositing.depositVibratorStop();
+            }
         default:
             break;
     }
