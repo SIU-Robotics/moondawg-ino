@@ -23,8 +23,7 @@ private:
 public:
     DigMovement();
     void digSetup(uint8_t diggingPin, uint8_t actuatorPin);
-    void digMotorForward(uint8_t maxSpeed);
-    void digMotorBackward();
+    void digMotor(uint8_t speed);
     void digMotorStop();
     void digActuatorForward();
     void digActuatorBackward();
@@ -43,7 +42,7 @@ public:
     void depositMotorForward();
     void depositMotorBackward();
     void depositMotorStop();
-    void depositVibrator(int speed);
+    void depositVibrator();
     void depositVibratorStop();
 };
 

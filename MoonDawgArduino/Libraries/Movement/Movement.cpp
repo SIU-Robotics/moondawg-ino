@@ -19,12 +19,8 @@ void DigMovement::digSetup(uint8_t diggingPin, uint8_t actuatorPin) {
     motor2.write(90);
 }
 
-void DigMovement::digMotorForward(uint8_t maxSpeed){
-    motor1.write(180);
-}
-
-void DigMovement::digMotorBackward(){
-    motor1.write(0);
+void DigMovement::digMotor(uint8_t speed){
+    motor1.write(speed);
 }
 
 void DigMovement::digMotorStop(){
@@ -67,8 +63,8 @@ void DepositMovement::depositMotorStop(){
     motor1.write(90);
 }
 
-void DepositMovement::depositVibrator(int speed){
-    motor2.write(speed);
+void DepositMovement::depositVibrator(){
+    motor2.write(180);
 }
 
 void DepositMovement::depositVibratorStop(){
