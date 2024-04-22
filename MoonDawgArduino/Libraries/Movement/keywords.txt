@@ -1,0 +1,30 @@
+# Arduino keywords.txt file for Movement classes
+
+# Classes
+DigMovement	KEYWORD1
+DepositMovement	KEYWORD2
+DriveMovement	KEYWORD3
+
+# Methods
+digSetup	KEYWORD4
+digMotorForward	KEYWORD5
+digMotorBackward	KEYWORD6
+digMotorStop	KEYWORD7
+digActuatorForward	KEYWORD8
+digActuatorBackward	KEYWORD9
+digActuatorStop	KEYWORD10
+
+depositSetup	KEYWORD11
+depositMotorForward	KEYWORD12
+depositMotorBackward	KEYWORD13
+depositMotorStop	KEYWORD14
+depositVibrator	KEYWORD15
+depositVibratorStop	KEYWORD16
+
+driveSetup	KEYWORD17
+drive	KEYWORD18
+
+# Types and Libraries
+uint8_t	KEYWORD19
+Servo	KEYWORD20
+
