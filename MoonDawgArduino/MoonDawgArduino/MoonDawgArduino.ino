@@ -18,7 +18,6 @@ constexpr int MAX_ARRAY_SIZE = 10;
 constexpr int MAX_INPUT_LENGTH = 50;
 
 constexpr char MOVEMENT = 'm';
-constexpr char MOVEACT = 't';
 constexpr char DIGBELT = 'b';
 constexpr char DIGACT = 'g';
 constexpr char DEPOSITAUGER = 'd';
@@ -46,19 +45,6 @@ void commandProcessing(char* tokens[]) {
     switch (cmd) {
         case MOVEMENT:
             driving.drive(param1, param2);
-            break;
-        case MOVEACT:
-            if (param1) {
-                if (param2 == 'l') {
-                    driving.actuatorTurnLeft();
-                }
-                else if (param2 == 'r') {
-                    driving.actuatorTurnRight();
-                }
-            }
-            else {
-                driving.actuatorTurnStop();
-            }
             break;
         case DIGBELT:
             if (param1) {
