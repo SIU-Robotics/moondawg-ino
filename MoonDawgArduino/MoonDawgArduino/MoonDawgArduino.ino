@@ -13,6 +13,7 @@
 
 #include "PinDefinitions.h"
 #include "Movement.h"
+#include "Camera.h"
 
 constexpr int MAX_ARRAY_SIZE = 10;
 constexpr int MAX_INPUT_LENGTH = 50;
@@ -22,19 +23,24 @@ constexpr char DIGBELT = 'b';
 constexpr char DIGACT = 'g';
 constexpr char DEPOSITAUGER = 'd';
 constexpr char VIBRATOR = 'v';
+constexpr char HORIZONTAL = 'h';
+constexpr char VERTICAL = 'v';
+constexpr char ARM = 'a';
 
 
 // Class constructors
 DriveMovement driving = DriveMovement();
 DepositMovement depositing = DepositMovement();
 DigMovement digging = DigMovement();
+CameraControl camera = CameraControl();
+
 
 void commandProcessing(char* tokens[]) {
 
     char cmd = tokens[0][0];
     int param1 = atoi(tokens[1]);
     int param2;
-    if (cmd == MOVEMENT || cmd == DIGBELT) {
+    if (cmd == MOVEMENT || cmd == DIGBELT || cmd == HORIZONTAL || cmd == VERTICAL || cmd == ARM) {
       param2 = atoi(tokens[2]);
     }
     else {
@@ -93,6 +99,22 @@ void commandProcessing(char* tokens[]) {
             else {
                 depositing.depositVibratorStop();
             }
+            break;
+        case HORIZONTAL:
+            if (param1) {
+                camera.moveHorizontal(param2);
+            }
+            break;
+        case VERTICAL:
+            if (param1) {
+                camera.moveVertical(param2);
+            }
+            break;
+        case ARM:
+            if (param1) {
+                camera.moveArm(param2);
+            }
+            break;
         default:
             break;
     }
@@ -107,6 +129,7 @@ void setup() {
     driving.driveSetup(LEFT_MOTOR, RIGHT_MOTOR);
     depositing.depositSetup(DEPOSIT_MOTOR, DEPOSIT_VIBRATOR);
     digging.digSetup(DIGGING_MOTOR, DIGGING_ACTUATOR);
+    camera.cameraSetup(HORIZONTAL_SERVO, VERTICAL_SERVO, ARM_SERVO);
 }
 
 void loop() {
@@ -133,5 +156,6 @@ void loop() {
 
 
     }
+    camera.hold();
 }
 

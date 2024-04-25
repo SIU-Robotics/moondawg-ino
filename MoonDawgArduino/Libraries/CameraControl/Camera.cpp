@@ -24,8 +24,8 @@ CameraControl::cameraSetup(uint8_t horizontalPin, unint8_t verticalPin, unint8_t
 
 // Swings the deployment arm to its final position
 // Currently 180 degrees, can change if needed
-CameraControl::deploy(){
-    armServo.write(180);
+CameraControl::moveArm(uint8_t armAngle){
+    armAngle = armHoldAngle;
 }
 
 // Pan servo, gets constrained between its limits
@@ -37,4 +37,8 @@ CameraControl::moveHorizontal(uint8_t horizontalAngle){
 // Tilt servo, has internal hard limits
 CameraControl::moveVertical(uint8_t verticalAngle){
     vertiaclServo.write(verticalAngle);
+}
+
+CameraControl::hold(){
+    armServo.write(armHoldAngle);
 }

@@ -16,12 +16,14 @@ private:
     Servo armServo;
     uint8_t horizontalMinAngle;
     uint8_t horizontalMaxAngle;
+    uint8_t armHoldAngle;
 public:
     CameraControl();
     void cameraSetup(uint8_t horizontalPin, unint8_t verticalPin, unint9_t armPin);
     void moveHorizontal(uint8_t horizontalAngle);
     void moveVertical(uint8_t verticalAngle);
-    void deploy();
+    void moveArm(uint8_t armAngle);
+    void hold();
 };
 
 #endif //Camera_h
