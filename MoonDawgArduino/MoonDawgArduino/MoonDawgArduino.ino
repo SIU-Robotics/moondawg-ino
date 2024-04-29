@@ -24,7 +24,7 @@ constexpr char DIGACT = 'g';
 constexpr char DEPOSITAUGER = 'd';
 constexpr char VIBRATOR = 'v';
 constexpr char HORIZONTAL = 'h';
-constexpr char VERTICAL = 'v';
+constexpr char VERTICAL = 'e';
 constexpr char ARM = 'a';
 
 
