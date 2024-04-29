@@ -36,7 +36,7 @@ void CameraControl::moveHorizontal(uint8_t horizontalAngle){
 
 // Tilt servo, has internal hard limits
 void CameraControl::moveVertical(uint8_t verticalAngle){
-    vertiaclServo.write(verticalAngle);
+    verticalServo.write(verticalAngle);
 }
 
 void CameraControl::hold(){
