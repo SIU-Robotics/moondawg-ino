@@ -19,7 +19,7 @@ private:
     uint8_t armHoldAngle;
 public:
     CameraControl();
-    void cameraSetup(uint8_t horizontalPin, unint8_t verticalPin, unint9_t armPin);
+    void cameraSetup(uint8_t horizontalPin, uint8_t verticalPin, uint8_t armPin);
     void moveHorizontal(uint8_t horizontalAngle);
     void moveVertical(uint8_t verticalAngle);
     void moveArm(uint8_t armAngle);

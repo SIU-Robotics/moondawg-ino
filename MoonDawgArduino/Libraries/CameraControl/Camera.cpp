@@ -5,7 +5,7 @@ CameraControl::CameraControl(){
     //empty constructor
 }
 
-CameraControl::cameraSetup(uint8_t horizontalPin, unint8_t verticalPin, unint8_t armPin){
+CameraControl::cameraSetup(uint8_t horizontalPin, uint8_t verticalPin, uint8_t armPin){
     horizontalServo.attach(horizontalPin);
     verticalServo.attach(verticalPin);
     armServo.attach(armPin);
