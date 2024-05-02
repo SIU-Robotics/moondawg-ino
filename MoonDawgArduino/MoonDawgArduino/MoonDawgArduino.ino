@@ -112,7 +112,7 @@ void commandProcessing(char* tokens[]) {
             break;
         case ARM:
             if (param1) {
-                camera.moveArm(param2);
+                camera.moveArmHold(param2);
             }
             break;
         default:

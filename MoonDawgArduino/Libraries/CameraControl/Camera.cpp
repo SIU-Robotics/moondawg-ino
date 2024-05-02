@@ -18,14 +18,14 @@ void CameraControl::cameraSetup(uint8_t horizontalPin, uint8_t verticalPin, uint
     // Helps to prevent the cable from getting wrapped around the servo
     // Can change to higher values if needed
     horizontalMinAngle = 0;
-    horizontalMaxAngle = 180;
+    horizontalMaxAngle = 359;
 }
 
 
 // Swings the deployment arm to its final position
 // Currently 180 degrees, can change if needed
-void CameraControl::moveArm(uint8_t armAngle){
-    armAngle = armHoldAngle;
+void CameraControl::moveArmHold(uint8_t armAngle){
+    armHoldAngle = armAngle;
 }
 
 // Pan servo, gets constrained between its limits
