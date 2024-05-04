@@ -23,7 +23,7 @@ private:
 public:
     DigMovement();
     void digSetup(uint8_t diggingPin, uint8_t actuatorPin);
-    void digMotor(uint8_t speed);
+    void digMotorStart(uint8_t speed);
     void digMotorStop();
     void digActuatorForward();
     void digActuatorBackward();

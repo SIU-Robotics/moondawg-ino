@@ -19,7 +19,7 @@ void DigMovement::digSetup(uint8_t diggingPin, uint8_t actuatorPin) {
     motor2.write(90);
 }
 
-void DigMovement::digMotor(uint8_t speed){
+void DigMovement::digMotorStart(uint8_t speed){
     motor1.write(speed);
 }
 
