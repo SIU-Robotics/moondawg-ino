@@ -23,6 +23,6 @@ constexpr uint8_t DEPOSIT_VIBRATOR = 9;
 
 constexpr uint8_t HORIZONTAL_SERVO = 7;
 constexpr uint8_t VERTICAL_SERVO = 8;
-constexpr uint8_t ARM_SERVO = 12;
+constexpr uint8_t ARM_SERVO = 13;
 
 #endif //PinDefinitions_h
