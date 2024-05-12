@@ -59,4 +59,10 @@ public:
     void drive(int speedLeft, int speedRight);
 };
 
+class SubRoutines{
+public:
+    SubRoutines();
+    void task1Deposit();
+};
+
 #endif //Movement_h
