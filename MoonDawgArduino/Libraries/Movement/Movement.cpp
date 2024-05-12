@@ -5,7 +5,6 @@
 
 #include "Movement.h"
 #include <Arduino.h>
-#include <TaskSchedule.h>
 
 // Dig motor movement, will write to the motor, "180" for forward, "0" for backward, "90" for stop
 // Actuator movement, will write to the pins "LOW" or "HIGH" depending on the action that is wanting to be done.
@@ -90,13 +89,4 @@ void DriveMovement::driveSetup(uint8_t leftPin, uint8_t rightPin) {
 void DriveMovement::drive(int speedLeft, int speedRight){
     motor1.write(speedLeft);
     motor2.write(speedRight);
-}
-
-
-SubRoutines::SubRoutines() {
-    // Empty constructor
-}
-
-void SubRoutines::task1Deposit() {
-
 }
