@@ -9,7 +9,7 @@ void CameraControl::cameraSetup(uint8_t horizontalPin, uint8_t verticalPin, uint
     horizontalServo.attach(horizontalPin);
     verticalServo.attach(verticalPin);
     armServo.attach(armPin);
-    horizontalServo.write(90);
+    horizontalServo.write(180);
     verticalServo.write(90);
     // Initial position for deployment servo
     // Can change if needed
