@@ -23,7 +23,6 @@ public:
     void moveHorizontal(uint8_t horizontalAngle);
     void moveVertical(uint8_t verticalAngle);
     void moveArmHold(uint8_t armAngle);
-    void hold();
 };
 
 #endif //Camera_h
