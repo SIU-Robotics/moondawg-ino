@@ -14,11 +14,6 @@ void CameraControl::cameraSetup(uint8_t horizontalPin, uint8_t verticalPin, uint
     // Initial position for deployment servo
     // Can change if needed
     armServo.write(0);
-    // Defines the limits for the horizontal servo
-    // Helps to prevent the cable from getting wrapped around the servo
-    // Can change to higher values if needed
-    horizontalMinAngle = 0;
-    horizontalMaxAngle = 359;
 }
 
 
@@ -30,7 +25,6 @@ void CameraControl::moveArmHold(uint8_t armAngle){
 
 // Pan servo, gets constrained between its limits
 void CameraControl::moveHorizontal(uint8_t horizontalAngle){
-    horizontalAngle = constrain(horizontalAngle, horizontalMinAngle, horizontalMaxAngle);
     horizontalServo.write(horizontalAngle);
 }
 
