@@ -21,5 +21,8 @@ constexpr uint8_t DIGGING_ACTUATOR = 10;
 constexpr uint8_t DEPOSIT_MOTOR = 5;
 constexpr uint8_t DEPOSIT_VIBRATOR = 9;
 
+constexpr uint8_t HORIZONTAL_SERVO = 7;
+constexpr uint8_t VERTICAL_SERVO = 8;
+constexpr uint8_t ARM_SERVO = 13;
 
 #endif //PinDefinitions_h
