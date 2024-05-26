@@ -157,6 +157,5 @@ void loop() {
 
 
     }
-    //camera.hold();
 }
 
