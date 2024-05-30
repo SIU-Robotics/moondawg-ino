@@ -1,6 +1,6 @@
 # embedded-berm-bot
 
-Branch for testing the Arduino code
+For all things Arduino and Arduino-esque on the SIU Lunabotics Robot. 
 
 ## MoonDawgArduino
 
