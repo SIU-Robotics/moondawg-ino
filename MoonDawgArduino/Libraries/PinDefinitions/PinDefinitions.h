@@ -1,19 +1,24 @@
-// Cameron Schwartzberg
-// 2/18/2024, 7:07 PM
-// 240216-212839-uno
-// This holds all the pin definitions that the Arduino uses
-// Cameron Schwartzberg, Marco Caliendo
+/*
+* This is the library the houses all of the pin definitions for the bot
+* Owner: Cameron Schwartzberg
+* Contributors: Marco Caliendo, Joshua Greuel, and Mitchell Wettig
+* Date Created: 2/18/2024
+*/
 
 #ifndef PinDefinitions_h
 #define PinDefinitions_h
 
+// Call library
 #include <stdint.h>
 
-// Defining the pins for motor controllers
-// These pins need to be updated to the correct pins
-
-constexpr uint8_t LEFT_MOTOR = 3;        // This is the pin for the left motor controllers
-constexpr uint8_t RIGHT_MOTOR = 11;    // This is the pin for the right motor controllers
+/*
+* Pin definitions for the motor controllers
+* 
+* PINS MUST BE UPDATED AS PIN LAYOUT CHANGES!!
+* IF NOT CHANGED NOTHING WILL WORK!!
+*/
+constexpr uint8_t LEFT_MOTOR = 3;        // This is the pin for the left motors
+constexpr uint8_t RIGHT_MOTOR = 11;      // This is the pin for the right motors
 
 constexpr uint8_t DIGGING_MOTOR = 6;
 constexpr uint8_t DIGGING_ACTUATOR = 10;
