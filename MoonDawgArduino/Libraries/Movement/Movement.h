@@ -1,25 +1,33 @@
-// Cameron Schwartzberg
-// 2/18/2024, 7:37 PM
-// 240216-212839-uno
-// Header file that contains all the classes and defines all functions for the "Movement.cpp"
-// Cameron Schwartzberg, Marco Caliendo, Andrew Barnes, Nadia Lafontant, Mitchell Wettig
+/*
+* This is the library the houses all of the functions and classes for moving and operating the bot
+* This file is the header of the library which has function declarations and classes
+* This file is connected to "Movement.cpp"
+* Owner: Cameron Schwartzberg
+* Contributors: Marco Caliendo, Andrew Barnes, and Mitchell Wettig
+* Date Created: 2/18/2024
+*/
 
 #ifndef Movement_h
 #define Movement_h
 
+// Calling all libraries 
 #include <stdint.h>
 #include <Servo.h>
 #include <Arduino.h>
 
 #include "PinDefinitions.h"
 
-
-// Class for the dig motor movement
-// Accesses the protected "Servo motor" and "(insert Actuator)" from the digSetup class
+/*
+* Class for the Dig movement
+* Private (things we don't want to be used by functions outside of this class):
+* This is the for using the Servo Library to create a controllable motor
+* Public:
+* This houses all of the functions that will be used by the main program
+*/
 class DigMovement {
 private:
-    Servo motor1;
-    Servo motor2;
+    Servo motor1; // Dig motor
+    Servo motor2; // Actuator
 public:
     DigMovement();
     void digSetup(uint8_t diggingPin, uint8_t actuatorPin);
@@ -30,12 +38,17 @@ public:
     void digActuatorStop();
 };
 
-// Class for the deposit motor movement
-// Accesses the protected "Servo motor" from the depositSetup class
+/*
+* Class for the Deposit movement
+* Private (things we don't want to be used by functions outside of this class):
+* This is the for using the Servo Library to create a controllable motor
+* Public:
+* This houses all of the functions that will be used by the main program
+*/
 class DepositMovement {
 private:
-    Servo motor1;
-    Servo motor2;
+    Servo motor1; // Auger
+    Servo motor2; // Vibrator
 public:
     DepositMovement();
     void depositSetup(uint8_t depositPin, uint8_t vibratorPin);
@@ -46,9 +59,13 @@ public:
     void depositVibratorStop();
 };
 
-// Class for the drive motor movement
-// Accesses the protected "Servo motor1" and "Servo motor2" from the driveMotorSetup class
-// Uses the "uint8_t" data type for the speed of the motors, which is an 8-bit unsigned integer. From the "stdint.h" library
+/*
+* Class for the Drive movement
+* Private (things we don't want to be used by functions outside of this class):
+* This is the for using the Servo Library to create a controllable motor
+* Public:
+* This houses all of the functions that will be used by the main program
+*/
 class DriveMovement{
 private:
     Servo motor1;
