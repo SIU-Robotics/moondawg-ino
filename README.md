@@ -13,12 +13,11 @@ Due to the nature of how our bot is constructed we have seperated the logic in t
   
 </details>
 
-<details open>
-  <summary>Arduino/Slave</summary>
+### Arduino/Slave
 
-  ### Overview
+#### Overview
   
-  This is what processes the commands sent from the Raspberry Pi/Master and once processed they trigger certain commands that control the bot. There is no feedback currently implemented so it is all manually controlled by a user. 
+This is what processes the commands sent from the Raspberry Pi/Master and once processed they trigger certain commands that control the bot. There is no feedback currently implemented so it is all manually controlled by a user. 
 
 #### File Summary
 
@@ -28,7 +27,7 @@ The file is structed into two different types of files. First, the main file (.i
 
 This is the code that is directly uploaded to the Arduino via the Arduino IDE.
 
-</details>
+
 
 ## MoonDawgArduino
 
