@@ -1,13 +1,28 @@
-// Cameron Schwartzberg
-// 2/18/2024, 7:37 PM
-// This is the corresponding file to the "Movement.h", it contains all the function definitions.
-// Cameron Schwartzberg, Marco Caliendo, Mitchell Wettig, Andrew Barnes
+/*
+* This is the library the houses all of the functions definitions and classes for moving and operating the bot
+* This file is the main file of the library which has function definitions and class constructors
+* This file is connected to "Movement.cpp"
+* Owner: Cameron Schwartzberg
+* Contributors: Marco Caliendo, Andrew Barnes, and Mitchell Wettig
+* Date Created: 2/18/2024
+*/
 
+// Calling all libraries
 #include "Movement.h"
 #include <Arduino.h>
 
-// Dig motor movement, will write to the motor, "180" for forward, "0" for backward, "90" for stop
-// Actuator movement, will write to the pins "LOW" or "HIGH" depending on the action that is wanting to be done.
+/*
+* DigMovement controls the movement of the actuator to swing the bucket conveyor as well as
+* the motor which drives the bucket conveyor
+* 
+* MUST HAVE AN EMPTY DEFAULT CONSTRUCTOR DO NOT LEAVE OUT!!!
+* 
+* Create a setup this will be called in the setup of your main file to initialize all of the variables used
+* SET ALL INITIAL VALUES TO STOP (90)!!!
+* 
+* The Dig motor is being sent a variable from the RPi that controls the speed and direction with a
+* function to stop the motor. The Actuator has three commands forward (180), backward (0), and stop (90) to control it
+*/
 DigMovement::DigMovement() {
     // Empty constructor
 }
@@ -39,8 +54,17 @@ void DigMovement::digActuatorStop(){
     motor2.write(90);
 }
 
-// Add ramping functions, so we don't have to pass speed
-// Deposit motor movement, will write to the motor, "180" for forward, "0" for backward, "90" for stop
+/*
+* DepositMovement controls the movement of the auger motor as well as the vibrator
+* 
+* MUST HAVE AN EMPTY DEFAULT CONSTRUCTOR DO NOT LEAVE OUT!!!
+* 
+* Create a setup this will be called in the setup of your main file to initialize all of the variables used 
+* SET ALL INITIAL VALUES TO STOP (90)!!!
+* 
+* The Dig motor is being sent a variable from the RPi that gives a command for both the auger motor and vibrator
+* The auger and vibrator each have three commands forward (180), backward (0), and stop (90) to control it
+*/
 DepositMovement::DepositMovement() {
     // Empty Constructor
 }
@@ -51,6 +75,7 @@ void DepositMovement::depositSetup(uint8_t depositPin, uint8_t vibratorPin) {
     motor1.write(90);
     motor2.write(90);
 }
+
 void DepositMovement::depositMotorForward(){
     motor1.write(180);
 }
@@ -71,9 +96,17 @@ void DepositMovement::depositVibratorStop(){
     motor2.write(90);
 }
 
-
-// Drive motor movement, will write to the motor
-// Takes data from the serial connection and then sends that to the function "drive" which writes to the motors controlling direction and speed
+/*
+* DriveMovement controls the movement of the drive motors for the locomotion of the bot
+* 
+* MUST HAVE AN EMPTY DEFAULT CONSTRUCTOR DO NOT LEAVE OUT!!!
+* 
+* Create a setup this will be called in the setup of your main file to initialize all of the variables used 
+* SET ALL INITIAL VALUES TO STOP (90)!!!
+* 
+* The Drive motors are being sent variables from the RPi that controls the speed and direction. Two of the motors are tied together
+* this is why there are only two motors in these functions
+*/
 DriveMovement::DriveMovement() {
     // Empty constructor
 }
