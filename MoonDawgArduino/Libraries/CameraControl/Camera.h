@@ -9,6 +9,7 @@
 #ifndef Camera_h
 #define Camera_h
 
+// Include all libraries
 #include <stdint.h>
 #include <Servo.h>
 #include <Arduino.h>
