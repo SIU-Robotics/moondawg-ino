@@ -1,6 +1,6 @@
 # NASA Lunabotics
 
-This is a competition that is hosted every year by NASA and other sponsors. The current obejctive of the competition is to build a bot that is able to traverse a simulated lunar enviroment (baring low gravity), at the end of this traversal it will need to then collect the lunar simulant *[BP-1](https://ares.jsc.nasa.gov/projects/simulants/bp-1.html)*, *[LHS-1](https://spaceresourcetech.com/products/lhs-1-lunar-highlands-simulant)*, etc. once collected this material is then transported to a deposition/berm building area. 
+This is a competition that is hosted every year by NASA and other sponsors. The current obejctive of the competition is to build a bot that is able to traverse a simulated lunar enviroment (baring low gravity), at the end of this traversal it will need to then collect the lunar simulant *[BP-1](https://ares.jsc.nasa.gov/projects/simulants/bp-1.html)*, *[LHS-1](https://spaceresourcetech.com/products/lhs-1-lunar-highlands-simulant)*, etc. once collected this material is then transported to a deposition/berm building area. The rules, guidelines, and documentation can be found [here](https://www.nasa.gov/learning-resources/lunabotics-challenge/).
 
 ## embedded-berm-bot
 
@@ -13,6 +13,22 @@ Due to the nature of how our bot is constructed we have seperated the logic in t
   
 </details>
 
+<details open>
+  <summary>Arduino/Slave</summary>
+
+  ### Overview
+  
+  This is what processes the commands sent from the Raspberry Pi/Master and once processed they trigger certain commands that control the bot. There is no feedback currently implemented so it is all manually controlled by a user. 
+
+#### File Summary
+
+The file is structed into two different types of files. First, the main file (.ino) which is what calls all the libraries, functions, and is uploaded on the Arduino. Second, the libraries this is called in the main file and houses functions, definitions, and classes.
+
+##### MoonDawgArduino.ino
+
+This is the code that is directly uploaded to the Arduino via the Arduino IDE.
+
+</details>
 
 ## MoonDawgArduino
 
