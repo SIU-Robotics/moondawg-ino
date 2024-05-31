@@ -1,4 +1,4 @@
-# SIU NASA Lunabotics
+# NASA Lunabotics
 
 This is a competition that is hosted every year by NASA and other sponsors. The current obejctive of the competition is to build a bot that is able to traverse a simulated lunar enviroment (baring low gravity), at the end of this traversal it will need to then collect the lunar simulant *[BP-1](https://ares.jsc.nasa.gov/projects/simulants/bp-1.html)*, *[LHS-1](https://spaceresourcetech.com/products/lhs-1-lunar-highlands-simulant)*, etc. once collected this material is then transported to a deposition/berm building area. 
 
