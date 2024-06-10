@@ -29,7 +29,7 @@ This is the code that is directly uploaded to the Arduino via the Arduino IDE. T
 
 #### PinDefinitions.h
 
-This is where we use `constexpr uint8_t` instead of `#DEFINE` to set what the pins will be. I found on a forum [here](https://stackoverflow.com/questions/42388077/when-should-i-prefer-constexpr-variables-over-macros/42388687#42388687) of why it's more betterer than `#DEFINE`
+This is where we use `constexpr uint8_t` instead of `#DEFINE` to set what the pins will be. I found on a forum [here](https://stackoverflow.com/questions/42388077/when-should-i-prefer-constexpr-variables-over-macros/42388687#42388687) of why it's more betterer than `#DEFINE`.
 
 #### Movement.h/Movement.cpp
 
