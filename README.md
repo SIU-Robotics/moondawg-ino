@@ -39,8 +39,13 @@ These hold all of the classes and functions that allows the bot to move and func
 
 These hold all of the classes and functions to be able to move the camera arm. We've found that you must have a default (or empty) constructor when making classes for an Arduino, after which you must have a function to "setup" the classes pin usages for it's functions. As well 360&deg; servos can create a lot of noise (or some other black magic) that causes other nearby servos to become uncontrollable (have seizures). We fixed this by replacing the servo with a 180&deg; servo. In the future can look into stepper motors or something more reliable and easier to control.
 
-### Adding Custom Libraries to Arduino IDE
+#### Adding Custom Libraries to Arduino IDE
 
 To be able to use the libraries we make, you must import them into the IDE this is mandatory to ensure that the main file will correctly work. To do so follow these steps:
 
 Download Library -> Zip the folder -> Open Arduino IDE -> Sketch -> Include Library -> Add .zip Libary -> Choose the .zip
+
+#### Dependencies
+
+- `Servo` Found in the Arduino IDE
+- `roboclaw_arduino_library` [here](https://github.com/basicmicro/roboclaw_arduino_library)
