@@ -17,7 +17,15 @@
 #include "Camera.h"
 
 
-// Camera control class
+/*
+* Class for camera control
+* Private (things we don't want to be used by functions outside of this class):
+* Uses the Servo library to create controllable servos
+* Defines the minimum and maximum angles for the horizontal servo
+* Defines a holding variable for the servo arm to continually get sent
+* Public:
+* This houses all of the functions that will be used by the main program
+*/
 class CameraControl {
 private:
     Servo horizontalServo;
