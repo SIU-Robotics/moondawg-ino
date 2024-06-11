@@ -1,6 +1,4 @@
 /*
-* This is the library the houses all of the functions and classes for the camera movement
-* This file is the main file of the library which has function definitions
 * This file is connected to "Camera.h"
 * Owner: Marco Caliendo
 * Contributors: Cameron Schwartzberg and Andrew Barnes
