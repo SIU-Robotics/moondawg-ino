@@ -1,5 +1,5 @@
 /*
-* This is the library the houses all of the pin definitions for the bot
+* This is the library that houses all of the pin definitions for the bot
 * Owner: Cameron Schwartzberg
 * Contributors: Marco Caliendo, Joshua Greuel, and Mitchell Wettig
 * Date Created: 2/18/2024
@@ -12,8 +12,8 @@
 #include <stdint.h>
 
 /*
-* Pin definitions for the motor controllers
-* 
+* Pin definitions for the motor controllers and other things hooked up to the output pins of the Arduino
+*
 * PINS MUST BE UPDATED AS PIN LAYOUT CHANGES!!
 * IF NOT CHANGED NOTHING WILL WORK!!
 */
