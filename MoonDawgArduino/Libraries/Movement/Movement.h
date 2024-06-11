@@ -18,11 +18,7 @@
 #include "PinDefinitions.h"
 
 /*
-* Class for the Dig movement
-* Private (things we don't want to be used by functions outside of this class):
-* This is the for using the Servo Library to create a controllable motor
-* Public:
-* This houses all of the functions that will be used by the main program
+* Class for the Dig Movement
 */
 class DigMovement {
 private:
@@ -40,10 +36,6 @@ public:
 
 /*
 * Class for the Deposit movement
-* Private (things we don't want to be used by functions outside of this class):
-* This is the for using the Servo Library to create a controllable motor
-* Public:
-* This houses all of the functions that will be used by the main program
 */
 class DepositMovement {
 private:
