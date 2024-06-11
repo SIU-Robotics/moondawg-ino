@@ -1,6 +1,4 @@
 /*
-* This is the library the houses all of the functions and classes for the camera movement
-* This file is the header of the library which has function declarations and classes
 * This file is connected to "Camera.cpp"
 * Owner: Marco Caliendo
 * Contributors: Cameron Schwartzberg and Andrew Barnes
