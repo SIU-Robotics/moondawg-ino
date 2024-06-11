@@ -18,7 +18,7 @@
 * Create a setup this will be called in the setup of your main file to initialize all of the variables used
 * SET ALL INITIAL VALUES TO STOP (90)!!!
 * 
-* The Dig motor is being sent a variable from the RPi that controls the speed and direction with a
+* The dig motor is being sent a variable from the RPi that controls the speed and direction with a
 * function to stop the motor. The Actuator has three commands forward (180), backward (0), and stop (90) to control it
 */
 DigMovement::DigMovement() {
