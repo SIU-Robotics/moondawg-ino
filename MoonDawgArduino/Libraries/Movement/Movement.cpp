@@ -1,6 +1,4 @@
 /*
-* This is the library the houses all of the functions definitions and classes for moving and operating the bot
-* This file is the main file of the library which has function definitions and class constructors
 * This file is connected to "Movement.cpp"
 * Owner: Cameron Schwartzberg
 * Contributors: Marco Caliendo, Andrew Barnes, and Mitchell Wettig
