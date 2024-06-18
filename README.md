@@ -7,7 +7,7 @@ This is a competition that is hosted every year by NASA and other sponsors. The 
 For all things Arduino and Arduino-esque on the SIU Lunabotics bot. 
 Due to the nature of how our bot is constructed we have seperated the logic in two distinct places. 
 <details>
-  <summary>Raspberry Pi/Master</summary>
+  <summary>Raspberry Pi - Master</summary>
   
   This will control the Arduino and tells it what to do along with communicating to the user. There is a more detailed description of how it works [here](https://github.com/SIU-Robotics/moondawg-ros). All that needs to be known for the Arduino side is that it will send data over Serial which is then parsed into usable bits for us to send to `commandProccessing` that will call specific functions and give it the data needed.
   
@@ -17,7 +17,7 @@ Due to the nature of how our bot is constructed we have seperated the logic in t
 
 #### Overview
   
-This is what processes the commands sent from the Raspberry Pi/Master and once processed they trigger certain commands that control the bot. There is no feedback currently implemented so it is all manually controlled by a user. 
+This is what processes the commands sent from the Raspberry Pi - Master and once processed they trigger certain commands that control the bot. There is no feedback currently implemented so it is all manually controlled by a user. 
 
 #### File Summary
 
