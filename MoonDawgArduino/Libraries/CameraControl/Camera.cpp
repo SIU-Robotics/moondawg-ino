@@ -1,11 +1,9 @@
 /*
-* This file is connected to "Camera.h"
-* Owner: Marco Caliendo
-* Contributors: Cameron Schwartzberg and Andrew Barnes
+* Owner: Marco Caliendo (MCal88)
+* Contributors: Cameron Schwartzberg (BigBroccoli)
 * Date Created: 4/25/2024
 */
 
-// Include all libraries
 #include "Camera.h"
 #include <Arduino.h>
 
