@@ -38,7 +38,7 @@ constexpr char ARM = 'a';
 
 /* 
 * Class constructors
-* Default constructors are only for "creating" the class 
+* Default constructors are required without arguments here, as initializing motors will cause it to break.
 * CANNOT HOUSE ANY OF THE SETUP CODE!!
 */
 DriveMovement driving = DriveMovement();
