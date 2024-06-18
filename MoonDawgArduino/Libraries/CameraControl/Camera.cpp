@@ -1,7 +1,6 @@
 /*
 * Owner: Marco Caliendo (MCal88)
 * Contributors: Cameron Schwartzberg (BigBroccoli)
-* Date Created: 4/25/2024
 */
 
 #include "Camera.h"
