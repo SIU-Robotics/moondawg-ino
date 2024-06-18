@@ -1,5 +1,4 @@
 /*
-* This file is connected to "Movement.cpp"
 * Owner: Cameron Schwartzberg (BigBroccoli)
 * Contributors: Marco Caliendo (MCal88), Andrew Barnes (abarnes6), and Mitchell Wettig
 */
