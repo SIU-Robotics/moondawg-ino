@@ -1,11 +1,9 @@
 /*
 * This file is connected to "Movement.cpp"
-* Owner: Cameron Schwartzberg
-* Contributors: Marco Caliendo, Andrew Barnes, and Mitchell Wettig
-* Date Created: 2/18/2024
+* Owner: Cameron Schwartzberg (BigBroccoli)
+* Contributors: Marco Caliendo (MCal88), Andrew Barnes (abarnes6), and Mitchell Wettig
 */
 
-// Calling all libraries
 #include "Movement.h"
 #include <Arduino.h>
 
