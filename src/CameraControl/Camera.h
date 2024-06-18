@@ -1,3 +1,7 @@
+/*
+* Owner: Marco Caliendo (MCal88)
+* Contributors: Cameron Schwartzberg (BigBroccoli)
+*/
 #ifndef Camera_h
 #define Camera_h
 
@@ -8,7 +12,9 @@
 #include "Camera.h"
 
 
-// Camera control class
+/*
+* Class for camera control
+*/
 class CameraControl {
 private:
     Servo horizontalServo;
