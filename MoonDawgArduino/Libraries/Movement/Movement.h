@@ -1,23 +1,19 @@
 /*
 * This file is connected to "Movement.cpp"
-* Owner: Cameron Schwartzberg
-* Contributors: Marco Caliendo, Andrew Barnes, and Mitchell Wettig
-* Date Created: 2/18/2024
+* Owner: Cameron Schwartzberg (BigBroccoli)
+* Contributors: Marco Caliendo (MCal88), Andrew Barnes (abarnes6), and Mitchell Wettig
 */
 
 #ifndef Movement_h
 #define Movement_h
 
-// Calling all libraries 
 #include <stdint.h>
 #include <Servo.h>
 #include <Arduino.h>
 
 #include "PinDefinitions.h"
 
-/*
-* Class for the Dig Movement
-*/
+
 class DigMovement {
 private:
     Servo motor1; // Dig motor
@@ -32,9 +28,7 @@ public:
     void digActuatorStop();
 };
 
-/*
-* Class for the Deposit movement
-*/
+
 class DepositMovement {
 private:
     Servo motor1; // Auger
@@ -49,13 +43,7 @@ public:
     void depositVibratorStop();
 };
 
-/*
-* Class for the Drive movement
-* Private (things we don't want to be used by functions outside of this class):
-* This is the for using the Servo Library to create a controllable motor
-* Public:
-* This houses all of the functions that will be used by the main program
-*/
+
 class DriveMovement{
 private:
     Servo motor1;
