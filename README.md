@@ -13,7 +13,7 @@ Due to the nature of how our bot is constructed we have seperated the logic in t
   
 </details>
 
-### Arduino/Slave
+### Arduino - Slave
 
 #### Overview
   
@@ -48,4 +48,3 @@ Download Library -> Zip the folder -> Open Arduino IDE -> Sketch -> Include Libr
 #### Dependencies
 
 - `Servo` Found in the Arduino IDE
-- `roboclaw_arduino_library` [here](https://github.com/basicmicro/roboclaw_arduino_library)
