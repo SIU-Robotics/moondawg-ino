@@ -10,6 +10,7 @@
 
 // Call library
 #include <stdint.h>
+#include <Arduino.h>
 
 /*
 * Pin definitions for the motor controllers and other things hooked up to the output pins of the Arduino
