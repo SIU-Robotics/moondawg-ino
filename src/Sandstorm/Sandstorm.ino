@@ -12,7 +12,14 @@
 #include <Servo.h>
 #include <Arduino.h>
 
-
+/*
+* PinDefinitions.h: This holds all of the pin definitions that can then be used to output signals.
+* Movement.h: This holds the classes and functions that allow the bot to operated.
+* Camera.h: This holds the class and functions for the camera to be able to move.
+*/
+#include "PinDefinitions.h"
+#include "Movement.h"
+#include "Camera.h"
 
 // Creates the max array size and input length which is used to 
 constexpr int MAX_ARRAY_SIZE = 10;
@@ -66,7 +73,7 @@ void commandProcessing(char* tokens[]) {
             break;
         case DIGBELT:
             if (param1) {
-                digging.digMotor(param2);
+                digging.digMotorStart(param2);
             }
             else {
                 digging.digMotorStop();
