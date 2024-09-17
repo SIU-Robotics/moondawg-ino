@@ -1,7 +1,3 @@
-#include <Camera.h>
-
-#include <Camera.h>
-
 /*
 * This Arduino code is for Sandstorm the 2024 Lunabotics bot.
 * The code has elements of the 2023 MoonDawg rover. However, has be heavily modified to abstract functions, use the Servo Library for control, 
@@ -21,7 +17,9 @@
 * Movement.h: This holds the classes and functions that allow the bot to operated.
 * Camera.h: This holds the class and functions for the camera to be able to move.
 */
-
+#include "PinDefinitions.h"
+#include "Movement.h"
+#include "Camera.h"
 
 // Creates the max array size and input length which is used to 
 constexpr int MAX_ARRAY_SIZE = 10;
