@@ -5,6 +5,11 @@
 
 #include "Camera.h"
 #include <Arduino.h>
+#include <Servo.h>
+
+Servo horizontalServo;
+Servo verticalServo;
+Servo armServo;
 
 /*
 * CameraControl controls the movement of the servos to move the camera around

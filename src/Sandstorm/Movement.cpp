@@ -6,6 +6,15 @@
 
 #include "Movement.h"
 #include <Arduino.h>
+#include <Servo.h>
+
+Servo digMotor;
+Servo actuator;
+Servo auger;
+Servo vibrator;
+Servo driveMotor1;
+Servo driveMotor2;
+
 
 /*
 * DigMovement controls the movement of the actuator to swing the bucket conveyor as well as
