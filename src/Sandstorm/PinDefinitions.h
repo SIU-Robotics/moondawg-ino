@@ -20,10 +20,13 @@
 */
 constexpr uint8_t LEFT_MOTOR = 3;        // This is the pin for the left motors
 constexpr uint8_t RIGHT_MOTOR = 11;      // This is the pin for the right motors
+
 constexpr uint8_t DIGGING_MOTOR = 6;
 constexpr uint8_t DIGGING_ACTUATOR = 10;
+
 constexpr uint8_t DEPOSIT_MOTOR = 5;
 constexpr uint8_t DEPOSIT_VIBRATOR = 9;
+
 constexpr uint8_t HORIZONTAL_SERVO = 7;
 constexpr uint8_t VERTICAL_SERVO = 8;
 constexpr uint8_t ARM_SERVO = 13;

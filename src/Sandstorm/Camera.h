@@ -15,9 +15,6 @@
 extern Servo horizontalServo;
 extern Servo verticalServo;
 extern Servo armServo;
-// extern uint8_t horizontalMinAngle;
-// extern uint16_t horizontalMaxAngle;
-// extern uint8_t armHoldAngle;
 
 void cameraSetup(uint8_t horizontalPin, uint8_t verticalPin, uint8_t armPin);
 void moveHorizontal(uint8_t horizontalAngle);

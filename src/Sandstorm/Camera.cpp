@@ -12,11 +12,7 @@ Servo verticalServo;
 Servo armServo;
 
 /*
-* CameraControl controls the movement of the servos to move the camera around
-* 
-* MUST HAVE AN EMPTY DEFAULT CONSTRUCTOR DO NOT LEAVE OUT!!!
-* 
-* Create a setup this will be called in the setup of your main file to initialize all of the variables used
+* Use the setup function this will be called in the setup of your main file to initialize all of the variables used
 * SET ALL INITIAL VALUES TO STOP (90)!!!
 * 
 * The servos are being sent a variable from the RPi that controls the speed and direction with a
