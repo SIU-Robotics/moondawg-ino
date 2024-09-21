@@ -73,7 +73,7 @@ void commandProcessing(char* tokens[]) {
             break;
         case DIGBELT:
             if (param1) {
-                digging.digMotor(param2);
+                digging.digMotorStart(param2);
             }
             else {
                 digging.digMotorStop();
