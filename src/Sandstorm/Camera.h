@@ -12,23 +12,17 @@
 #include "Camera.h"
 
 
-/*
-* Class for camera control
-*/
-class CameraControl {
-private:
-    Servo horizontalServo;
-    Servo verticalServo;
-    Servo armServo;
-    uint8_t horizontalMinAngle;
-    uint16_t horizontalMaxAngle;
-    uint8_t armHoldAngle;
-public:
-    CameraControl();
-    void cameraSetup(uint8_t horizontalPin, uint8_t verticalPin, uint8_t armPin);
-    void moveHorizontal(uint8_t horizontalAngle);
-    void moveVertical(uint8_t verticalAngle);
-    void moveArmHold(uint8_t armAngle);
-};
+extern Servo horizontalServo;
+extern Servo verticalServo;
+extern Servo armServo;
+// extern uint8_t horizontalMinAngle;
+// extern uint16_t horizontalMaxAngle;
+// extern uint8_t armHoldAngle;
+
+void cameraSetup(uint8_t horizontalPin, uint8_t verticalPin, uint8_t armPin);
+void moveHorizontal(uint8_t horizontalAngle);
+void moveVertical(uint8_t verticalAngle);
+void moveArmHold(uint8_t armAngle);
+
 
 #endif //Camera_h

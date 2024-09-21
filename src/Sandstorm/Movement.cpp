@@ -19,35 +19,31 @@
 * The dig motor is being sent a variable from the RPi that controls the speed and direction with a
 * function to stop the motor. The Actuator has three commands forward (180), backward (0), and stop (90) to control it
 */
-DigMovement::DigMovement() {
-    // Empty constructor
+void digSetup(uint8_t diggingPin, uint8_t actuatorPin) {
+    digMotor.attach(diggingPin);
+    actuator.attach(actuatorPin);
+    digMotor.write(90);
+    actuator.write(90);
 }
 
-void DigMovement::digSetup(uint8_t diggingPin, uint8_t actuatorPin) {
-    motor1.attach(diggingPin);
-    motor2.attach(actuatorPin);
-    motor1.write(90);
-    motor2.write(90);
+void digMotorStart(uint8_t speed){
+    digMotor.write(speed);
 }
 
-void DigMovement::digMotorStart(uint8_t speed){
-    motor1.write(speed);
+void digMotorStop(){
+    digMotor.write(90);
 }
 
-void DigMovement::digMotorStop(){
-    motor1.write(90);
+void digActuatorForward(){
+    actuator.write(180);
 }
 
-void DigMovement::digActuatorForward(){
-    motor2.write(180);
+void digActuatorBackward(){
+    actuator.write(0);
 }
 
-void DigMovement::digActuatorBackward(){
-    motor2.write(0);
-}
-
-void DigMovement::digActuatorStop(){
-    motor2.write(90);
+void digActuatorStop(){
+    actuator.write(90);
 }
 
 /*
@@ -61,35 +57,31 @@ void DigMovement::digActuatorStop(){
 * The Dig motor is being sent a variable from the RPi that gives a command for both the auger motor and vibrator
 * The auger and vibrator each have three commands forward (180), backward (0), and stop (90) to control it
 */
-DepositMovement::DepositMovement() {
-    // Empty Constructor
+void depositSetup(uint8_t depositPin, uint8_t vibratorPin) {
+    auger.attach(depositPin);
+    vibrator.attach(vibratorPin);
+    auger.write(90);
+    vibrator.write(90);
 }
 
-void DepositMovement::depositSetup(uint8_t depositPin, uint8_t vibratorPin) {
-    motor1.attach(depositPin);
-    motor2.attach(vibratorPin);
-    motor1.write(90);
-    motor2.write(90);
+void depositMotorForward(){
+    auger.write(180);
 }
 
-void DepositMovement::depositMotorForward(){
-    motor1.write(180);
+void depositMotorBackward(){
+    auger.write(0);
 }
 
-void DepositMovement::depositMotorBackward(){
-    motor1.write(0);
+void depositMotorStop(){
+    auger.write(90);
 }
 
-void DepositMovement::depositMotorStop(){
-    motor1.write(90);
+void depositVibrator(){
+    vibrator.write(180);
 }
 
-void DepositMovement::depositVibrator(){
-    motor2.write(180);
-}
-
-void DepositMovement::depositVibratorStop(){
-    motor2.write(90);
+void depositVibratorStop(){
+    vibrator.write(90);
 }
 
 /*
@@ -103,19 +95,15 @@ void DepositMovement::depositVibratorStop(){
 * The Drive motors are being sent variables from the RPi that controls the speed and direction. Two of the motors are tied together
 * this is why there are only two motors in these functions
 */
-DriveMovement::DriveMovement() {
-    // Empty constructor
-}
-
-void DriveMovement::driveSetup(uint8_t leftPin, uint8_t rightPin) {
-    motor1.attach(leftPin);
-    motor2.attach(rightPin);
-    motor1.write(90);
-    motor2.write(90);
+void driveSetup(uint8_t leftPin, uint8_t rightPin) {
+    driveMotor1.attach(leftPin);
+    driveMotor2.attach(rightPin);
+    driveMotor1.write(90);
+    driveMotor2.write(90);
 
 }
 
-void DriveMovement::drive(int speedLeft, int speedRight){
-    motor1.write(speedLeft);
-    motor2.write(speedRight);
+void drive(int speedLeft, int speedRight){
+    driveMotor1.write(speedLeft);
+    driveMotor2.write(speedRight);
 }
