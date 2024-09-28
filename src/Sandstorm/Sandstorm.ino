@@ -17,6 +17,7 @@
 * Movement.h: This holds the classes and functions that allow the bot to operated.
 * Camera.h: This holds the class and functions for the camera to be able to move.
 */
+
 #include "PinDefinitions.h"
 #include "Movement.h"
 #include "Camera.h"
@@ -41,10 +42,10 @@ constexpr char ARM = 'a';
 * Default constructors are required without arguments here, as initializing motors will cause it to break.
 * CANNOT HOUSE ANY OF THE SETUP CODE!!
 */
-DriveMovement driving = DriveMovement();
-DepositMovement depositing = DepositMovement();
-DigMovement digging = DigMovement();
-CameraControl camera = CameraControl();
+// DriveMovement driving = DriveMovement();
+// DepositMovement depositing = DepositMovement();
+// DigMovement digging = DigMovement();
+// CameraControl camera = CameraControl();
 
 /*
 * This processes the commands sent via the RPi into usuable function calls for the Arduino
@@ -69,69 +70,69 @@ void commandProcessing(char* tokens[]) {
 
     switch (cmd) {
         case MOVEMENT:
-            driving.drive(param1, param2);
+            drive(param1, param2);
             break;
         case DIGBELT:
             if (param1) {
-                digging.digMotorStart(param2);
+                digMotorStart(param2);
             }
             else {
-                digging.digMotorStop();
+                digMotorStop();
             }
             break;
         case DIGACT:
             if (param1) {
                 if (param2 == 'r')
                 {
-                    digging.digActuatorForward();
+                    digActuatorForward();
                 }
                 else if (param2 == 'l')
                 {
-                    digging.digActuatorBackward();
+                    digActuatorBackward();
                 }                
             }
             else {
-                digging.digActuatorStop();
+                digActuatorStop();
             }
             break;
         case DEPOSITAUGER:
             if (param1) {
                 if (param2 == 'f') {
-                    depositing.depositMotorForward();
+                    depositMotorForward();
                 }
                 else if (param2 == 'b')
                 {
-                    depositing.depositMotorBackward();
+                    depositMotorBackward();
                 }
                 
             }
             else {
-                depositing.depositMotorStop();
+                depositMotorStop();
             }
             break;
         case VIBRATOR:
             if (param1) {
                 if (param2 == 'v'){
-                    depositing.depositVibrator();
+                    depositVibrator();
                 }
             }
             else {
-                depositing.depositVibratorStop();
+                depositVibratorStop();
             }
             break;
         case HORIZONTAL:
             if (param1) {
-                camera.moveHorizontal(param2);
+                moveHorizontal(param2);
             }
             break;
         case VERTICAL:
             if (param1) {
-                camera.moveVertical(param2);
+                moveVertical(param2);
             }
             break;
         case ARM:
             if (param1) {
-                camera.moveArmHold(param2);
+                moveArmHold(param2);
             }
             break;
         default:
@@ -145,10 +146,10 @@ void setup() {
     Serial.begin(9600);
     
     // This is how the constructor is able to setup all of the code in each of the classes
-    driving.driveSetup(LEFT_MOTOR, RIGHT_MOTOR);
-    depositing.depositSetup(DEPOSIT_MOTOR, DEPOSIT_VIBRATOR);
-    digging.digSetup(DIGGING_MOTOR, DIGGING_ACTUATOR);
-    camera.cameraSetup(HORIZONTAL_SERVO, VERTICAL_SERVO, ARM_SERVO);
+    driveSetup(LEFT_MOTOR, RIGHT_MOTOR);
+    depositSetup(DEPOSIT_MOTOR, DEPOSIT_VIBRATOR);
+    digSetup(DIGGING_MOTOR, DIGGING_ACTUATOR);
+    cameraSetup(HORIZONTAL_SERVO, VERTICAL_SERVO, ARM_SERVO);
 }
 
 void loop() {

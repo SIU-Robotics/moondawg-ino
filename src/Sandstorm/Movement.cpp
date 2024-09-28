@@ -6,116 +6,92 @@
 
 #include "Movement.h"
 #include <Arduino.h>
+#include <Servo.h>
+
+Servo digMotor;
+Servo actuator;
+Servo auger;
+Servo vibrator;
+Servo driveMotor1;
+Servo driveMotor2;
 
 /*
-* DigMovement controls the movement of the actuator to swing the bucket conveyor as well as
-* the motor which drives the bucket conveyor
-* 
-* MUST HAVE AN EMPTY DEFAULT CONSTRUCTOR DO NOT LEAVE OUT!!!
-* 
-* Create a setup this will be called in the setup of your main file to initialize all of the variables used
+* Use the setup function this will be called in the setup of your main file to initialize all of the variables used and attach
+* the motors to the pins
 * SET ALL INITIAL VALUES TO STOP (90)!!!
 * 
-* The dig motor is being sent a variable from the RPi that controls the speed and direction with a
-* function to stop the motor. The Actuator has three commands forward (180), backward (0), and stop (90) to control it
-*/
-DigMovement::DigMovement() {
-    // Empty constructor
-}
-
-void DigMovement::digSetup(uint8_t diggingPin, uint8_t actuatorPin) {
-    motor1.attach(diggingPin);
-    motor2.attach(actuatorPin);
-    motor1.write(90);
-    motor2.write(90);
-}
-
-void DigMovement::digMotorStart(uint8_t speed){
-    motor1.write(speed);
-}
-
-void DigMovement::digMotorStop(){
-    motor1.write(90);
-}
-
-void DigMovement::digActuatorForward(){
-    motor2.write(180);
-}
-
-void DigMovement::digActuatorBackward(){
-    motor2.write(0);
-}
-
-void DigMovement::digActuatorStop(){
-    motor2.write(90);
-}
-
-/*
-* DepositMovement controls the movement of the auger motor as well as the vibrator
+* The motors are being sent a variable from the RPi that controls the speed and direction with a
+* function to stop the motor. The motors/actuator have three commands forward (180), backward (0), and stop (90) to control it
+* and numbers between to control the speed
 * 
-* MUST HAVE AN EMPTY DEFAULT CONSTRUCTOR DO NOT LEAVE OUT!!!
-* 
-* Create a setup this will be called in the setup of your main file to initialize all of the variables used 
-* SET ALL INITIAL VALUES TO STOP (90)!!!
-* 
-* The Dig motor is being sent a variable from the RPi that gives a command for both the auger motor and vibrator
-* The auger and vibrator each have three commands forward (180), backward (0), and stop (90) to control it
-*/
-DepositMovement::DepositMovement() {
-    // Empty Constructor
-}
-
-void DepositMovement::depositSetup(uint8_t depositPin, uint8_t vibratorPin) {
-    motor1.attach(depositPin);
-    motor2.attach(vibratorPin);
-    motor1.write(90);
-    motor2.write(90);
-}
-
-void DepositMovement::depositMotorForward(){
-    motor1.write(180);
-}
-
-void DepositMovement::depositMotorBackward(){
-    motor1.write(0);
-}
-
-void DepositMovement::depositMotorStop(){
-    motor1.write(90);
-}
-
-void DepositMovement::depositVibrator(){
-    motor2.write(180);
-}
-
-void DepositMovement::depositVibratorStop(){
-    motor2.write(90);
-}
-
-/*
-* DriveMovement controls the movement of the drive motors for the locomotion of the bot
-* 
-* MUST HAVE AN EMPTY DEFAULT CONSTRUCTOR DO NOT LEAVE OUT!!!
-* 
-* Create a setup this will be called in the setup of your main file to initialize all of the variables used 
-* SET ALL INITIAL VALUES TO STOP (90)!!!
-* 
-* The Drive motors are being sent variables from the RPi that controls the speed and direction. Two of the motors are tied together
+* For the drive motors, two are tied together in hardware so they will be controlled together in the function call
 * this is why there are only two motors in these functions
 */
-DriveMovement::DriveMovement() {
-    // Empty constructor
+void digSetup(uint8_t diggingPin, uint8_t actuatorPin) {
+    digMotor.attach(diggingPin);
+    actuator.attach(actuatorPin);
+    digMotor.write(90);
+    actuator.write(90);
 }
 
-void DriveMovement::driveSetup(uint8_t leftPin, uint8_t rightPin) {
-    motor1.attach(leftPin);
-    motor2.attach(rightPin);
-    motor1.write(90);
-    motor2.write(90);
+void digMotorStart(uint8_t speed){
+    digMotor.write(speed);
+}
+
+void digMotorStop(){
+    digMotor.write(90);
+}
+
+void digActuatorForward(){
+    actuator.write(180);
+}
+
+void digActuatorBackward(){
+    actuator.write(0);
+}
+
+void digActuatorStop(){
+    actuator.write(90);
+}
+
+
+void depositSetup(uint8_t depositPin, uint8_t vibratorPin) {
+    auger.attach(depositPin);
+    vibrator.attach(vibratorPin);
+    auger.write(90);
+    vibrator.write(90);
+}
+
+void depositMotorForward(){
+    auger.write(180);
+}
+
+void depositMotorBackward(){
+    auger.write(0);
+}
+
+void depositMotorStop(){
+    auger.write(90);
+}
+
+void depositVibrator(){
+    vibrator.write(180);
+}
+
+void depositVibratorStop(){
+    vibrator.write(90);
+}
+
+
+void driveSetup(uint8_t leftPin, uint8_t rightPin) {
+    driveMotor1.attach(leftPin);
+    driveMotor2.attach(rightPin);
+    driveMotor1.write(90);
+    driveMotor2.write(90);
 
 }
 
-void DriveMovement::drive(int speedLeft, int speedRight){
-    motor1.write(speedLeft);
-    motor2.write(speedRight);
+void drive(int speedLeft, int speedRight){
+    driveMotor1.write(speedLeft);
+    driveMotor2.write(speedRight);
 }
