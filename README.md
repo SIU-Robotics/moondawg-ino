@@ -21,11 +21,11 @@ This is what processes the commands sent from the Raspberry Pi - Master and once
 
 #### File Summary
 
-The file is structed into two different types of files. First, the main file (.ino) which is what calls all the libraries, functions, and is uploaded on the Arduino. Second, the libraries this is called in the main file and houses functions, definitions, and classes.
+The file is structed into two different types of files. First, the main file (.ino) which is what calls all the libraries, functions, and is uploaded on the Arduino. Second, the libraries this is called in the main file and houses functions and definitions.
 
 ##### MoonDawgArduino.ino
 
-This is the code that is directly uploaded to the Arduino via the Arduino IDE. This has all of the function calls, the serial communication logic, and initialization of the classes.
+This is the code that is directly uploaded to the Arduino via the Arduino IDE. This has all of the function calls, the serial communication logic, and use of functions.
 
 #### PinDefinitions.h
 
@@ -33,17 +33,15 @@ This is where we use `constexpr uint8_t` instead of `#DEFINE` to set what the pi
 
 #### Movement.h/Movement.cpp
 
-These hold all of the classes and functions that allows the bot to move and function. We've found that you must have a default (or empty) constructor when making classes for an Arduino, after which you must have a function to "setup" the classes pin usages for it's functions. 
+These hold all of the functions that allows the bot to move and function. Use the setup function in the setup of `Sandstorm.ino`.
 
 #### Camera.h/Camera.cpp
 
-These hold all of the classes and functions to be able to move the camera arm. We've found that you must have a default (or empty) constructor when making classes for an Arduino, after which you must have a function to "setup" the classes pin usages for it's functions. As well 360&deg; servos can create a lot of noise (or some other black magic) that causes other nearby servos to become uncontrollable (have seizures). We fixed this by replacing the servo with a 180&deg; servo. In the future can look into stepper motors or something more reliable and easier to control.
+These hold all of the functions to be able to move the camera arm. Use the setup function in the setup of `Sandstorm.ino`. As well 360&deg; servos can create a lot of noise (or some other black magic) that causes other nearby servos to become uncontrollable (have seizures). We fixed this by replacing the servo with a 180&deg; servo. In the future can look into stepper motors or something more reliable and easier to control.
 
-#### Adding Custom Libraries to Arduino IDE
+#### Adding New Libraries to Version
 
-To be able to use the libraries we make, you must import them into the IDE this is mandatory to ensure that the main file will correctly work. To do so follow these steps:
-
-Download Library -> Zip the folder -> Open Arduino IDE -> Sketch -> Include Library -> Add .zip Libary -> Choose the .zip
+Simply add the new files `.h` and `.cpp` to the same directory that has the `.ino` file. Following the format as set previously.
 
 #### Dependencies
 
