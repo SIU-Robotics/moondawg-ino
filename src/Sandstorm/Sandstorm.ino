@@ -36,6 +36,15 @@ constexpr char HORIZONTAL = 'h';
 constexpr char VERTICAL = 'e';
 constexpr char ARM = 'a';
 
+// Define the encoder objects and attach the pins defined in "PinDefinitions"
+Encoder fl_encoder(FRONT_LEFT_WHEEL_ENCODER_PIN1, FRONT_LEFT_WHEEL_ENCODER_PIN2);
+Encoder fr_encoder(FRONT_RIGHT_WHEEL_ENCODER_PIN1, FRONT_RIGHT_WHEEL_ENCODER_PIN2);
+Encoder rr_encoder(REAR_RIGHT_ENCODER_PIN1, REAR_RIGHT_ENCODER_PIN2);
+Encoder rl_encoder(REAR_LEFT_ENCODER_PIN1, REAR_LEFT_ENCODER_PIN2);
+
+// Variable for keeping track of elapsed time : used for getting rpm of motors
+unsigned long millisBefore = 0;
+
 
 /* 
 * Class constructors
@@ -173,6 +182,19 @@ void loop() {
         }
 
         commandProcessing(tokens);
+    }
+
+    // Encoder Code
+    readEncoder(fr_encoder);
+    readEncoder(fl_encoder);
+    readEncoder(rr_encoder);
+    readEncoder(rl_encoder);
+    if (millis() - millisBefore > 1000) {
+        getRPM(fr_encoder);
+        getRPM(fl_encoder);
+        getRPM(rr_encoder);
+        getRPM(rl_encoder);
+        millisBefore = millis();
     }
 }
 
