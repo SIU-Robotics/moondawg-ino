@@ -66,7 +66,7 @@ void loop() {
         int bytesRead = Serial.readBytesUntil('\n', inputBuffer, MAX_INPUT_LENGTH);
         inputBuffer[bytesRead] = '\0'; // Add null terminator
 
-        char* tokens[3];
+        char* tokens[MAX_ARRAY_SIZE] = {nullptr};
 
         int numCount = 0;
         char *token = strtok(inputBuffer, ",");
@@ -104,16 +104,21 @@ void loop() {
 */
 void commandProcessing(char* tokens[]) {
 
+    if (tokens[0] == nullptr || tokens[1] == nullptr ) {
+        return;
+    }
+
     char cmd = tokens[0][0];
     int param1 = atoi(tokens[1]);
     int param2;
-    if (cmd == MOVEMENT || cmd == DIGBELT || cmd == HORIZONTAL || cmd == VERTICAL || cmd == ARM) {
-      param2 = atoi(tokens[2]);
+    if (tokens[2] != nullptr) {
+        if (cmd == MOVEMENT || cmd == DIGBELT || cmd == HORIZONTAL || cmd == VERTICAL || cmd == ARM) {
+        param2 = atoi(tokens[2]);
+        }
+        else {
+        param2 = (int)tokens[2][0];
+        }
     }
-    else {
-      param2 = (int)tokens[2][0];
-    }
-
 
     switch (cmd) {
         case MOVEMENT:
