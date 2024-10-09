@@ -5,7 +5,7 @@
 
 #include "Camera.h"
 #include <Arduino.h>
-#include <Servo.h>
+#include <ESP32Servo.h>
 
 Servo horizontalServo;
 Servo verticalServo;

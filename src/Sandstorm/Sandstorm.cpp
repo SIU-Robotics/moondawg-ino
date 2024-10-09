@@ -9,8 +9,9 @@
 */
 
 // Call all libraries
-#include <Servo.h>
+#include <ESP32Servo.h>
 #include <Arduino.h>
+#include <ESP32Encoder.h>
 
 /*
 * PinDefinitions.h: This holds all of the pin definitions that can then be used to output signals.
@@ -21,6 +22,7 @@
 #include "PinDefinitions.h"
 #include "Movement.h"
 #include "Camera.h"
+#include "Encoders.h"
 
 // Creates the max array size and input length which is used to 
 constexpr int MAX_ARRAY_SIZE = 10;
@@ -36,25 +38,61 @@ constexpr char HORIZONTAL = 'h';
 constexpr char VERTICAL = 'e';
 constexpr char ARM = 'a';
 
-// Define the encoder objects and attach the pins defined in "PinDefinitions"
-Encoder fl_encoder(FRONT_LEFT_WHEEL_ENCODER_PIN1, FRONT_LEFT_WHEEL_ENCODER_PIN2);
-Encoder fr_encoder(FRONT_RIGHT_WHEEL_ENCODER_PIN1, FRONT_RIGHT_WHEEL_ENCODER_PIN2);
-Encoder rr_encoder(REAR_RIGHT_ENCODER_PIN1, REAR_RIGHT_ENCODER_PIN2);
-Encoder rl_encoder(REAR_LEFT_ENCODER_PIN1, REAR_LEFT_ENCODER_PIN2);
-
 // Variable for keeping track of elapsed time : used for getting rpm of motors
 unsigned long millisBefore = 0;
 
+void commandProcessing(char* tokens[]);
 
-/* 
-* Class constructors
-* Default constructors are required without arguments here, as initializing motors will cause it to break.
-* CANNOT HOUSE ANY OF THE SETUP CODE!!
-*/
-// DriveMovement driving = DriveMovement();
-// DepositMovement depositing = DepositMovement();
-// DigMovement digging = DigMovement();
-// CameraControl camera = CameraControl();
+
+void setup() {
+    // For the serial communication from RPi to Arduino
+    Serial.begin(9600);
+    
+    // This is how the constructor is able to setup all of the code in each of the classes
+    driveSetup(LEFT_MOTOR, RIGHT_MOTOR);
+    depositSetup(DEPOSIT_MOTOR, DEPOSIT_VIBRATOR);
+    digSetup(DIGGING_MOTOR, DIGGING_ACTUATOR);
+    cameraSetup(HORIZONTAL_SERVO, VERTICAL_SERVO, ARM_SERVO);
+    setupEncoder(FRONT_LEFT_WHEEL_ENCODER_PIN1, FRONT_LEFT_WHEEL_ENCODER_PIN2, FRONT_RIGHT_WHEEL_ENCODER_PIN1, FRONT_RIGHT_WHEEL_ENCODER_PIN2, REAR_LEFT_ENCODER_PIN1, REAR_LEFT_ENCODER_PIN2, REAR_RIGHT_ENCODER_PIN1, REAR_RIGHT_ENCODER_PIN2);
+}
+
+void loop() {
+
+    // This parses the data sent from the RPi
+    if (Serial.available() > 0) {
+        char inputBuffer[MAX_INPUT_LENGTH + 1] = {0}; // +1 for null terminator
+
+        // Read bytes directly into the buffer
+        int bytesRead = Serial.readBytesUntil('\n', inputBuffer, MAX_INPUT_LENGTH);
+        inputBuffer[bytesRead] = '\0'; // Add null terminator
+
+        char* tokens[3];
+
+        int numCount = 0;
+        char *token = strtok(inputBuffer, ",");
+
+        while (token != NULL && numCount < MAX_ARRAY_SIZE) {
+            tokens[numCount++] = token;
+            token = strtok(NULL, ",");
+        }
+
+        commandProcessing(tokens);
+    }
+
+    // Encoder Code
+    readEncoder(fr_encoder);
+    readEncoder(fl_encoder);
+    readEncoder(rr_encoder);
+    readEncoder(rl_encoder);
+    if (millis() - millisBefore > 1000) {
+        getRPM(fr_encoder);
+        getRPM(fl_encoder);
+        getRPM(rr_encoder);
+        getRPM(rl_encoder);
+        millisBefore = millis();
+    }
+}
+
 
 /*
 * This processes the commands sent via the RPi into usuable function calls for the Arduino
@@ -149,52 +187,4 @@ void commandProcessing(char* tokens[]) {
     }
 }
 
-
-void setup() {
-    // For the serial communication from RPi to Arduino
-    Serial.begin(9600);
-    
-    // This is how the constructor is able to setup all of the code in each of the classes
-    driveSetup(LEFT_MOTOR, RIGHT_MOTOR);
-    depositSetup(DEPOSIT_MOTOR, DEPOSIT_VIBRATOR);
-    digSetup(DIGGING_MOTOR, DIGGING_ACTUATOR);
-    cameraSetup(HORIZONTAL_SERVO, VERTICAL_SERVO, ARM_SERVO);
-}
-
-void loop() {
-
-    // This parses the data sent from the RPi
-    if (Serial.available() > 0) {
-        char inputBuffer[MAX_INPUT_LENGTH + 1] = {0}; // +1 for null terminator
-
-        // Read bytes directly into the buffer
-        int bytesRead = Serial.readBytesUntil('\n', inputBuffer, MAX_INPUT_LENGTH);
-        inputBuffer[bytesRead] = '\0'; // Add null terminator
-
-        char* tokens[3];
-
-        int numCount = 0;
-        char *token = strtok(inputBuffer, ",");
-
-        while (token != NULL && numCount < MAX_ARRAY_SIZE) {
-            tokens[numCount++] = token;
-            token = strtok(NULL, ",");
-        }
-
-        commandProcessing(tokens);
-    }
-
-    // Encoder Code
-    readEncoder(fr_encoder);
-    readEncoder(fl_encoder);
-    readEncoder(rr_encoder);
-    readEncoder(rl_encoder);
-    if (millis() - millisBefore > 1000) {
-        getRPM(fr_encoder);
-        getRPM(fl_encoder);
-        getRPM(rr_encoder);
-        getRPM(rl_encoder);
-        millisBefore = millis();
-    }
-}
 

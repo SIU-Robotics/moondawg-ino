@@ -6,7 +6,7 @@
 #define Camera_h
 
 #include <stdint.h>
-#include <Servo.h>
+#include <ESP32Servo.h>
 #include <Arduino.h>
 
 #include "Camera.h"

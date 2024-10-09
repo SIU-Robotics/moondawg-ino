@@ -6,7 +6,7 @@
 
 #include "Movement.h"
 #include <Arduino.h>
-#include <Servo.h>
+#include <ESP32Servo.h>
 
 Servo digMotor;
 Servo actuator;

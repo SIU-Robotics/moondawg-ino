@@ -7,7 +7,7 @@
 #define Movement_h
 
 #include <stdint.h>
-#include <Servo.h>
+#include <ESP32Servo.h>
 #include <Arduino.h>
 
 #include "PinDefinitions.h"

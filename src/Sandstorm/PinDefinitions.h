@@ -10,7 +10,7 @@
 
 // Call library
 #include <stdint.h>
-#include <Servo.h>
+#include <ESP32Servo.h>
 
 /*
 * Pin definitions for the motor controllers and other things hooked up to the output pins of the Arduino
@@ -33,11 +33,11 @@ constexpr uint8_t ARM_SERVO = 13;
 
 constexpr uint8_t FRONT_RIGHT_WHEEL_ENCODER_PIN1 = 2;
 constexpr uint8_t FRONT_RIGHT_WHEEL_ENCODER_PIN2 = 3;
-constexpr uint8_t FRONT_LEFT_WHEEL_ENCODER_PIN1 = NULL;
-constexpr uint8_t FRONT_LEFT_WHEEL_ENCODER_PIN2 = NULL;
-constexpr uint8_t REAR_RIGHT_ENCODER_PIN1 = NULL;
-constexpr uint8_t REAR_RIGHT_ENCODER_PIN2 = NULL;
-constexpr uint8_t REAR_LEFT_ENCODER_PIN1 = NULL;
-constexpr uint8_t REAR_LEFT_ENCODER_PIN2 = NULL;
+constexpr uint8_t FRONT_LEFT_WHEEL_ENCODER_PIN1 = 0;
+constexpr uint8_t FRONT_LEFT_WHEEL_ENCODER_PIN2 = 0;
+constexpr uint8_t REAR_RIGHT_ENCODER_PIN1 = 0;
+constexpr uint8_t REAR_RIGHT_ENCODER_PIN2 = 0;
+constexpr uint8_t REAR_LEFT_ENCODER_PIN1 = 0;
+constexpr uint8_t REAR_LEFT_ENCODER_PIN2 = 0;
 
 #endif //PinDefinitions_h
