@@ -1,11 +1,18 @@
-
-
-
+/*
+* Communication.cpp - Implementation file for handling communication between the RPi and the microcontroller
+* for the Sandstorm 2024 Lunabotics bot.
+* 
+* This file implements the communication protocol and preocession functions.
+*
+* Owner: Cameron Schwartzberg (BigBroccoli)
+* Contributors: Andrew Barnes (abarnes6)
+* Date Created: 10/9/2024
+*/
 
 #include "Communication.h"
 
 namespace comm {
-    // This gives the definitions for what is being sent by the RPi to process into function commands.
+    // Command character definitions for various functions
     constexpr char MOVEMENT = 'm';
     constexpr char DIGBELT = 'b';
     constexpr char DIGACT = 'g';
@@ -16,15 +23,16 @@ namespace comm {
     constexpr char ARM = 'a';
 
     /*
-    * This processes the commands sent via the RPi into usuable function calls for the Arduino
+    * Process function implementation
     *
-    * The function takes a parsed command converts that into two parameters and a command character
-    * command is taken into the switch statement and compared to the defined command characters and will use that part of the switch statement
-    * this is where either the command will take both params or will use param1 to decide if this is an 'ON' command, where param2
-    * decides which of the 'ON' functions will be used.
+    * This function interprets commands sent the RPi and executes the corresponding functions.
+    * Using a switch statement to determine which function to call based on the command character.
+    * 
+    * @param tokens An array of char pointers containing the parsed command tokens
+    * @param motorContainer A struct containing all of the motor objects
     */
     void Process(char* tokens[], motors::Container motorContainer) {
-
+        // Check if at least two tokens are present
         if (tokens[0] == nullptr || tokens[1] == nullptr) {
             return;
         }
@@ -32,6 +40,8 @@ namespace comm {
         char cmd = tokens[0][0];
         int param1 = atoi(tokens[1]);
         int param2;
+
+        // Parse param2 if it exists
         if (tokens[2] != nullptr) {
             if (cmd == MOVEMENT || cmd == DIGBELT || cmd == HORIZONTAL || cmd == VERTICAL || cmd == ARM) {
             param2 = atoi(tokens[2]);
@@ -41,6 +51,7 @@ namespace comm {
             }
         }
 
+        // Process the command
         switch (cmd) {
             case MOVEMENT:
                 motors::drive(param1, param2, motorContainer.driveMotor1, motorContainer.driveMotor2);

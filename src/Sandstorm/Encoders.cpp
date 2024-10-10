@@ -1,7 +1,7 @@
 /*
 * This file is connected to "Encoders.cpp"
 * Owner: Marco Caliendo (MCal88)
-* Contributors: Marco Caliendo (MCal88), Cameron Schwartzberg (BigBroccoli)
+* Contributors: Cameron Schwartzberg (BigBroccoli), and Andrew Barnes (abarnes6)
 */
 
 

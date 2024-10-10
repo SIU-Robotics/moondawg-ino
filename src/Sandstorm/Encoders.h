@@ -1,6 +1,6 @@
 /*
 * Owner: Marco Caliendo (MCal88)
-* Contributors: Marco Caliendo (MCal88), Cameron Schwartzberg (BigBroccoli)
+* Contributors: Cameron Schwartzberg (BigBroccoli), and Andrew Barnes (abarnes6)
 */
 
 #ifndef Encoders_h
