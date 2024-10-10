@@ -1,48 +1,73 @@
 # NASA Lunabotics
 
-This is a competition that is hosted every year by NASA and other sponsors. The current obejctive of the competition is to build a bot that is able to traverse a simulated lunar enviroment (baring low gravity), at the end of this traversal it will need to then collect the lunar simulant *[BP-1](https://ares.jsc.nasa.gov/projects/simulants/bp-1.html)*, *[LHS-1](https://spaceresourcetech.com/products/lhs-1-lunar-highlands-simulant)*, etc. once collected this material is then transported to a deposition/berm building area. The rules, guidelines, and documentation can be found [here](https://www.nasa.gov/learning-resources/lunabotics-challenge/).
+NASA Lunabotics is a university-level competition challenging teams to design, build, and operate a lunar robot using NASA's systems engineering process. The competition simulates off-world terrain, requiring robots to traverse the environment and excavate simulated lunar material.
 
-## embedded-berm-bot
+## moondawg-ino
 
-For all things Arduino and Arduino-esque on the SIU Lunabotics bot. 
-Due to the nature of how our bot is constructed we have seperated the logic in two distinct places. 
+This repository contains the ESP32 code for the SIU Lunabotics bot, specifically designed for the ESP-WROVER-KIT. The bot's control system is divided into two main components:
+
 <details>
   <summary>Raspberry Pi - Master</summary>
   
-  This will control the Arduino and tells it what to do along with communicating to the user. There is a more detailed description of how it works [here](https://github.com/SIU-Robotics/moondawg-ros). All that needs to be known for the Arduino side is that it will send data over Serial which is then parsed into usable bits for us to send to `commandProccessing` that will call specific functions and give it the data needed.
+  The Raspberry Pi acts as the master controller, managing the ESP32 and communicating with the user. It sends commands to the ESP32 via Serial communication. For more details on the Raspberry Pi side, see the moondawg-ros repository.
   
 </details>
 
-### Arduino - Slave
+### ESP32 - Slave
 
 #### Overview
   
-This is what processes the commands sent from the Raspberry Pi - Master and once processed they trigger certain commands that control the bot. There is no feedback currently implemented so it is all manually controlled by a user. 
+The ESP32 processes commands sent from the Raspberry Pi and controls the bot's various functions. Currently, there is no feedback implemented, so all control is manual via user input.
 
-#### File Summary
+##### Development Environment
 
-The file is structed into two different types of files. First, the main file (.ino) which is what calls all the libraries, functions, and is uploaded on the Arduino. Second, the libraries this is called in the main file and houses functions and definitions.
+This project uses PlatformIO, an extension for Visual Studio Code, instead of the Arduino IDE. This allows for more advanced project management and better support for the ESP32 platform.
 
-##### MoonDawgArduino.ino
+##### File Structure
 
-This is the code that is directly uploaded to the Arduino via the Arduino IDE. This has all of the function calls, the serial communication logic, and use of functions.
+- **Sandstorm.cpp**: The main C++ file containing setup, loop, and serial communication handling.
+- **PinDefinitions.h**: Defines pin assignments using ```constexpr uint8_t```.
+- **Motors.h/Motors.cpp**: Contains functions for motor control and movement.
+- **Communication.h/Communication.cpp**: Handles command processing from serial input.
+- **Encoders.h**: Manages encoder functionality.
+
+##### Sandstorm.cpp
+
+This is the main C++ file that includes:
+- Library inclusions
+- Global variable declarations
+- Setup function for initializing components
+- Loop function for continuous operation and serial communication handling
 
 #### PinDefinitions.h
 
-This is where we use `constexpr uint8_t` instead of `#DEFINE` to set what the pins will be. I found on a forum [here](https://stackoverflow.com/questions/42388077/when-should-i-prefer-constexpr-variables-over-macros/42388687#42388687) of why it's more betterer than `#DEFINE`.
+Defines pin assignments using ```constexpr uint8_t``` for better type safety and compiler optimizations.
 
-#### Movement.h/Movement.cpp
+#### Motors.h/Motors.cpp
 
-These hold all of the functions that allows the bot to move and function. Use the setup function in the setup of `Sandstorm.ino`.
+These files contain the functions that control the bot's movement and other motorized functions. The ```Setup``` function should be called in ```Sandstorm.cpp```'s ```setup()``` function.
 
-#### Camera.h/Camera.cpp
+#### Communication.h/Communication.cpp
 
-These hold all of the functions to be able to move the camera arm. Use the setup function in the setup of `Sandstorm.ino`. As well 360&deg; servos can create a lot of noise (or some other black magic) that causes other nearby servos to become uncontrollable (have seizures). We fixed this by replacing the servo with a 180&deg; servo. In the future can look into stepper motors or something more reliable and easier to control.
+These files handle the processing of commands received from the Raspberry Pi via serial communication. They interpret the commands and call the appropriate motor control functions.
 
-#### Adding New Libraries to Version
+#### Encoders.h
 
-Simply add the new files `.h` and `.cpp` to the same directory that has the `.ino` file. Following the format as set previously.
+This file manages the encoder functionality, which is likely used for precise motor control and position tracking.
+
+#### Adding New Functionality
+
+To add new functionality, create new ```.h``` and ```.cpp``` files in the project directory, following the established format. Use PlatformIO's project management features to include these files in the build.
 
 #### Dependencies
 
-- `Servo` Found in the Arduino IDE
+- ```ESP32Servo```: For servo motor control
+- ```Arduino.h```: Standard Arduino functions (available in ESP32 core for Arduino)
+- ```ESP32Encoder```: For encoder functionality
+
+### Notes
+
+- The project now uses an ESP32, specifically the ESP-WROVER-KIT, which offers more processing power and features compared to standard Arduino boards.
+- PlatformIO is used for development, providing better project management and ESP32 support compared to the Arduino IDE.
+- The camera control system previously used 360° servos, which caused interference issues. These have been replaced with 180° servos for better control and reliability.
+- Future improvements could include exploring the use of stepper motors for more precise control.
