@@ -19,13 +19,13 @@ Due to the nature of how our bot is constructed we have seperated the logic in t
   
 This is what processes the commands sent from the Raspberry Pi - Master and once processed they trigger certain commands that control the bot. There is no feedback currently implemented so it is all manually controlled by a user. 
 
-#### File Summary
+##### File Overview
 
-The file is structed into two different types of files. First, the main file (.ino) which is what calls all the libraries, functions, and is uploaded on the Arduino. Second, the libraries this is called in the main file and houses functions and definitions.
+We have our main file (Sandstorm.cpp) and the "Helper Function Files" which house the functions definitions and declarations.
 
-##### MoonDawgArduino.ino
+##### Sandstorm.cpp
 
-This is the code that is directly uploaded to the Arduino via the Arduino IDE. This has all of the function calls, the serial communication logic, and use of functions.
+This is the main file we use to do the following: class declarations, function calls, and serial communication.
 
 #### PinDefinitions.h
 
