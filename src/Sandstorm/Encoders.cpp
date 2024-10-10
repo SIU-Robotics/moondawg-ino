@@ -9,11 +9,6 @@
 #include <ESP32Encoder.h>
 #include "PinDefinitions.h"
 
-// Define the encoder objects and attach the pins defined in "PinDefinitions"
-ESP32Encoder fl_encoder;
-ESP32Encoder fr_encoder;
-ESP32Encoder rr_encoder;
-ESP32Encoder rl_encoder;
 
 //unsigned long millisBefore = 0;
 long counts = 0;
@@ -24,11 +19,8 @@ int ppr = 600;
 // Constant Variable for tuning the rpm function
 constexpr uint8_t cv = 4;
 
-void setupEncoder(uint8_t fl_pin_1, uint8_t fl_pin_2, uint8_t fr_pin_1, uint8_t fr_pin_2, uint8_t rl_pin_1, uint8_t rl_pin_2, uint8_t rr_pin_1, uint8_t rr_pin_2){
-    fl_encoder.attachFullQuad(fl_pin_1, fl_pin_2);
-    fr_encoder.attachFullQuad(fr_pin_1, fr_pin_2);
-    rl_encoder.attachFullQuad(rl_pin_1, rl_pin_2);
-    rr_encoder.attachFullQuad(rr_pin_1, rr_pin_2);
+void setupEncoder(uint8_t pin_1, uint8_t pin_2, ESP32Encoder &encoder) {
+    encoder.attachFullQuad(pin_1, pin_2);
 }
 
 

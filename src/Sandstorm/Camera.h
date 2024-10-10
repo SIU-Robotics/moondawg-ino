@@ -12,14 +12,11 @@
 #include "Camera.h"
 
 
-extern Servo horizontalServo;
-extern Servo verticalServo;
-extern Servo armServo;
 
-void cameraSetup(uint8_t horizontalPin, uint8_t verticalPin, uint8_t armPin);
-void moveHorizontal(uint8_t horizontalAngle);
-void moveVertical(uint8_t verticalAngle);
-void moveArmHold(uint8_t armAngle);
+void cameraSetup(uint8_t horizontalPin, uint8_t verticalPin, uint8_t armPin, Servo &horizontalServo, Servo &verticalServo, Servo &armServo);
+void moveHorizontal(uint8_t horizontalAngle, Servo &horizontalServo);
+void moveVertical(uint8_t verticalAngle, Servo &verticalServo);
+void moveArmHold(uint8_t armAngle, Servo &armServo);
 
 
 #endif //Camera_h

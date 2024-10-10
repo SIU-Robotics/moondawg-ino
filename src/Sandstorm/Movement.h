@@ -12,28 +12,22 @@
 
 #include "PinDefinitions.h"
 
-extern Servo digMotor;
-extern Servo actuator;
-extern Servo auger;
-extern Servo vibrator;
-extern Servo driveMotor1;
-extern Servo driveMotor2;
 
-void digSetup(uint8_t diggingPin, uint8_t actuatorPin);
-void digMotorStart(uint8_t speed);
-void digMotorStop();
-void digActuatorForward();
-void digActuatorBackward();
-void digActuatorStop();
+void digSetup(uint8_t diggingPin, uint8_t actuatorPin, Servo &digMotor, Servo &actuator);
+void digMotorStart(uint8_t speed, Servo &digMotor);
+void digMotorStop(Servo &digMotor);
+void digActuatorForward(Servo &actuator);
+void digActuatorBackward(Servo &actuator);
+void digActuatorStop(Servo &actuator);
 
-void depositSetup(uint8_t depositPin, uint8_t vibratorPin);
-void depositMotorForward();
-void depositMotorBackward();
-void depositMotorStop();
-void depositVibrator();
-void depositVibratorStop();
+void depositSetup(uint8_t depositPin, uint8_t vibratorPin, Servo &auger, Servo &vibrator);
+void depositMotorForward(Servo &auger);
+void depositMotorBackward(Servo &auger);
+void depositMotorStop(Servo &auger);
+void depositVibrator(Servo &vibrator);
+void depositVibratorStop(Servo &vibrator);
 
-void driveSetup(uint8_t leftPin, uint8_t rightPin);
-void drive(int speedLeft, int speedRight);
+void driveSetup(uint8_t leftPin, uint8_t rightPin, Servo &driveMotor1, Servo &driveMotor2);
+void drive(int speedLeft, int speedRight, Servo &driveMotor1, Servo &driveMotor2);
 
 #endif //Movement_h

@@ -43,17 +43,32 @@ unsigned long millisBefore = 0;
 
 void commandProcessing(char* tokens[]);
 
+Servo digMotor;
+Servo actuator;
+Servo auger;
+Servo vibrator;
+Servo driveMotor1;
+Servo driveMotor2;
+
+Servo horizontalServo;
+Servo verticalServo;
+Servo armServo;
+
+ESP32Encoder fl_encoder;
+ESP32Encoder fr_encoder;
+ESP32Encoder rr_encoder;
+ESP32Encoder rl_encoder;
 
 void setup() {
     // For the serial communication from RPi to Arduino
     Serial.begin(9600);
     
     // This is how the constructor is able to setup all of the code in each of the classes
-    driveSetup(LEFT_MOTOR, RIGHT_MOTOR);
-    depositSetup(DEPOSIT_MOTOR, DEPOSIT_VIBRATOR);
-    digSetup(DIGGING_MOTOR, DIGGING_ACTUATOR);
-    cameraSetup(HORIZONTAL_SERVO, VERTICAL_SERVO, ARM_SERVO);
-    setupEncoder(FRONT_LEFT_WHEEL_ENCODER_PIN1, FRONT_LEFT_WHEEL_ENCODER_PIN2, FRONT_RIGHT_WHEEL_ENCODER_PIN1, FRONT_RIGHT_WHEEL_ENCODER_PIN2, REAR_LEFT_ENCODER_PIN1, REAR_LEFT_ENCODER_PIN2, REAR_RIGHT_ENCODER_PIN1, REAR_RIGHT_ENCODER_PIN2);
+    driveSetup(LEFT_MOTOR, RIGHT_MOTOR, driveMotor1, driveMotor2);
+    depositSetup(DEPOSIT_MOTOR, DEPOSIT_VIBRATOR, auger, vibrator);
+    digSetup(DIGGING_MOTOR, DIGGING_ACTUATOR, digMotor, actuator);
+    cameraSetup(HORIZONTAL_SERVO, VERTICAL_SERVO, ARM_SERVO, horizontalServo, verticalServo, armServo);
+    setupEncoder(FRONT_LEFT_WHEEL_ENCODER_PIN1, FRONT_LEFT_WHEEL_ENCODER_PIN2, fl_encoder);
 }
 
 void loop() {
@@ -122,69 +137,69 @@ void commandProcessing(char* tokens[]) {
 
     switch (cmd) {
         case MOVEMENT:
-            drive(param1, param2);
+            drive(param1, param2, driveMotor1, driveMotor2);
             break;
         case DIGBELT:
             if (param1) {
-                digMotorStart(param2);
+                digMotorStart(param2, digMotor);
             }
             else {
-                digMotorStop();
+                digMotorStop(digMotor);
             }
             break;
         case DIGACT:
             if (param1) {
                 if (param2 == 'r')
                 {
-                    digActuatorForward();
+                    digActuatorForward(actuator);
                 }
                 else if (param2 == 'l')
                 {
-                    digActuatorBackward();
+                    digActuatorBackward(actuator);
                 }                
             }
             else {
-                digActuatorStop();
+                digActuatorStop(actuator);
             }
             break;
         case DEPOSITAUGER:
             if (param1) {
                 if (param2 == 'f') {
-                    depositMotorForward();
+                    depositMotorForward(auger);
                 }
                 else if (param2 == 'b')
                 {
-                    depositMotorBackward();
+                    depositMotorBackward(auger);
                 }
                 
             }
             else {
-                depositMotorStop();
+                depositMotorStop(auger);
             }
             break;
         case VIBRATOR:
             if (param1) {
                 if (param2 == 'v'){
-                    depositVibrator();
+                    depositVibrator(vibrator);
                 }
             }
             else {
-                depositVibratorStop();
+                depositVibratorStop(vibrator);
             }
             break;
         case HORIZONTAL:
             if (param1) {
-                moveHorizontal(param2);
+                moveHorizontal(param2, horizontalServo);
             }
             break;
         case VERTICAL:
             if (param1) {
-                moveVertical(param2);
+                moveVertical(param2, verticalServo);
             }
             break;
         case ARM:
             if (param1) {
-                moveArmHold(param2);
+                moveArmHold(param2, armServo);
             }
             break;
         default:

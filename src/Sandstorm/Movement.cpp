@@ -8,12 +8,6 @@
 #include <Arduino.h>
 #include <ESP32Servo.h>
 
-Servo digMotor;
-Servo actuator;
-Servo auger;
-Servo vibrator;
-Servo driveMotor1;
-Servo driveMotor2;
 
 /*
 * Use the setup function this will be called in the setup of your main file to initialize all of the variables used and attach
@@ -27,63 +21,63 @@ Servo driveMotor2;
 * For the drive motors, two are tied together in hardware so they will be controlled together in the function call
 * this is why there are only two motors in these functions
 */
-void digSetup(uint8_t diggingPin, uint8_t actuatorPin) {
+void digSetup(uint8_t diggingPin, uint8_t actuatorPin, Servo &digMotor, Servo &actuator) {
     digMotor.attach(diggingPin);
     actuator.attach(actuatorPin);
     digMotor.write(90);
     actuator.write(90);
 }
 
-void digMotorStart(uint8_t speed){
+void digMotorStart(uint8_t speed, Servo &digMotor){
     digMotor.write(speed);
 }
 
-void digMotorStop(){
+void digMotorStop(Servo &digMotor){
     digMotor.write(90);
 }
 
-void digActuatorForward(){
+void digActuatorForward(Servo &actuator){
     actuator.write(180);
 }
 
-void digActuatorBackward(){
+void digActuatorBackward(Servo &actuator){
     actuator.write(0);
 }
 
-void digActuatorStop(){
+void digActuatorStop(Servo &actuator){
     actuator.write(90);
 }
 
 
-void depositSetup(uint8_t depositPin, uint8_t vibratorPin) {
+void depositSetup(uint8_t depositPin, uint8_t vibratorPin, Servo &auger, Servo &vibrator) {
     auger.attach(depositPin);
     vibrator.attach(vibratorPin);
     auger.write(90);
     vibrator.write(90);
 }
 
-void depositMotorForward(){
+void depositMotorForward(Servo &auger){
     auger.write(180);
 }
 
-void depositMotorBackward(){
+void depositMotorBackward(Servo &auger){
     auger.write(0);
 }
 
-void depositMotorStop(){
+void depositMotorStop(Servo &auger){
     auger.write(90);
 }
 
-void depositVibrator(){
+void depositVibrator(Servo &vibrator){
     vibrator.write(180);
 }
 
-void depositVibratorStop(){
+void depositVibratorStop(Servo &vibrator){
     vibrator.write(90);
 }
 
 
-void driveSetup(uint8_t leftPin, uint8_t rightPin) {
+void driveSetup(uint8_t leftPin, uint8_t rightPin, Servo &driveMotor1, Servo &driveMotor2) {
     driveMotor1.attach(leftPin);
     driveMotor2.attach(rightPin);
     driveMotor1.write(90);
@@ -91,7 +85,7 @@ void driveSetup(uint8_t leftPin, uint8_t rightPin) {
 
 }
 
-void drive(int speedLeft, int speedRight){
+void drive(int speedLeft, int speedRight, Servo &driveMotor1, Servo &driveMotor2) {
     driveMotor1.write(speedLeft);
     driveMotor2.write(speedRight);
 }
