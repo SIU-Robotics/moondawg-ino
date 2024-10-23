@@ -13,6 +13,7 @@
 #define Communication_h
 
 // Include custom header files
+#include <Wire.h>               // Required for I2C communication
 #include "PinDefinitions.h"     // Holds all of the pin definitions for output signals
 #include "Motors.h"             // Contains motor-related functions
 #include "Encoders.h"           // Contains functions for reading encoder values
@@ -20,6 +21,11 @@
 
 // Define a namespace 'comm' to encapsulate all communication functions
 namespace comm{
+    constexpr uint8_t I2C_ADDRESS = 0x01; // I2C address for the microcontroller
+
+    void transferBegin(uint8_t address);
+    void onRequest();
+    void onReceive(int numBytes);
     /*
     * Process function declaration
     * 

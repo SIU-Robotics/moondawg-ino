@@ -22,6 +22,24 @@ namespace comm {
     constexpr char VERTICAL = 'e';
     constexpr char ARM = 'a';
 
+
+    void transferBegin(uint8_t address) {
+        Serial.begin(115200);
+        Wire.onRequest(onRequest);
+        Wire.onReceive(onReceive);
+        Wire.begin(address);
+    }
+
+    void onRequest() {
+        // Send data back to the RPi
+        Wire.write("Hello from the ESP32");
+    }
+
+    void onReceive(int numBytes) {
+        while (Wire.available()){
+            Serial.write(Wire.read());
+        }
+    }
     /*
     * Process function implementation
     *
