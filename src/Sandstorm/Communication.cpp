@@ -12,33 +12,62 @@
 #include "Communication.h"
 
 namespace comm {
-    // Command character definitions for various functions
-    constexpr char MOVEMENT = 'm';
-    constexpr char DIGBELT = 'b';
-    constexpr char DIGACT = 'g';
-    constexpr char DEPOSITAUGER = 'd';
-    constexpr char VIBRATOR = 'v';
-    constexpr char HORIZONTAL = 'h';
-    constexpr char VERTICAL = 'e';
-    constexpr char ARM = 'a';
+    // Static variables
+    static motors::Container* g_motorContainer = nullptr;
+    static char inputBuffer[MAX_INPUT_LENGTH + 1] = {0};
+    static volatile bool newData = false;
 
+    // Internal function declarations
+    static void receiveEvent(int numBytes);
+    static void processI2CData();
 
-    void transferBegin(uint8_t address) {
-        Serial.begin(115200);
-        Wire.onRequest(onRequest);
-        Wire.onReceive(onReceive);
-        Wire.begin(address);
+    void i2cSetup(motors::Container& container) {
+        g_motorContainer = &container;
+        Wire.begin(pin::I2C_ADDRESS, pin::I2C_SDA);
+        Wire.onReceive(receiveEvent);
     }
 
-    void onRequest() {
-        // Send data back to the RPi
-        Wire.write("Hello from the ESP32");
-    }
-
-    void onReceive(int numBytes) {
-        while (Wire.available()){
-            Serial.write(Wire.read());
+    static void receiveEvent(int numBytes) {
+        int i = 0;
+        while (Wire.available() && i < MAX_INPUT_LENGTH) {
+            char c = Wire.read();
+            if (c == '\n' || c == '\0') {
+                inputBuffer[i] = '\0';
+                newData = true;
+                break;
+            }
+            inputBuffer[i++] = c;
         }
+        inputBuffer[i] = '\0';
+        newData = true;
+    }
+
+    static void processI2CData() {
+        char* tokens[MAX_ARRAY_SIZE] = {nullptr};
+        int numCount = 0;
+        char* token = strtok(inputBuffer, ",");
+
+        while (token != NULL && numCount < MAX_ARRAY_SIZE) {
+            tokens[numCount++] = token;
+            token = strtok(NULL, ",");
+        }
+
+        if (g_motorContainer != nullptr) {
+            Process(tokens, *g_motorContainer);
+        }
+    }
+
+    bool hasNewData() {
+        if (newData) {
+            processI2CData();
+            return true;
+        }
+        return false;
+    }
+
+    void clearNewDataFlag() {
+        newData = false;
+        memset(inputBuffer, 0, MAX_INPUT_LENGTH + 1);
     }
     /*
     * Process function implementation
@@ -49,7 +78,7 @@ namespace comm {
     * @param tokens An array of char pointers containing the parsed command tokens
     * @param motorContainer A struct containing all of the motor objects
     */
-    void Process(char* tokens[], motors::Container motorContainer) {
+    void Process(char* tokens[], motors::Container& motorContainer) {
         // Check if at least two tokens are present
         if (tokens[0] == nullptr || tokens[1] == nullptr) {
             return;
@@ -62,10 +91,10 @@ namespace comm {
         // Parse param2 if it exists
         if (tokens[2] != nullptr) {
             if (cmd == MOVEMENT || cmd == DIGBELT || cmd == HORIZONTAL || cmd == VERTICAL || cmd == ARM) {
-            param2 = atoi(tokens[2]);
+                param2 = atoi(tokens[2]);
             }
             else {
-            param2 = (int)tokens[2][0];
+                param2 = (int)tokens[2][0];
             }
         }
 

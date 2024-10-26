@@ -21,21 +21,24 @@
 
 // Define a namespace 'comm' to encapsulate all communication functions
 namespace comm{
-    constexpr uint8_t I2C_ADDRESS = 0x01; // I2C address for the microcontroller
+    // Constants
+    constexpr uint8_t MAX_INPUT_LENGTH = 50;
+    constexpr uint8_t MAX_ARRAY_SIZE = 10;
 
-    void transferBegin(uint8_t address);
-    void onRequest();
-    void onReceive(int numBytes);
-    /*
-    * Process function declaration
-    * 
-    * @param tokens An array of char pointers containing the parsed command tokens
-    * @param motorContainer A struct containing all of the motor objects
-    * 
-    * This function interprets and executes commands received from the RPi
-    * via serial communication. Allowing the RPi to communicate with the microcontroller
-    */
-    void Process(char* tokens[], motors::Container motorContainer);
+    // Command characters
+    constexpr char MOVEMENT = 'm';
+    constexpr char DIGBELT = 'b';
+    constexpr char DIGACT = 'g';
+    constexpr char DEPOSITAUGER = 'd';
+    constexpr char VIBRATOR = 'v';
+    constexpr char HORIZONTAL = 'h';
+    constexpr char VERTICAL = 'e';
+    constexpr char ARM = 'a';
+
+    void i2cSetup(motors::Container& container);
+    void Process(char* tokens[], motors::Container& motorContainer);
+    bool hasNewData();
+    void clearNewDataFlag();
 }
 
 #endif //Communication_h

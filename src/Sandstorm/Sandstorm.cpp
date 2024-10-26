@@ -33,7 +33,7 @@ encoders::Container encoderContainer{};
 
 void setup() {
     // For the serial communication from RPi to Arduino
-    Serial.begin(9600);
+    comm::i2cSetup(motorContainer);
     
     // Set up motors using pin definitions from PinDefinitions.h
     // All motors are initialized to the STOP (90) value as a safety measure
@@ -85,7 +85,6 @@ void loop() {
         // 'h' - Horizontal Camera Servo, 'e' - Vertical Camera Servo, 'a' - Arm Servo
         comm::Process(tokens, motorContainer);
     }
-
     // Encoder reading code
     // readEncoder(fr_encoder);
     // readEncoder(fl_encoder);

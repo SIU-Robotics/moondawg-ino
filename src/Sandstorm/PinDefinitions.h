@@ -13,6 +13,9 @@
 
 // Define a namespace 'pin' to encapsulate all pin definitions
 namespace pin{
+    constexpr uint8_t I2C_ADDRESS = 0x04;
+    constexpr uint8_t I2C_SDA = 21;
+    // constexpr uint8_t I2C_SCL = 22;
     /*
     * Pin definitions for the motor controllers and other components
     * connected to the output pins of the microcontroller
