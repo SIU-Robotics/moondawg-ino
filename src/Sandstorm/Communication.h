@@ -26,19 +26,19 @@ namespace comm{
     constexpr uint8_t MAX_ARRAY_SIZE = 10;
 
     // Command characters
-    constexpr char MOVEMENT = 'm';
-    constexpr char DIGBELT = 'b';
-    constexpr char DIGACT = 'g';
-    constexpr char DEPOSITAUGER = 'd';
-    constexpr char VIBRATOR = 'v';
-    constexpr char HORIZONTAL = 'h';
-    constexpr char VERTICAL = 'e';
-    constexpr char ARM = 'a';
+    constexpr uint8_t MOVEMENT = 'm';
+    constexpr uint8_t DIGBELT = 'b';
+    constexpr uint8_t DIGACT = 'g';
+    constexpr uint8_t DEPOSITAUGER = 'd';
+    constexpr uint8_t VIBRATOR = 'v';
+    constexpr uint8_t HORIZONTAL = 'h';
+    constexpr uint8_t VERTICAL = 'e';
+    constexpr uint8_t ARM = 'a';
 
     void i2cSetup(motors::Container& container);
+    inline bool hasNewData();
+    inline void clearNewDataFlag();
     void Process(char* tokens[], motors::Container& motorContainer);
-    bool hasNewData();
-    void clearNewDataFlag();
 }
 
 #endif //Communication_h
