@@ -32,7 +32,7 @@ namespace pin{
         constexpr uint8_t DIGGING_ACTUATOR = 5;    // Pin for the digging actuator
     #endif
 
-    #ifdef USE_DIGGING_SYSTEM
+    #ifdef USE_DEPOSIT_SYSTEM
         // Deposit system pins
         constexpr uint8_t DEPOSIT_MOTOR = 4;        // Pin for the deposit motor
         constexpr uint8_t DEPOSIT_VIBRATOR = 5;     // Pin for the deposit vibrator

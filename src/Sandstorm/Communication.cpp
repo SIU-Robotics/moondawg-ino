@@ -150,10 +150,10 @@ namespace comm {
                 isNumericParam |= (cmd == MOVEMENT);
             #endif
             #ifdef USE_TURN_SYSTEM
-                isNumericaParam |= (cmd == TURN);
+                isNumericParam |= (cmd == TURN);
             #endif
             #ifdef USE_DIGGING_SYSTEM
-                isNumericaParam |= (cmd == DIGBELT);
+                isNumericParam |= (cmd == DIGBELT);
             #endif
             #ifdef USE_CAMERA_SYSTEM
                 isNumericParam |= (cmd == HORIZONTAL || cmd == VERTICAL || cmd == ARM);
