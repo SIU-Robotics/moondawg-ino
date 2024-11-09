@@ -26,18 +26,33 @@ namespace comm{
     constexpr uint8_t MAX_ARRAY_SIZE = 10;
 
     // Command characters
-    constexpr uint8_t MOVEMENT = 'm';
-    constexpr uint8_t DIGBELT = 'b';
-    constexpr uint8_t DIGACT = 'g';
-    constexpr uint8_t DEPOSITAUGER = 'd';
-    constexpr uint8_t VIBRATOR = 'v';
-    constexpr uint8_t HORIZONTAL = 'h';
-    constexpr uint8_t VERTICAL = 'e';
-    constexpr uint8_t ARM = 'a';
+    #ifdef USE_DRIVE_SYSTEM
+        constexpr uint8_t MOVEMENT = 'm';
+    #endif
+
+    #ifdef USE_TURN_SYSTEM
+        constexpr uint8_t TURN = 't';
+    #endif
+
+    #ifdef USE_DIGGING_SYSTEM
+        constexpr uint8_t DIGBELT = 'b';
+        constexpr uint8_t DIGACT = 'g';
+    #endif
+    
+    #ifdef USE_DEPOSIT_SYSTEM
+        constexpr uint8_t DEPOSITAUGER = 'd';
+        constexpr uint8_t VIBRATOR = 'v';
+    #endif
+
+    #ifdef USE_CAMERA_SYSTEM    
+        constexpr uint8_t HORIZONTAL = 'h';
+        constexpr uint8_t VERTICAL = 'e';
+        constexpr uint8_t ARM = 'a';
+    #endif
 
     void i2cSetup(motors::Container& container);
-    inline bool hasNewData();
-    inline void clearNewDataFlag();
+    bool hasNewData();
+    void clearNewDataFlag();
     void Process(char* tokens[], motors::Container& motorContainer);
 }
 

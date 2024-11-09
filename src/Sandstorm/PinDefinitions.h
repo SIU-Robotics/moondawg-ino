@@ -15,43 +15,42 @@
 namespace pin{
     constexpr uint8_t I2C_ADDRESS = 0x04;
     constexpr uint8_t I2C_SDA = 21;
-    // constexpr uint8_t I2C_SCL = 22;
-    /*
-    * Pin definitions for the motor controllers and other components
-    * connected to the output pins of the microcontroller
-    *
-    * IMPORTANT: PINS MUST BE UPDATED AS PIN LAYOUT CHANGES!!
-    * IF NOT CHANGED, NOTHING WILL WORK!!
-    */
+    constexpr uint8_t I2C_SCL = 22;
 
-    // Drive motor pins
-    constexpr uint8_t LEFT_MOTOR = 4;           // Pin for the left motors
-    constexpr uint8_t RIGHT_MOTOR = 11;         // Pin for the right motors
+    #ifdef USE_DRIVE_SYSTEM
+        // Drive motor pins
+        constexpr uint8_t DRIVE_MOTOR = 4;
+    #endif
 
-    // Digging mechanism pins
-    constexpr uint8_t DIGGING_MOTOR = 6;        // Pin for the digging motor
-    constexpr uint8_t DIGGING_ACTUATOR = 10;    // Pin for the digging actuator
+    #ifdef USE_TURN_SYSTEM
+        constexpr uint8_t TURN_MOTOR = 4;
+    #endif
 
-    // Deposit system pins
-    constexpr uint8_t DEPOSIT_MOTOR = 5;        // Pin for the deposit motor
-    constexpr uint8_t DEPOSIT_VIBRATOR = 9;     // Pin for the deposit vibrator
+    #ifdef USE_DIGGING_SYSTEM
+        // Digging mechanism pins
+        constexpr uint8_t DIGGING_MOTOR = 4;        // Pin for the digging motor
+        constexpr uint8_t DIGGING_ACTUATOR = 5;    // Pin for the digging actuator
+    #endif
 
-    // Camera servo pins
-    constexpr uint8_t HORIZONTAL_SERVO = 7;     // Pin for the horizontal camera servo
-    constexpr uint8_t VERTICAL_SERVO = 8;       // Pin for the vertical camera servo
-    constexpr uint8_t ARM_SERVO = 13;           // Pin for the arm servo
+    #ifdef USE_DIGGING_SYSTEM
+        // Deposit system pins
+        constexpr uint8_t DEPOSIT_MOTOR = 4;        // Pin for the deposit motor
+        constexpr uint8_t DEPOSIT_VIBRATOR = 5;     // Pin for the deposit vibrator
+    #endif
 
+    #ifdef USE_CAMERA_SYSTEM
+        // Camera servo pins
+        constexpr uint8_t HORIZONTAL_SERVO = 4;     // Pin for the horizontal camera servo
+        constexpr uint8_t VERTICAL_SERVO = 5;       // Pin for the vertical camera servo
+        constexpr uint8_t ARM_SERVO = 7;           // Pin for the arm servo
+    #endif
 
-    // Encoder pins
-    // Note: These are placeholder values and should be updated with the actual pin numbers
-    constexpr uint8_t FRONT_RIGHT_WHEEL_ENCODER_PIN1 = 2;
-    constexpr uint8_t FRONT_RIGHT_WHEEL_ENCODER_PIN2 = 3;
-    constexpr uint8_t FRONT_LEFT_WHEEL_ENCODER_PIN1 = 0;
-    constexpr uint8_t FRONT_LEFT_WHEEL_ENCODER_PIN2 = 0;
-    constexpr uint8_t REAR_RIGHT_ENCODER_PIN1 = 0;
-    constexpr uint8_t REAR_RIGHT_ENCODER_PIN2 = 0;
-    constexpr uint8_t REAR_LEFT_ENCODER_PIN1 = 0;
-    constexpr uint8_t REAR_LEFT_ENCODER_PIN2 = 0;
+    #ifdef USE_ENCODER_SYSTEM
+        // Encoder pins
+        // Note: These are placeholder values and should be updated with the actual pin numbers
+        constexpr uint8_t ENCODER_PIN1 = 2;
+        constexpr uint8_t ENCODER_PIN2 = 3;
+    #endif
 }
 
 #endif //PinDefinitions_h

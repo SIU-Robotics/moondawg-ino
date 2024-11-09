@@ -17,17 +17,12 @@ namespace comm {
     static char g_inputBuffer[MAX_INPUT_LENGTH + 1] = {0};
     static volatile bool g_newData = false;
 
-    // Internal function declarations
+    // Forward declarations - must be at the top
     static void receiveEvent(int numBytes);
     static void processI2CData();
-    static inline void processCommand(const char cmd, const int param1, const int param2, motors::Container& motorContainer);
+    static inline void processCommand(const uint8_t cmd, const int param1, const int param2, motors::Container& motorContainer);
 
-    void i2cSetup(motors::Container& container) {
-        g_motorContainer = &container;
-        Wire.begin(pin::I2C_ADDRESS, pin::I2C_SDA);
-        Wire.onReceive(receiveEvent);
-    }
-
+    // Function implementations
     static void receiveEvent(int numBytes) {
         if (numBytes > MAX_INPUT_LENGTH) {
             numBytes = MAX_INPUT_LENGTH;  // Prevent buffer overflow
@@ -43,7 +38,14 @@ namespace comm {
         g_newData = true;
     }
 
-    static void process() {
+    void i2cSetup(motors::Container& container) {
+        g_motorContainer = &container;
+        Wire.begin(pin::I2C_ADDRESS, pin::I2C_SDA, pin::I2C_SCL);
+        Wire.onReceive(receiveEvent);  // Now receiveEvent is properly declared before use
+    }
+
+
+    static void processI2C() {
         char* tokens[MAX_ARRAY_SIZE] = {nullptr};
         uint8_t numCount = 0;
         char* token = strtok(g_inputBuffer, ",");
@@ -60,7 +62,7 @@ namespace comm {
 
     bool hasNewData() {
         if (g_newData) {
-            process();
+            processI2C();
             return true;
         }
         return false;
@@ -71,60 +73,81 @@ namespace comm {
         memset(g_inputBuffer, 0, MAX_INPUT_LENGTH + 1);
     }
 
-    static inline void processCommand(const char cmd, const int param1, const int param2, motors::Container& motorContainer) {
+    static inline void processCommand(const uint8_t cmd, const int param1, const int param2, motors::Container& motorContainer) {
         switch (cmd) {
-            case MOVEMENT:
-                motors::drive(param1, param2, motorContainer.driveMotor1, motorContainer.driveMotor2);
-                break;
-            case DIGBELT:
-                param1 ? motors::Set(motorContainer.digMotor, param2) : motors::Stop(motorContainer.digMotor);
-                break;
-            case DIGACT:
-                if (param1) {
-                    if (param2 == 'r') motors::Forward(motorContainer.actuator);
-                    else if (param2 == 'l') motors::Backward(motorContainer.actuator);
-                } else {
-                    motors::Stop(motorContainer.actuator);
-                }
-                break;
-            case DEPOSITAUGER:
-                if (param1) {
-                    if (param2 == 'f') motors::Forward(motorContainer.auger);
-                    else if (param2 == 'b') motors::Backward(motorContainer.auger);
-                } else {
-                    motors::Stop(motorContainer.auger);
-                }
-                break;
-            case VIBRATOR:
-                param1 && param2 == 'v' ? motors::Forward(motorContainer.vibrator) : motors::Stop(motorContainer.vibrator);
-                break;
-            case HORIZONTAL:
-                if (param1) motors::Set(motorContainer.horizontalServo, param2);
-                break;
-            case VERTICAL:
-                if (param1) motors::Set(motorContainer.verticalServo, param2);
-                break;
-            case ARM:
-                if (param1) motors::Set(motorContainer.armServo, param2);
-                break;
-            default:
-                break;
+            #ifdef USE_DRIVE_SYSTEM
+                case MOVEMENT:
+                    motors::Set(motorContainer.driveMotor, param1);
+                    break;
+            #endif
+
+            #ifdef USE_TURN_SYSTEM
+                case TURN:
+                    motors::Set(motorContainer.turnMotor, param1);
+                    break;
+            #endif
+
+            #ifdef USE_DIGGING_SYSTEM
+                case DIGBELT:
+                    param1 ? motors::Set(motorContainer.digMotor, param2) : motors::Stop(motorContainer.digMotor);
+                    break;
+                case DIGACT:
+                    if (param1) {
+                        param2 == 'r' ? motors::Forward(motorContainer.actuator) :
+                        param2 == 'l' ? motors::Backward(motorContainer.actuator) : void();
+                    } 
+                    else {
+                        motors::Stop(motorContainer.actuator);
+                    }
+                    break;
+            #endif
+            
+            #ifdef USE_DEPOSIT_SYSTEM
+                case DEPOSITAUGER:
+                    if (param1) {
+                        param2 == 'f' ? motors::Forward(motorContainer.auger) :
+                        param2 == 'b' ? motors::Backward(motorContainer.auger) : void();
+                    } 
+                    else {
+                        motors::Stop(motorContainer.auger);
+                    }
+                    break;
+                case VIBRATOR:
+                    param1 && param2 == 'v' ? motors::Forward(motorContainer.vibrator) : motors::Stop(motorContainer.vibrator);
+                    break;
+            #endif
+                
+            #ifdef USE_CAMERA_SYSTEM
+                case HORIZONTAL:
+                    if (param1) motors::Set(motorContainer.horizontalServo, param2);
+                    break;
+                case VERTICAL:
+                    if (param1) motors::Set(motorContainer.verticalServo, param2);
+                    break;
+                case ARM:
+                    if (param1) motors::Set(motorContainer.armServo, param2);
+                    break;
+            #endif
+
+                default:
+                    break;
         }
     }
 
+    
     void Process(char* tokens[], motors::Container& motorContainer) {
         if (tokens[0] == nullptr || tokens[1] == nullptr) {
             return;
         }
 
-        const char cmd = tokens[0][0];
+        const uint8_t cmd = static_cast<uint8_t>(tokens[0][0]); 
         const int param1 = atoi(tokens[1]);
         int param2 = 0;
 
         if (tokens[2] != nullptr) {
             param2 = (cmd == MOVEMENT || cmd == DIGBELT || cmd == HORIZONTAL || 
-                     cmd == VERTICAL || cmd == ARM) ? atoi(tokens[2]) : 
-                     static_cast<int>(tokens[2][0]);
+                    cmd == VERTICAL || cmd == ARM) ? atoi(tokens[2]) : 
+                    static_cast<int>(tokens[2][0]);
         }
 
         processCommand(cmd, param1, param2, motorContainer);

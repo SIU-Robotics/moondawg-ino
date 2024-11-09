@@ -10,16 +10,18 @@
 #include <Arduino.h>
 
 namespace encoders {
+    constexpr uint8_t PPR = 20;
+    constexpr uint8_t CV = 4;
+
     struct Container {
-        ESP32Encoder fl_encoder;
-        ESP32Encoder fr_encoder;
-        ESP32Encoder rl_encoder;
-        ESP32Encoder rr_encoder;
+        ESP32Encoder motor_encoder;
+        volatile int32_t lastCount{0};
+        volatile uint32_t lastReadTime{0};
     };
 
-    void setupEncoder(uint8_t fl_pin_1, uint8_t fl_pin_2, ESP32Encoder &encoder);
-    int readEncoder(ESP32Encoder enc);
-    float getRPM(ESP32Encoder e);
+    void setupEncoder(uint8_t pin_1, uint8_t pin_2, ESP32Encoder &encoder);
+    inline int32_t readEncoder(ESP32Encoder enc, int32_t& lastCount);
+    float getRPM(ESP32Encoder& encoder, Container& container);
 }
 
 #endif // Encoders_h

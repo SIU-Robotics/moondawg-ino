@@ -19,21 +19,37 @@
 
 // Define a namespace 'motors' to encapsulate all motor functions
 namespace motors {
+    constexpr uint8_t STOP_VALUE = 90;
+    constexpr uint8_t FORWARD_VALUE = 180;
+    constexpr uint8_t BACKWARD_VALUE = 0;
     /*
     * Container struct for all servo objects used in the bot
     * This structure centralizes all motor and servo objects for easy access
     */
     struct Container {
-        Servo digMotor;         // Motor for the digging mechanism
-        Servo actuator;         // Actuator for the digging mechanism
-        Servo auger;            // Motor for the deposit system
-        Servo vibrator;         // Motor for the deposit vibrator
-        Servo driveMotor1;      // Left drive motor
-        Servo driveMotor2;      // Right drive motor
+        #ifdef USE_DRIVE_SYSTEM
+            Servo driveMotor;       // drive motor
+        #endif
 
-        Servo horizontalServo;  // Servo for the horizontal camera servo
-        Servo verticalServo;    // Servo for the vertical camera servo
-        Servo armServo;         // Servo for the arm servo
+        #ifdef USE_TURN_SYSTEM
+            Servo turnMotor;
+        #endif
+
+        #ifdef USE_DIGGING_SYSTEM
+            Servo digMotor;         // Motor for the digging mechanism
+            Servo actuator;         // Actuator for the digging mechanism
+        #endif
+        
+        #ifdef USE_DEPOSIT_SYSTEM
+            Servo auger;            // Motor for the deposit system
+            Servo vibrator;         // Motor for the deposit vibrator
+        #endif
+
+        #ifdef USE_CAMERA_SYSTEM
+            Servo horizontalServo;  // Servo for the horizontal camera servo
+            Servo verticalServo;    // Servo for the vertical camera servo
+            Servo armServo;         // Servo for the arm servo
+        #endif
     };
 
     /*
@@ -42,41 +58,43 @@ namespace motors {
     * @param motor Reference to the Servo object representing the motor
     * @param pwmParameter Initial PWM value to set for the motor
     */
-    void Setup(uint8_t pin, Servo &motor, uint8_t pwmParamater);
+    inline void Setup(const uint8_t pin, Servo &motor, const uint8_t pwmParameter) {
+        motor.attach(pin);
+        motor.write(pwmParameter);
+    }
 
     /*
     * Set the speed/position of a motor or servo
     * @param motor Reference to the Servo object to be controlled
     * @param pwmParameter PWM value to set for the motor
     */
-    void Set(Servo &motor, uint8_t pwmParamater);
+    inline void Set(Servo &motor, uint8_t speed) {
+        motor.write(speed);
+    }
 
     /*
     * Stop a motor
     * @param motor Reference to the Servo object to be stopped
     */
-    void Stop(Servo &motor);
+    inline void Stop(Servo &motor) {
+        Set(motor, STOP_VALUE);
+    }
 
     /*
     * Set a motor to move forward at full speed
     * @param motor Reference to the Servo object to be moved forward
     */
-    void Forward(Servo &motor);
+    inline void Forward(Servo &motor) {
+        Set(motor, FORWARD_VALUE);
+    }
 
     /*
     * Set a motor to move backward at full speed
     * @param motor Reference to the Servo object to be moved backward
     */
-    void Backward(Servo &motor);
-
-    /*
-    * Control the drive motors for the bot's movement
-    * @param speedLeft Speed value for the left drive motor (0-180)
-    * @param speedRight Speed value for the right drive motor (0-180)
-    * @param driveMotor1 Reference to the left drive motor
-    * @param driveMotor2 Reference to the right drive motor
-    */
-    void drive(uint8_t speedLeft, uint8_t speedRight, Servo &driveMotor1, Servo &driveMotor2);
+    inline void Backward(Servo &motor) {
+        Set(motor, BACKWARD_VALUE);
+    }
 }
 
 #endif //Motors_h
