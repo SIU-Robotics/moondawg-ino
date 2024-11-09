@@ -145,9 +145,21 @@ namespace comm {
         int param2 = 0;
 
         if (tokens[2] != nullptr) {
-            param2 = (cmd == MOVEMENT || cmd == DIGBELT || cmd == HORIZONTAL || 
-                    cmd == VERTICAL || cmd == ARM) ? atoi(tokens[2]) : 
-                    static_cast<int>(tokens[2][0]);
+            bool isNumericParam = false;
+            #ifdef USE_DRIVE_SYSTEM
+                isNumericParam |= (cmd == MOVEMENT);
+            #endif
+            #ifdef USE_TURN_SYSTEM
+                isNumericaParam |= (cmd == TURN);
+            #endif
+            #ifdef USE_DIGGING_SYSTEM
+                isNumericaParam |= (cmd == DIGBELT);
+            #endif
+            #ifdef USE_CAMERA_SYSTEM
+                isNumericParam |= (cmd == HORIZONTAL || cmd == VERTICAL || cmd == ARM);
+            #endif
+
+            param2 = isNumericParam ? atoi(tokens[2]) : static_cast<int>(tokens[2][0]);
         }
 
         processCommand(cmd, param1, param2, motorContainer);
