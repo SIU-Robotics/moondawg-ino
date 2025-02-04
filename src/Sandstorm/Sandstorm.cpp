@@ -10,7 +10,7 @@
 // Include all necessary libraries
 #include <ESP32Servo.h>
 #include <Arduino.h>
-#include <ESP32Encoder.h>
+#include <Encoder.h>
 
 // Include custom header files
 #include "PinDefinitions.h" // Holds all of the pin definitions for output signals
@@ -26,7 +26,7 @@ namespace {
     constexpr uint8_t DEFAULT_POS_TURN = 90;
 
     static motors::Container motorContainer{};
-    encoders::Container encoderContainer{};
+    encoders::Container encoderContainer{Encoder(0, 0)};
 }
 
 void setup() {
