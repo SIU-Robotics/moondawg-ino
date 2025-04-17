@@ -10,6 +10,7 @@
 */
 
 #include "Communication.h"
+#include <Wire.h>  // Explicitly include Wire.h for ESP32
 
 namespace comm {
     // Static variables with internal linkage
@@ -19,7 +20,7 @@ namespace comm {
 
     // Forward declarations - must be at the top
     static void receiveEvent(int numBytes);
-    static void processI2CData();
+    static void processI2C();  // Changed from processI2CData to match implementation
     static inline void processCommand(const uint8_t cmd, const int param1, const int param2, motors::Container& motorContainer);
 
     // Function implementations
@@ -40,10 +41,14 @@ namespace comm {
 
     void i2cSetup(motors::Container& container) {
         g_motorContainer = &container;
-        Wire.begin(pin::I2C_ADDRESS, pin::I2C_SDA, pin::I2C_SCL);
-        Wire.onReceive(receiveEvent);  // Now receiveEvent is properly declared before use
+        
+        // ESP32 specific I2C initialization
+        Wire.begin(pin::I2C_SDA, pin::I2C_SCL);  // ESP32 requires SDA, SCL pin order
+        Wire.onReceive(receiveEvent);  
+        
+        // Configure ESP32 as I2C slave with specified address
+        Wire.begin(pin::I2C_ADDRESS);
     }
-
 
     static void processI2C() {
         char* tokens[MAX_ARRAY_SIZE] = {nullptr};
