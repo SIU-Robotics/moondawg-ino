@@ -10,12 +10,12 @@
 // Include all necessary libraries
 #include <ESP32Servo.h>
 #include <Arduino.h>
-#include <Encoder.h>
+// #include <Encoder.h>
 
 // Include custom header files
 #include "PinDefinitions.h" // Holds all of the pin definitions for output signals
 #include "Motors.h"         // Contains motor-related functions
-#include "Encoders.h"       // Contains functions for reading encoder values
+// #include "Encoders.h"       // Contains functions for reading encoder values
 #include "Communication.h"  // Contains function for parsing commands from the RPi
 
 namespace {
@@ -26,7 +26,7 @@ namespace {
     constexpr uint8_t DEFAULT_POS_TURN = 90;
 
     static motors::Container motorContainer{};
-    encoders::Container encoderContainer{Encoder(0, 0)};
+    // encoders::Container encoderContainer{Encoder(0, 0)};
 }
 
 void setup() {
@@ -60,10 +60,10 @@ void setup() {
         motors::Setup(pin::ARM_SERVO, motorContainer.armServo, 0);
     #endif
 
-    #ifdef USE_ENCODER_SYSTEM
-        // Set up encoders
-        encoders::setupEncoder(pin::ENCODER_PIN1, pin::ENCODER_PIN2, encoderContainer.motor_encoder);
-    #endif
+    // #ifdef USE_ENCODER_SYSTEM
+    //     // Set up encoders
+    //     encoders::setupEncoder(pin::ENCODER_PIN1, pin::ENCODER_PIN2, encoderContainer.motor_encoder);
+    // #endif
 }
 
 void loop() {
