@@ -13,16 +13,20 @@
 
 // Define a namespace 'pin' to encapsulate all pin definitions
 namespace pin{
+    // I2C pins
+    constexpr uint8_t I2C_SDA = 21;
+    constexpr uint8_t I2C_SCL = 22;
+
     #if defined(USE_DRIVE_SYSTEM) && defined(FRONT_LEFT)
         // Drive motor pins
         constexpr uint8_t I2C_ADDRESS = 0x10;  // Pin for the drive motor
     #elif defined(USE_DRIVE_SYSTEM) && defined(FRONT_RIGHT)
         // Drive motor pins
         constexpr uint8_t I2C_ADDRESS = 0x11;  // Pin for the drive motor
-    #elif defined(USE_DRIVE_SYSTEM) && defined(BACK_LEFT)
+    #elif defined(USE_DRIVE_SYSTEM) && defined(REAR_LEFT)
         // Drive motor pins
         constexpr uint8_t I2C_ADDRESS = 0x12;  // Pin for the drive motor
-    #elif defined(USE_DRIVE_SYSTEM) && defined(BACK_RIGHT)
+    #elif defined(USE_DRIVE_SYSTEM) && defined(REAR_RIGHT)
         // Drive motor pins
         constexpr uint8_t I2C_ADDRESS = 0x13;  // Pin for the drive motor
     #elif defined(USE_TURN_SYSTEM)
@@ -38,23 +42,17 @@ namespace pin{
         // Camera servo pins
         constexpr uint8_t I2C_ADDRESS = 0x00;     // Pin for the horizontal camera servo
     #endif
-    #ifdef WROOM32
-        // ESP32 specific I2C pins
-        constexpr uint8_t I2C_SDA = 21;
-        constexpr uint8_t I2C_SCL = 22;
-    #else
-        // ESP8266 specific I2C pins
-        constexpr uint8_t I2C_SDA = 4;  // GPIO 4
-        constexpr uint8_t I2C_SCL = 5;  // GPIO 5
-    #endif
-
+        
     #ifdef USE_DRIVE_SYSTEM
         // Drive motor pins
         constexpr uint8_t DRIVE_MOTOR = 4;
     #endif
 
     #ifdef USE_TURN_SYSTEM
-        constexpr uint8_t TURN_MOTOR = 4;
+        constexpr uint8_t TURN_MOTOR_FL = 4;
+        constexpr uint8_t TURN_MOTOR_FR = 5;
+        constexpr uint8_t TURN_MOTOR_RL = 6;
+        constexpr uint8_t TURN_MOTOR_RR = 7;
     #endif
 
     #ifdef USE_DIGGING_SYSTEM

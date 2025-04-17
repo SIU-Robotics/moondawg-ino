@@ -32,7 +32,10 @@ namespace motors {
         #endif
 
         #ifdef USE_TURN_SYSTEM
-            Servo turnMotor;
+            Servo turnMotorFL;
+            Servo turnMotorFR;
+            Servo turnMotorRL;
+            Servo turnMotorRR;
         #endif
 
         #ifdef USE_DIGGING_SYSTEM

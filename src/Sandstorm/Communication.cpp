@@ -83,7 +83,20 @@ namespace comm {
 
             #ifdef USE_TURN_SYSTEM
                 case TURN:
-                    motors::Set(motorContainer.turnMotor, param1);
+                    switch (param2){
+                        case '1': // FL
+                            motors::Set(motorContainer.turnMotorFL, param1);
+                            break;
+                        case '2': // FR
+                            motors::Set(motorContainer.turnMotorFR, param1);
+                            break;
+                        case '3': // RL
+                            motors::Set(motorContainer.turnMotorRL, param1);
+                            break;
+                        case '4': // RR
+                            motors::Set(motorContainer.turnMotorRR, param1);
+                            break;
+                    }
                     break;
             #endif
 

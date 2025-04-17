@@ -38,7 +38,15 @@ void setup() {
     #endif
 
     #ifdef USE_TURN_SYSTEM
-        motors::Setup(pin::TURN_MOTOR, motorContainer.turnMotor, DEFAULT_POS_TURN);
+        constexpr uint8_t DEFAULT_POS_TURN_FL = 90; // Default position for turn motors
+        constexpr uint8_t DEFAULT_POS_TURN_FR = 90;
+        constexpr uint8_t DEFAULT_POS_TURN_RL = 90;
+        constexpr uint8_t DEFAULT_POS_TURN_RR = 90;
+
+        motors::Setup(pin::TURN_MOTOR_FL, motorContainer.turnMotorFL, DEFAULT_POS_TURN_FL);
+        motors::Setup(pin::TURN_MOTOR_FR, motorContainer.turnMotorFR, DEFAULT_POS_TURN_FR);
+        motors::Setup(pin::TURN_MOTOR_RL, motorContainer.turnMotorRL, DEFAULT_POS_TURN_RL);
+        motors::Setup(pin::TURN_MOTOR_RR, motorContainer.turnMotorRR, DEFAULT_POS_TURN_RR);
     #endif
 
     #ifdef USE_DIGGING_SYSTEM
