@@ -34,7 +34,6 @@ void setup()
 {
     // For the i2c communication
     comm::i2cSetup(motorContainer);
-    Serial.begin(115200);
 
 #ifdef USE_DRIVE_SYSTEM
     motors::Setup(pin::DRIVE_MOTOR, motorContainer.driveMotor, STOP);

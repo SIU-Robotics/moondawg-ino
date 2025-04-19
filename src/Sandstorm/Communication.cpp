@@ -75,10 +75,6 @@ namespace comm
         {
             Process(tokens, *g_motorContainer);
         }
-        else
-        {
-            Serial.println("Motor container empty");
-        }
     }
 
     bool hasNewData()
