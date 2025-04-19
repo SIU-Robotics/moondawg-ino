@@ -93,88 +93,71 @@ namespace comm
         memset(g_inputBuffer, 0, MAX_INPUT_LENGTH + 1);
     }
 
-    static inline void processCommand(const uint8_t cmd, const int param1, const int param2, motors::Container &motorContainer)
+    static inline void processCommand(const int param1, const int param2, motors::Container &motorContainer)
     {
-        switch (cmd)
-        {
 #ifdef USE_DRIVE_SYSTEM
-        case MOVEMENT:
-            motors::Set(motorContainer.driveMotor, param1);
-            break;
+        motors::Set(motorContainer.driveMotor, param1);
 #endif
-
 #ifdef USE_TURN_SYSTEM
-        case TURN:
-            switch (param2)
-            {
-            case '1': // FL
-                motors::Set(motorContainer.turnMotorFL, param1);
-                break;
-            case '2': // FR
-                motors::Set(motorContainer.turnMotorFR, param1);
-                break;
-            case '3': // RL
-                motors::Set(motorContainer.turnMotorRL, param1);
-                break;
-            case '4': // RR
-                motors::Set(motorContainer.turnMotorRR, param1);
-                break;
-            }
+        switch (param2)
+        {
+        case 1: // FL
+            motors::Set(motorContainer.turnMotorFL, param1);
             break;
+        case 2: // FR
+            motors::Set(motorContainer.turnMotorFR, param1);
+            break;
+        case 3: // RL
+            motors::Set(motorContainer.turnMotorRL, param1);
+            break;
+        case 4: // RR
+            motors::Set(motorContainer.turnMotorRR, param1);
+            break;
+        }
 #endif
 
 #ifdef USE_DIGGING_SYSTEM
-        case DIGBELT:
-            param1 ? motors::Set(motorContainer.digMotor, param2) : motors::Stop(motorContainer.digMotor);
-            break;
-        case DIGACT:
-            if (param1)
-            {
-                param2 == 'r' ? motors::Forward(motorContainer.actuator) : param2 == 'l' ? motors::Backward(motorContainer.actuator)
-                                                                                         : void();
-            }
-            else
-            {
-                motors::Stop(motorContainer.actuator);
-            }
-            break;
+        param1 ? motors::Set(motorContainer.digMotor, param2) : motors::Stop(motorContainer.digMotor);
+    case DIGACT:
+        if (param1)
+        {
+            param2 == 'r' ? motors::Forward(motorContainer.actuator) : param2 == 'l' ? motors::Backward(motorContainer.actuator)
+                                                                                     : void();
+        }
+        else
+        {
+            motors::Stop(motorContainer.actuator);
+        }
+        break;
 #endif
 
 #ifdef USE_DEPOSIT_SYSTEM
-        case DEPOSITAUGER:
-            if (param1)
-            {
-                param2 == 'f' ? motors::Forward(motorContainer.auger) : param2 == 'b' ? motors::Backward(motorContainer.auger)
-                                                                                      : void();
-            }
-            else
-            {
-                motors::Stop(motorContainer.auger);
-            }
-            break;
-        case VIBRATOR:
-            param1 &&param2 == 'v' ? motors::Forward(motorContainer.vibrator) : motors::Stop(motorContainer.vibrator);
-            break;
-#endif
-
-#ifdef USE_CAMERA_SYSTEM
-        case HORIZONTAL:
-            if (param1)
-                motors::Set(motorContainer.horizontalServo, param2);
-            break;
-        case VERTICAL:
-            if (param1)
-                motors::Set(motorContainer.verticalServo, param2);
-            break;
-        case ARM:
-            if (param1)
-                motors::Set(motorContainer.armServo, param2);
-            break;
-#endif
-
-        default:
-            break;
+        if (param1)
+        {
+            param2 == 'f' ? motors::Forward(motorContainer.auger) : param2 == 'b' ? motors::Backward(motorContainer.auger)
+                                                                                  : void();
         }
+        else
+        {
+            motors::Stop(motorContainer.auger);
+        }
+        param1 &&param2 == 'v' ? motors::Forward(motorContainer.vibrator) : motors::Stop(motorContainer.vibrator);
+#endif
+
+        // #ifdef USE_CAMERA_SYSTEM
+        //     case HORIZONTAL:
+        //         if (param1)
+        //             motors::Set(motorContainer.horizontalServo, param2);
+        //         break;
+        //     case VERTICAL:
+        //         if (param1)
+        //             motors::Set(motorContainer.verticalServo, param2);
+        //         break;
+        //     case ARM:
+        //         if (param1)
+        //             motors::Set(motorContainer.armServo, param2);
+        //         break;
+        // #endif
     }
 
     void Process(char *tokens[], motors::Container &motorContainer)
@@ -183,31 +166,9 @@ namespace comm
         {
             return;
         }
+        const int param1 = atoi(tokens[0]);
+        int param2 = atoi(tokens[1]);
 
-        const uint8_t cmd = static_cast<uint8_t>(tokens[0][0]);
-        const int param1 = atoi(tokens[1]);
-        int param2 = 0;
-
-        if (tokens[2] != nullptr)
-        {
-            bool isNumericParam = false;
-#ifdef USE_DRIVE_SYSTEM
-            isNumericParam |= (cmd == MOVEMENT);
-#endif
-#ifdef USE_TURN_SYSTEM
-            isNumericParam |= (cmd == TURN);
-#endif
-#ifdef USE_DIGGING_SYSTEM
-            isNumericParam |= (cmd == DIGBELT);
-#endif
-#ifdef USE_CAMERA_SYSTEM
-            isNumericParam |= (cmd == HORIZONTAL || cmd == VERTICAL || cmd == ARM);
-#endif
-
-            param2 = isNumericParam ? atoi(tokens[2]) : static_cast<int>(tokens[2][0]);
-        }
-
-        processCommand(cmd, param1, param2, motorContainer);
+        processCommand(param1, param2, motorContainer);
     }
-
 }
