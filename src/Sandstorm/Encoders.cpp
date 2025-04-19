@@ -4,7 +4,6 @@
 // * Contributors: Cameron Schwartzberg (BigBroccoli), and Andrew Barnes (abarnes6)
 // */
 
-
 // #include "Encoders.h"
 // #include "PinDefinitions.h"
 
@@ -23,7 +22,7 @@
 //     inline int32_t readEncoder(Encoder& encoder) {
 //         return encoder.read();
 //     }
-    
+
 //     float getRPM(Encoder& encoder) {
 //         int32_t counts = readEncoder(encoder);
 //         return ((static_cast<float>(counts) / PPR) * 60.0f) / CV;

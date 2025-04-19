@@ -20,7 +20,7 @@ namespace pin
 
 #if defined(USE_DRIVE_SYSTEM) && defined(FRONT_LEFT)
     // Drive motor pins
-    constexpr uint8_t I2C_ADDRESS = 0x10; // Pin for the drive motor
+    constexpr uint8_t I2C_ADDRESS = 0x14; // Pin for the drive motor
 #elif defined(USE_DRIVE_SYSTEM) && defined(FRONT_RIGHT)
     // Drive motor pins
     constexpr uint8_t I2C_ADDRESS = 0x11; // Pin for the drive motor

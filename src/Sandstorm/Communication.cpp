@@ -36,12 +36,16 @@ namespace comm
         while (Wire.available() && i < numBytes)
         {
             char c = Wire.read();
-            if (c == '\n' || c == '\0')
-                break;
-            g_inputBuffer[i++] = c;
+            if (i == 0)
+            {
+                i++;
+                continue;
+            }
+            g_inputBuffer[++i - 2] = c;
         }
-        g_inputBuffer[i] = '\0';
+        g_inputBuffer[i - 1] = '\0';
         g_newData = true;
+        processI2C();
     }
 
     void i2cSetup(motors::Container &container)
@@ -70,6 +74,10 @@ namespace comm
         if (g_motorContainer != nullptr)
         {
             Process(tokens, *g_motorContainer);
+        }
+        else
+        {
+            Serial.println("Motor container empty");
         }
     }
 
