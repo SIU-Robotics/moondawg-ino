@@ -48,7 +48,7 @@ namespace pin
 
 #ifdef USE_TURN_SYSTEM
     constexpr uint8_t TURN_MOTOR_FL = 2;
-    constexpr uint8_t TURN_MOTOR_FR = 21;
+    constexpr uint8_t TURN_MOTOR_FR = 17;
     constexpr uint8_t TURN_MOTOR_RL = 18;
     constexpr uint8_t TURN_MOTOR_RR = 19;
 #endif
