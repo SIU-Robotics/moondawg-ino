@@ -40,7 +40,6 @@ namespace comm
         // Multi-byte command - reads as a block
         else if (numBytes > 1)
         {
-            uint8_t i = 0;
             uint8_t cmd = 0;
             int param1 = 0;
             int param2 = 0;
@@ -94,16 +93,16 @@ namespace comm
         switch (param1)
         {
         case 1: // FL
-            motors::Set(motorContainer.turnMotorFL, param2);
+            motors::Set(g_motorContainer->turnMotorFL, param2);
             break;
         case 2: // FR
-            motors::Set(motorContainer.turnMotorFR, param2);
+            motors::Set(g_motorContainer->turnMotorFR, param2);
             break;
         case 3: // RL
-            motors::Set(motorContainer.turnMotorRL, param2);
+            motors::Set(g_motorContainer->turnMotorRL, param2);
             break;
         case 4: // RR
-            motors::Set(motorContainer.turnMotorRR, param2);
+            motors::Set(g_motorContainer->turnMotorRR, param2);
             break;
         default:
             break;
@@ -114,10 +113,10 @@ namespace comm
         switch (param1)
         {
         case 1: // Belt speed
-            motors::Set(motorContainer.digMotor, param2);
+            motors::Set(g_motorContainer->digMotor, param2);
             break;
         case 2: // Raise or lower belt
-            motors::Set(motorContainer.actuator, param2);
+            motors::Set(g_motorContainer->actuator, param2);
             break;
         }
 #endif
@@ -126,19 +125,29 @@ namespace comm
         switch (param1)
         {
         case 1: // Auger
-            motors::Set(motorContainer.auger, param2);
+            motors::Set(g_motorContainer->auger, param2);
             break;
         case 2: // Vibrator
-            motors::Set(motorContainer.vibrator, param2);
+            motors::Set(g_motorContainer->vibrator, param2);
             break;
         }
 #endif
 
 #ifdef USE_CAMERA_SYSTEM
-        throw std::runtime_error("Camera system not implemented yet");
-        motors::Set(motorContainer.horizontalServo, param2);
-        motors::Set(motorContainer.verticalServo, param2);
-        motors::Set(motorContainer.armServo, param2);
+        switch (param1)
+        {
+        case 1: // Horizontal servo
+            motors::Set(g_motorContainer->horizontalServo, param2);
+            break;
+        case 2: // Vertical servo
+            motors::Set(g_motorContainer->verticalServo, param2);
+            break;
+        case 3: // Arm servo
+            motors::Set(g_motorContainer->armServo, param2);
+            break;
+        default:
+            break;
+        }
 #endif
     }
 }
