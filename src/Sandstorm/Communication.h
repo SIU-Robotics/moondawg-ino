@@ -25,7 +25,7 @@ namespace comm
     constexpr uint8_t MAX_ARRAY_SIZE = 10;
 
     void i2cSetup(motors::Container &container);
-    void processCommand(int param, int param2);
+    static void processCommand(int param, int param2);
 }
 
 #endif // Communication_h

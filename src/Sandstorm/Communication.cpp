@@ -20,7 +20,71 @@ namespace comm
 
     // Forward declarations - must be at the top
     static void receiveEvent(int numBytes);
-    static inline void processCommand(const int param1, const int param2);
+    static inline void processCommand(const int param1, const int param2){
+        #ifdef USE_DRIVE_SYSTEM
+            motors::Set(g_motorContainer->driveMotor, param1);
+        #endif
+        #ifdef USE_TURN_SYSTEM
+                switch (param1)
+                {
+                case 1: // FL
+                    motors::Set(g_motorContainer->turnMotorFL, param2);
+                    break;
+                case 2: // FR
+                    motors::Set(g_motorContainer->turnMotorFR, param2);
+                    break;
+                case 3: // RL
+                    motors::Set(g_motorContainer->turnMotorRL, param2);
+                    break;
+                case 4: // RR
+                    motors::Set(g_motorContainer->turnMotorRR, param2);
+                    break;
+                default:
+                    break;
+                }
+        #endif
+
+        #ifdef USE_DIGGING_SYSTEM
+                switch (param1)
+                {
+                case 1: // Belt speed
+                    motors::Set(g_motorContainer->digMotor, param2);
+                    break;
+                case 2: // Raise or lower belt
+                    motors::Set(g_motorContainer->actuator, param2);
+                    break;
+                }
+        #endif
+
+        #ifdef USE_DEPOSIT_SYSTEM
+                switch (param1)
+                {
+                case 1: // Auger
+                    motors::Set(g_motorContainer->auger, param2);
+                    break;
+                case 2: // Vibrator
+                    motors::Set(g_motorContainer->vibrator, param2);
+                    break;
+                }
+        #endif
+
+        #ifdef USE_CAMERA_SYSTEM
+                switch (param1)
+                {
+                case 1: // Horizontal servo
+                    motors::Set(g_motorContainer->horizontalServo, param2);
+                    break;
+                case 2: // Vertical servo
+                    motors::Set(g_motorContainer->verticalServo, param2);
+                    break;
+                case 3: // Arm servo
+                    motors::Set(g_motorContainer->armServo, param2);
+                    break;
+                default:
+                    break;
+                }
+        #endif
+    }
 
     static void receiveEvent(int numBytes)
     {
@@ -82,72 +146,5 @@ namespace comm
 
         // Configure ESP32 as I2C slave with specified address
         Wire.begin(pin::I2C_ADDRESS);
-    }
-
-    static inline void processCommand(const int param1, const int param2)
-    {
-#ifdef USE_DRIVE_SYSTEM
-        motors::Set(g_motorContainer->driveMotor, param1);
-#endif
-#ifdef USE_TURN_SYSTEM
-        switch (param1)
-        {
-        case 1: // FL
-            motors::Set(g_motorContainer->turnMotorFL, param2);
-            break;
-        case 2: // FR
-            motors::Set(g_motorContainer->turnMotorFR, param2);
-            break;
-        case 3: // RL
-            motors::Set(g_motorContainer->turnMotorRL, param2);
-            break;
-        case 4: // RR
-            motors::Set(g_motorContainer->turnMotorRR, param2);
-            break;
-        default:
-            break;
-        }
-#endif
-
-#ifdef USE_DIGGING_SYSTEM
-        switch (param1)
-        {
-        case 1: // Belt speed
-            motors::Set(g_motorContainer->digMotor, param2);
-            break;
-        case 2: // Raise or lower belt
-            motors::Set(g_motorContainer->actuator, param2);
-            break;
-        }
-#endif
-
-#ifdef USE_DEPOSIT_SYSTEM
-        switch (param1)
-        {
-        case 1: // Auger
-            motors::Set(g_motorContainer->auger, param2);
-            break;
-        case 2: // Vibrator
-            motors::Set(g_motorContainer->vibrator, param2);
-            break;
-        }
-#endif
-
-#ifdef USE_CAMERA_SYSTEM
-        switch (param1)
-        {
-        case 1: // Horizontal servo
-            motors::Set(g_motorContainer->horizontalServo, param2);
-            break;
-        case 2: // Vertical servo
-            motors::Set(g_motorContainer->verticalServo, param2);
-            break;
-        case 3: // Arm servo
-            motors::Set(g_motorContainer->armServo, param2);
-            break;
-        default:
-            break;
-        }
-#endif
     }
 }

@@ -15,8 +15,14 @@
 #include "PinDefinitions.h" // Holds all of the pin definitions for output signals
 #include "Motors.h"         // Contains motor-related functions
 #include "Communication.h"  // Contains function for parsing commands from the RPi
+
+// Encoders are only used if USE_ENCODER_SYSTEM is defined
 #ifdef USE_ENCODER_SYSTEM
+#ifdef wroom32
+#include <ESP32Encoder.h>
+#else
 #include <Encoder.h>
+#endif
 #include "Encoders.h" // Contains functions for reading encoder values
 #endif
 
