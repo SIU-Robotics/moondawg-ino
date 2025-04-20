@@ -54,7 +54,8 @@ namespace comm
     void i2cSetup(motors::Container &container);
     bool hasNewData();
     void clearNewDataFlag();
-    void Process(char *tokens[], motors::Container &motorContainer);
+    void Process(char *tokens[], int token_count, motors::Container &motorContainer);
+    void processCommand(int param, int param2);
 }
 
 #endif // Communication_h

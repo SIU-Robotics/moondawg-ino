@@ -33,19 +33,18 @@ namespace comm
         }
 
         uint8_t i = 0;
+        int cmd = 90;
+        int cmd2 = 0;
         while (Wire.available() && i < numBytes)
         {
             char c = Wire.read();
-            if (i == 0)
-            {
-                i++;
-                continue;
-            }
-            g_inputBuffer[++i - 2] = c;
+            // g_inputBuffer[i++] = c;
+            cmd = c;
         }
-        g_inputBuffer[i - 1] = '\0';
-        g_newData = true;
-        processI2C();
+        processCommand(cmd, cmd2);
+        // g_inputBuffer[i] = '\0';
+        // g_newData = true;
+        // processI2C();
     }
 
     void i2cSetup(motors::Container &container)
@@ -62,7 +61,7 @@ namespace comm
     static void processI2C()
     {
         char *tokens[MAX_ARRAY_SIZE] = {nullptr};
-        uint8_t numCount = 0;
+        int numCount = 0;
         char *token = strtok(g_inputBuffer, ",");
 
         while (token != nullptr && numCount < MAX_ARRAY_SIZE)
@@ -73,7 +72,7 @@ namespace comm
 
         if (g_motorContainer != nullptr)
         {
-            Process(tokens, *g_motorContainer);
+            Process(tokens, numCount, *g_motorContainer);
         }
     }
 
@@ -93,10 +92,10 @@ namespace comm
         memset(g_inputBuffer, 0, MAX_INPUT_LENGTH + 1);
     }
 
-    static inline void processCommand(const int param1, const int param2, motors::Container &motorContainer)
+    void processCommand(const int param1, const int param2)
     {
 #ifdef USE_DRIVE_SYSTEM
-        motors::Set(motorContainer.driveMotor, param1);
+        motors::Set(g_motorContainer->driveMotor, param1);
 #endif
 #ifdef USE_TURN_SYSTEM
         switch (param2)
@@ -160,15 +159,14 @@ namespace comm
         // #endif
     }
 
-    void Process(char *tokens[], motors::Container &motorContainer)
+    void Process(char *tokens[], int token_count, motors::Container &motorContainer)
     {
-        if (tokens[0] == nullptr || tokens[1] == nullptr)
-        {
-            return;
-        }
         const int param1 = atoi(tokens[0]);
-        int param2 = atoi(tokens[1]);
-
-        processCommand(param1, param2, motorContainer);
+        int param2 = 0;
+        if (token_count > 1)
+        {
+            param2 = atoi(tokens[1]);
+        }
+        processCommand(param1, param2);
     }
 }
