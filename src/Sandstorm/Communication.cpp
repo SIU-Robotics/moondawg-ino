@@ -91,19 +91,19 @@ namespace comm
         motors::Set(g_motorContainer->driveMotor, param1);
 #endif
 #ifdef USE_TURN_SYSTEM
-        switch (param2)
+        switch (param1)
         {
         case 1: // FL
-            motors::Set(motorContainer.turnMotorFL, param1);
+            motors::Set(motorContainer.turnMotorFL, param2);
             break;
         case 2: // FR
-            motors::Set(motorContainer.turnMotorFR, param1);
+            motors::Set(motorContainer.turnMotorFR, param2);
             break;
         case 3: // RL
-            motors::Set(motorContainer.turnMotorRL, param1);
+            motors::Set(motorContainer.turnMotorRL, param2);
             break;
         case 4: // RR
-            motors::Set(motorContainer.turnMotorRR, param1);
+            motors::Set(motorContainer.turnMotorRR, param2);
             break;
         default:
             break;
@@ -111,23 +111,31 @@ namespace comm
 #endif
 
 #ifdef USE_DIGGING_SYSTEM
-        motors::Set(motorContainer.digMotor, param2);
-        motors::Stop(motorContainer.digMotor);
-        motors::Forward(motorContainer.actuator);
-        motors::Backward(motorContainer.actuator);
-        motors::Stop(motorContainer.actuator);
+        switch (param1)
+        {
+        case 1: // Belt speed
+            motors::Set(motorContainer.digMotor, param2);
+            break;
+        case 2: // Raise or lower belt
+            motors::Set(motorContainer.actuator, param2);
+            break;
+        }
 #endif
 
 #ifdef USE_DEPOSIT_SYSTEM
-
-        motors::Forward(motorContainer.auger);
-        motors::Backward(motorContainer.auger);
-        motors::Stop(motorContainer.auger);
-        motors::Forward(motorContainer.vibrator);
-        motors::Stop(motorContainer.vibrator);
+        switch (param1)
+        {
+        case 1: // Auger
+            motors::Set(motorContainer.auger, param2);
+            break;
+        case 2: // Vibrator
+            motors::Set(motorContainer.vibrator, param2);
+            break;
+        }
 #endif
 
 #ifdef USE_CAMERA_SYSTEM
+        throw std::runtime_error("Camera system not implemented yet");
         motors::Set(motorContainer.horizontalServo, param2);
         motors::Set(motorContainer.verticalServo, param2);
         motors::Set(motorContainer.armServo, param2);
