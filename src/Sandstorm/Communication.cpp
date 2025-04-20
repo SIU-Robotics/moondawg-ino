@@ -40,16 +40,17 @@ namespace comm
         // Multi-byte command - reads as a block
         else if (numBytes > 1)
         {
+            uint8_t cmd = 0;
             int param1 = 0;
             int param2 = 0;
 
-            // Read first byte as param1
+            // Read first byte as command
             if (Wire.available())
             {
-                param1 = Wire.read();
+                cmd = Wire.read();
             }
 
-            // Read second byte as param1 if available, first byte was skipped because block read
+            // Read second byte as param1 if available
             if (Wire.available())
             {
                 param1 = Wire.read();
