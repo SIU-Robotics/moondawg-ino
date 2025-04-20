@@ -10,13 +10,15 @@
 // Include all necessary libraries
 #include <ESP32Servo.h>
 #include <Arduino.h>
-// #include <Encoder.h>
 
 // Include custom header files
 #include "PinDefinitions.h" // Holds all of the pin definitions for output signals
 #include "Motors.h"         // Contains motor-related functions
-// #include "Encoders.h"       // Contains functions for reading encoder values
-#include "Communication.h" // Contains function for parsing commands from the RPi
+#include "Communication.h"  // Contains function for parsing commands from the RPi
+#ifdef USE_ENCODER_SYSTEM
+#include <Encoder.h>
+#include "Encoders.h" // Contains functions for reading encoder values
+#endif
 
 namespace
 {
@@ -70,29 +72,28 @@ void setup()
     motors::Setup(pin::ARM_SERVO, motorContainer.armServo, 0);
 #endif
 
-    // #ifdef USE_ENCODER_SYSTEM
-    //     // Set up encoders
-    //     encoders::setupEncoder(pin::ENCODER_PIN1, pin::ENCODER_PIN2, encoderContainer.motor_encoder);
-    // #endif
+#ifdef USE_ENCODER_SYSTEM
+    // Set up encoders
+    encoders::setupEncoder(pin::ENCODER_PIN1, pin::ENCODER_PIN2, encoderContainer.motor_encoder);
+#endif
 }
 
 void loop()
 {
-    if (comm::hasNewData())
-    {
-        comm::clearNewDataFlag();
-    }
 
+#ifdef USE_ENCODER_SYSTEM
     // Encoder reading code
-    // readEncoder(fr_encoder);
-    // readEncoder(fl_encoder);
-    // readEncoder(rr_encoder);
-    // readEncoder(rl_encoder);
-    // if (millis() - millisBefore > 1000) {
-    //     getRPM(fr_encoder);
-    //     getRPM(fl_encoder);
-    //     getRPM(rr_encoder);
-    //     getRPM(rl_encoder);
-    //     millisBefore = millis();
-    // }
+    readEncoder(fr_encoder);
+    readEncoder(fl_encoder);
+    readEncoder(rr_encoder);
+    readEncoder(rl_encoder);
+    if (millis() - millisBefore > 1000)
+    {
+        getRPM(fr_encoder);
+        getRPM(fl_encoder);
+        getRPM(rr_encoder);
+        getRPM(rl_encoder);
+        millisBefore = millis();
+    }
+#endif
 }

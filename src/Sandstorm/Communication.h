@@ -16,8 +16,6 @@
 #include <Wire.h>           // Required for I2C communication
 #include "PinDefinitions.h" // Holds all of the pin definitions for output signals
 #include "Motors.h"         // Contains motor-related functions
-#include "Encoders.h"       // Contains functions for reading encoder values
-#include "Communication.h"  // Contains function for parsing commands from the RPi
 
 // Define a namespace 'comm' to encapsulate all communication functions
 namespace comm
@@ -26,35 +24,7 @@ namespace comm
     constexpr uint8_t MAX_INPUT_LENGTH = 50;
     constexpr uint8_t MAX_ARRAY_SIZE = 10;
 
-// Command characters
-#ifdef USE_DRIVE_SYSTEM
-    constexpr uint8_t MOVEMENT = 'm';
-#endif
-
-#ifdef USE_TURN_SYSTEM
-    constexpr uint8_t TURN = 't';
-#endif
-
-#ifdef USE_DIGGING_SYSTEM
-    constexpr uint8_t DIGBELT = 'b';
-    constexpr uint8_t DIGACT = 'g';
-#endif
-
-#ifdef USE_DEPOSIT_SYSTEM
-    constexpr uint8_t DEPOSITAUGER = 'd';
-    constexpr uint8_t VIBRATOR = 'v';
-#endif
-
-#ifdef USE_CAMERA_SYSTEM
-    constexpr uint8_t HORIZONTAL = 'h';
-    constexpr uint8_t VERTICAL = 'e';
-    constexpr uint8_t ARM = 'a';
-#endif
-
     void i2cSetup(motors::Container &container);
-    bool hasNewData();
-    void clearNewDataFlag();
-    void Process(char *tokens[], int token_count, motors::Container &motorContainer);
     void processCommand(int param, int param2);
 }
 
