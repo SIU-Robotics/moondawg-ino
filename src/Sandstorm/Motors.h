@@ -20,9 +20,6 @@
 // Define a namespace 'motors' to encapsulate all motor functions
 namespace motors
 {
-    constexpr uint8_t STOP_VALUE = 90;
-    constexpr uint8_t FORWARD_VALUE = 180;
-    constexpr uint8_t BACKWARD_VALUE = 0;
     /*
      * Container struct for all servo objects used in the bot
      * This structure centralizes all motor and servo objects for easy access
@@ -77,33 +74,6 @@ namespace motors
     inline void Set(Servo &motor, uint8_t speed)
     {
         motor.write(speed);
-    }
-
-    /*
-     * Stop a motor
-     * @param motor Reference to the Servo object to be stopped
-     */
-    inline void Stop(Servo &motor)
-    {
-        Set(motor, STOP_VALUE);
-    }
-
-    /*
-     * Set a motor to move forward at full speed
-     * @param motor Reference to the Servo object to be moved forward
-     */
-    inline void Forward(Servo &motor)
-    {
-        Set(motor, FORWARD_VALUE);
-    }
-
-    /*
-     * Set a motor to move backward at full speed
-     * @param motor Reference to the Servo object to be moved backward
-     */
-    inline void Backward(Servo &motor)
-    {
-        Set(motor, BACKWARD_VALUE);
     }
 }
 
