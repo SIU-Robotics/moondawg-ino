@@ -15,14 +15,24 @@ namespace encoders
         encoder.attachFullQuad(pin1, pin2);
         encoder.setCount(0);
     }
+
+    int32_t readEncoder(ESP32Encoder &encoder)
+    {
+        return encoder.getCount();
+    }
+
+    float getRPM(ESP32Encoder &encoder)
+    {
+        int32_t counts = readEncoder(encoder);
+        return ((static_cast<float>(counts) / PPR) * 60.0f) / CV;
+    }
 #else
     void setupEncoder(uint8_t pin1, uint8_t pin2, Encoder &encoder)
     {
         encoder.write(0);
     }
-#endif
 
-    inline int32_t readEncoder(Encoder &encoder)
+    int32_t readEncoder(Encoder &encoder)
     {
         return encoder.read();
     }
@@ -32,4 +42,5 @@ namespace encoders
         int32_t counts = readEncoder(encoder);
         return ((static_cast<float>(counts) / PPR) * 60.0f) / CV;
     }
+#endif
 }

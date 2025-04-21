@@ -18,7 +18,7 @@
 
 // Encoders are only used if USE_ENCODER_SYSTEM is defined
 #ifdef USE_ENCODER_SYSTEM
-#ifdef wroom32
+#ifdef WROOM32
 #include <ESP32Encoder.h>
 #else
 #include <Encoder.h>
@@ -36,7 +36,24 @@ namespace
 
     static motors::Container motorContainer{};
 #ifdef USE_ENCODER_SYSTEM
-    encoders::Container encoderContainer{Encoder(0, 0)};
+    // Fix initialization of encoder container
+    #ifdef WROOM32
+    encoders::Container encoderContainer{};  // Default initialization
+    #else
+    encoders::Container encoderContainer{};  // Default initialization
+    #endif
+    
+    // Add declarations for encoder instances and tracking variables
+    #ifdef WROOM32
+    ESP32Encoder fr_encoder, fl_encoder, rr_encoder, rl_encoder;
+    #else
+    Encoder fr_encoder(0, 0);  // Replace with actual pin numbers
+    Encoder fl_encoder(0, 0);  // Replace with actual pin numbers
+    Encoder rr_encoder(0, 0);  // Replace with actual pin numbers
+    Encoder rl_encoder(0, 0);  // Replace with actual pin numbers
+    #endif
+    
+    uint32_t millisBefore = 0;
 #endif
 }
 
@@ -86,18 +103,18 @@ void loop()
 {
 
 #ifdef USE_ENCODER_SYSTEM
-    // Encoder reading code
-    // fr fl rr rl dont exist, needs to be updated to work with the new system
-    readEncoder(fr_encoder);
-    readEncoder(fl_encoder);
-    readEncoder(rr_encoder);
-    readEncoder(rl_encoder);
+    // Encoder reading code - using proper namespace qualification
+    encoders::readEncoder(fr_encoder);
+    encoders::readEncoder(fl_encoder);
+    encoders::readEncoder(rr_encoder);
+    encoders::readEncoder(rl_encoder);
+    
     if (millis() - millisBefore > 1000)
     {
-        getRPM(fr_encoder);
-        getRPM(fl_encoder);
-        getRPM(rr_encoder);
-        getRPM(rl_encoder);
+        encoders::getRPM(fr_encoder);
+        encoders::getRPM(fl_encoder);
+        encoders::getRPM(rr_encoder);
+        encoders::getRPM(rl_encoder);
         millisBefore = millis();
     }
 #endif

@@ -6,7 +6,7 @@
 #ifndef Encoders_h
 #define Encoders_h
 
-#ifdef wroom32
+#ifdef WROOM32
 #include <ESP32Encoder.h>
 #else
 #include <Encoder.h>
@@ -20,21 +20,24 @@ namespace encoders
 
     struct Container
     {
-#if defined(wroom32)
+    #if defined(WROOM32)
         ESP32Encoder motor_encoder;
-#else
+    #else
         Encoder motor_encoder;
-#endif
+    #endif
         volatile int32_t lastCount{0};
         volatile uint32_t lastReadTime{0};
     };
-#ifdef wroom32
-    void setupEncoder(uint8_t pin_1, uint8_t pin_2, ESP32Encoder &encoder);
-#else
-    void setupEncoder(uint8_t pin_1, uint8_t pin_2, Encoder &encoder);
-#endif
-    inline int32_t readEncoder(Encoder enc, int32_t &lastCount);
-    float getRPM(Encoder encoder, Container &container);
+
+    #ifdef WROOM32
+        void setupEncoder(uint8_t pin_1, uint8_t pin_2, ESP32Encoder &encoder);
+        int32_t readEncoder(ESP32Encoder &encoder);
+        float getRPM(ESP32Encoder &encoder);
+    #else
+        void setupEncoder(uint8_t pin_1, uint8_t pin_2, Encoder &encoder);
+        int32_t readEncoder(Encoder &encoder);
+        float getRPM(Encoder &encoder);
+    #endif
 }
 
 #endif // Encoders_h
