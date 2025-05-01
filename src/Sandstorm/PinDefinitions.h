@@ -56,13 +56,13 @@ namespace pin
 #ifdef USE_DIGGING_SYSTEM
     // Digging mechanism pins
     constexpr uint8_t DIGGING_MOTOR = 2;     // Pin for the digging motor
-    constexpr uint8_t DIGGING_ACTUATOR = 21; // Pin for the digging actuator
+    constexpr uint8_t DIGGING_ACTUATOR = 17; // Pin for the digging actuator
 #endif
 
 #ifdef USE_DEPOSIT_SYSTEM
     // Deposit system pins
     constexpr uint8_t DEPOSIT_MOTOR = 2;     // Pin for the deposit motor
-    constexpr uint8_t DEPOSIT_VIBRATOR = 21; // Pin for the deposit vibrator
+    constexpr uint8_t DEPOSIT_VIBRATOR = 17; // Pin for the deposit vibrator
 #endif
 
 #ifdef USE_CAMERA_SYSTEM
