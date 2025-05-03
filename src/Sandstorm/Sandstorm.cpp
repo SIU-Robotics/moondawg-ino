@@ -36,23 +36,23 @@ namespace
 
     static motors::Container motorContainer{};
 #ifdef USE_ENCODER_SYSTEM
-    // Fix initialization of encoder container
-    #ifdef WROOM32
-    encoders::Container encoderContainer{};  // Default initialization
-    #else
-    encoders::Container encoderContainer{};  // Default initialization
-    #endif
-    
-    // Add declarations for encoder instances and tracking variables
-    #ifdef WROOM32
+// Fix initialization of encoder container
+#ifdef WROOM32
+    encoders::Container encoderContainer{}; // Default initialization
+#else
+    encoders::Container encoderContainer{}; // Default initialization
+#endif
+
+// Add declarations for encoder instances and tracking variables
+#ifdef WROOM32
     ESP32Encoder fr_encoder, fl_encoder, rr_encoder, rl_encoder;
-    #else
-    Encoder fr_encoder(0, 0);  // Replace with actual pin numbers
-    Encoder fl_encoder(0, 0);  // Replace with actual pin numbers
-    Encoder rr_encoder(0, 0);  // Replace with actual pin numbers
-    Encoder rl_encoder(0, 0);  // Replace with actual pin numbers
-    #endif
-    
+#else
+    Encoder fr_encoder(0, 0); // Replace with actual pin numbers
+    Encoder fl_encoder(0, 0); // Replace with actual pin numbers
+    Encoder rr_encoder(0, 0); // Replace with actual pin numbers
+    Encoder rl_encoder(0, 0); // Replace with actual pin numbers
+#endif
+
     uint32_t millisBefore = 0;
 #endif
 }
@@ -61,6 +61,7 @@ void setup()
 {
     // For the i2c communication
     comm::i2cSetup(motorContainer);
+    Serial.begin(115200);
 
 #ifdef USE_DRIVE_SYSTEM
     motors::Setup(pin::DRIVE_MOTOR, motorContainer.driveMotor, STOP);
@@ -76,7 +77,8 @@ void setup()
 
 #ifdef USE_DIGGING_SYSTEM
     motors::Setup(pin::DIGGING_MOTOR, motorContainer.digMotor, STOP);
-    motors::Setup(pin::DIGGING_ACTUATOR, motorContainer.actuator, STOP);
+    motors::Setup(pin::DIGGING_RACTUATOR, motorContainer.rActuator, STOP);
+    motors::Setup(pin::DIGGING_LACTUATOR, motorContainer.lActuator, STOP);
 #endif
 
 #ifdef USE_DEPOSIT_SYSTEM
@@ -108,7 +110,7 @@ void loop()
     encoders::readEncoder(fl_encoder);
     encoders::readEncoder(rr_encoder);
     encoders::readEncoder(rl_encoder);
-    
+
     if (millis() - millisBefore > 1000)
     {
         encoders::getRPM(fr_encoder);

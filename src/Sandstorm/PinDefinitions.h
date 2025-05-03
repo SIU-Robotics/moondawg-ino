@@ -55,8 +55,9 @@ namespace pin
 
 #ifdef USE_DIGGING_SYSTEM
     // Digging mechanism pins
-    constexpr uint8_t DIGGING_MOTOR = 2;     // Pin for the digging motor
-    constexpr uint8_t DIGGING_ACTUATOR = 17; // Pin for the digging actuator
+    constexpr uint8_t DIGGING_MOTOR = 2;      // Pin for the digging motor
+    constexpr uint8_t DIGGING_RACTUATOR = 17; // Pin for the digging actuator
+    constexpr uint8_t DIGGING_LACTUATOR = 18; // Pin for the digging actuator
 #endif
 
 #ifdef USE_DEPOSIT_SYSTEM

@@ -20,61 +20,62 @@
 // Define a namespace 'motors' to encapsulate all motor functions
 namespace motors
 {
-    /*
-     * Container struct for all servo objects used in the bot
-     * This structure centralizes all motor and servo objects for easy access
-     */
-    struct Container
-    {
+        /*
+         * Container struct for all servo objects used in the bot
+         * This structure centralizes all motor and servo objects for easy access
+         */
+        struct Container
+        {
 #ifdef USE_DRIVE_SYSTEM
-        Servo driveMotor; // drive motor
+                Servo driveMotor; // drive motor
 #endif
 
 #ifdef USE_TURN_SYSTEM
-        Servo turnMotorFL;
-        Servo turnMotorFR;
-        Servo turnMotorRL;
-        Servo turnMotorRR;
+                Servo turnMotorFL;
+                Servo turnMotorFR;
+                Servo turnMotorRL;
+                Servo turnMotorRR;
 #endif
 
 #ifdef USE_DIGGING_SYSTEM
-        Servo digMotor; // Motor for the digging mechanism
-        Servo actuator; // Actuator for the digging mechanism
+                Servo digMotor;  // Motor for the digging mechanism
+                Servo rActuator; // Actuator for the digging mechanism
+                Servo lActuator; // Second actuator for the digging mechanism
 #endif
 
 #ifdef USE_DEPOSIT_SYSTEM
-        Servo auger;    // Motor for the deposit system
-        Servo vibrator; // Motor for the deposit vibrator
+                Servo auger;    // Motor for the deposit system
+                Servo vibrator; // Motor for the deposit vibrator
 #endif
 
 #ifdef USE_CAMERA_SYSTEM
-        Servo horizontalServo; // Servo for the horizontal camera servo
-        Servo verticalServo;   // Servo for the vertical camera servo
-        Servo armServo;        // Servo for the arm servo
+                Servo horizontalServo; // Servo for the horizontal camera servo
+                Servo verticalServo;   // Servo for the vertical camera servo
+                Servo armServo;        // Servo for the arm servo
 #endif
-    };
+        };
 
-    /*
-     * Setup function for initializing a motor or servo
-     * @param pin The microcontroller pin number to which the motor is connected
-     * @param motor Reference to the Servo object representing the motor
-     * @param pwmParameter Initial PWM value to set for the motor
-     */
-    inline void Setup(const uint8_t pin, Servo &motor, const uint8_t pwmParameter)
-    {
-        motor.attach(pin);
-        motor.write(pwmParameter);
-    }
+        /*
+         * Setup function for initializing a motor or servo
+         * @param pin The microcontroller pin number to which the motor is connected
+         * @param motor Reference to the Servo object representing the motor
+         * @param pwmParameter Initial PWM value to set for the motor
+         */
+        inline void Setup(const uint8_t pin, Servo &motor, const uint8_t pwmParameter)
+        {
+                motor.attach(pin);
+                motor.write(pwmParameter);
+        }
 
-    /*
-     * Set the speed/position of a motor or servo
-     * @param motor Reference to the Servo object to be controlled
-     * @param pwmParameter PWM value to set for the motor
-     */
-    inline void Set(Servo &motor, uint8_t speed)
-    {
-        motor.write(speed);
-    }
+        /*
+         * Set the speed/position of a motor or servo
+         * @param motor Reference to the Servo object to be controlled
+         * @param pwmParameter PWM value to set for the motor
+         */
+        inline void Set(Servo &motor, uint8_t speed)
+        {
+                motor.write(speed);
+        }
 }
 
 #endif // Motors_h

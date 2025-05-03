@@ -20,70 +20,72 @@ namespace comm
 
     // Forward declarations - must be at the top
     static void receiveEvent(int numBytes);
-    static inline void processCommand(const int param1, const int param2){
-        #ifdef USE_DRIVE_SYSTEM
-            motors::Set(g_motorContainer->driveMotor, param1);
-        #endif
-        #ifdef USE_TURN_SYSTEM
-                switch (param1)
-                {
-                case 1: // FL
-                    motors::Set(g_motorContainer->turnMotorFL, param2);
-                    break;
-                case 2: // FR
-                    motors::Set(g_motorContainer->turnMotorFR, param2);
-                    break;
-                case 3: // RL
-                    motors::Set(g_motorContainer->turnMotorRL, param2);
-                    break;
-                case 4: // RR
-                    motors::Set(g_motorContainer->turnMotorRR, param2);
-                    break;
-                default:
-                    break;
-                }
-        #endif
+    static inline void processCommand(const int param1, const int param2)
+    {
+#ifdef USE_DRIVE_SYSTEM
+        motors::Set(g_motorContainer->driveMotor, param1);
+#endif
+#ifdef USE_TURN_SYSTEM
+        switch (param1)
+        {
+        case 1: // FL
+            motors::Set(g_motorContainer->turnMotorFL, param2);
+            break;
+        case 2: // FR
+            motors::Set(g_motorContainer->turnMotorFR, param2);
+            break;
+        case 3: // RL
+            motors::Set(g_motorContainer->turnMotorRL, param2);
+            break;
+        case 4: // RR
+            motors::Set(g_motorContainer->turnMotorRR, param2);
+            break;
+        default:
+            break;
+        }
+#endif
 
-        #ifdef USE_DIGGING_SYSTEM
-                switch (param1)
-                {
-                case 1: // Belt speed
-                    motors::Set(g_motorContainer->digMotor, param2);
-                    break;
-                case 2: // Raise or lower belt
-                    motors::Set(g_motorContainer->actuator, param2);
-                    break;
-                }
-        #endif
+#ifdef USE_DIGGING_SYSTEM
+        switch (param1)
+        {
+        case 1: // Belt speed
+            motors::Set(g_motorContainer->digMotor, param2);
+            break;
+        case 2: // Raise or lower belt
+            motors::Set(g_motorContainer->rActuator, param2);
+            motors::Set(g_motorContainer->lActuator, param2);
+            break;
+        }
+#endif
 
-        #ifdef USE_DEPOSIT_SYSTEM
-                switch (param1)
-                {
-                case 1: // Auger
-                    motors::Set(g_motorContainer->auger, param2);
-                    break;
-                case 2: // Vibrator
-                    motors::Set(g_motorContainer->vibrator, param2);
-                    break;
-                }
-        #endif
+#ifdef USE_DEPOSIT_SYSTEM
+        switch (param1)
+        {
+        case 1: // Auger
+            motors::Set(g_motorContainer->auger, param2);
+            break;
+        case 2: // Vibrator
+            motors::Set(g_motorContainer->vibrator, param2);
+            break;
+        }
+#endif
 
-        #ifdef USE_CAMERA_SYSTEM
-                switch (param1)
-                {
-                case 1: // Horizontal servo
-                    motors::Set(g_motorContainer->horizontalServo, param2);
-                    break;
-                case 2: // Vertical servo
-                    motors::Set(g_motorContainer->verticalServo, param2);
-                    break;
-                case 3: // Arm servo
-                    motors::Set(g_motorContainer->armServo, param2);
-                    break;
-                default:
-                    break;
-                }
-        #endif
+#ifdef USE_CAMERA_SYSTEM
+        switch (param1)
+        {
+        case 1: // Horizontal servo
+            motors::Set(g_motorContainer->horizontalServo, param2);
+            break;
+        case 2: // Vertical servo
+            motors::Set(g_motorContainer->verticalServo, param2);
+            break;
+        case 3: // Arm servo
+            motors::Set(g_motorContainer->armServo, param2);
+            break;
+        default:
+            break;
+        }
+#endif
     }
 
     static void receiveEvent(int numBytes)
@@ -104,23 +106,16 @@ namespace comm
         // Multi-byte command - reads as a block
         else if (numBytes > 1)
         {
-            uint8_t cmd = 0;
             int param1 = 0;
             int param2 = 0;
 
             // Read first byte as command
             if (Wire.available())
             {
-                cmd = Wire.read();
-            }
-
-            // Read second byte as param1 if available
-            if (Wire.available())
-            {
                 param1 = Wire.read();
             }
 
-            // Read third byte as param2 if available
+            // Read second byte as param1 if available
             if (Wire.available())
             {
                 param2 = Wire.read();
