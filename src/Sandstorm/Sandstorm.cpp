@@ -59,8 +59,11 @@ namespace
 
 void setup()
 {
-    // For the i2c communication
+#ifdef USE_ENCODER_SYSTEM
+    comm::i2cSetup(motorContainer, encoderContainer);
+#else
     comm::i2cSetup(motorContainer);
+#endif
     Serial.begin(115200);
 
 #ifdef USE_DRIVE_SYSTEM
@@ -104,19 +107,34 @@ void setup()
 void loop()
 {
 
-#ifdef USE_ENCODER_SYSTEM
-    // Encoder reading code - using proper namespace qualification
-    encoders::readEncoder(fr_encoder);
-    encoders::readEncoder(fl_encoder);
-    encoders::readEncoder(rr_encoder);
-    encoders::readEncoder(rl_encoder);
-
-    if (millis() - millisBefore > 1000)
+    #ifdef USE_ENCODER_SYSTEM
+    // Current time for RPM calculations
+    static uint32_t millisBefore = millis();
+    
+    if (millis() - millisBefore > 100)  // Update every 100ms for smoother readings
     {
-        encoders::getRPM(fr_encoder);
-        encoders::getRPM(fl_encoder);
-        encoders::getRPM(rr_encoder);
-        encoders::getRPM(rl_encoder);
+        // Read encoders and update RPM and direction for each wheel
+        encoderContainer.rpm = encoders::getRPM(encoderContainer.motor_encoder, 
+                                              encoderContainer.lastCount,
+                                              encoderContainer.lastReadTime,
+                                              encoderContainer.direction);
+        
+        // Debug output (optional)
+        Serial.print("Motor RPM: ");
+        Serial.print(encoderContainer.rpm);
+        Serial.print(", Direction: ");
+        switch(encoderContainer.direction) {
+            case encoders::Direction::FORWARD:
+                Serial.println("FORWARD");
+                break;
+            case encoders::Direction::BACKWARD:
+                Serial.println("BACKWARD");
+                break;
+            case encoders::Direction::STOPPED:
+                Serial.println("STOPPED");
+                break;
+        }
+        
         millisBefore = millis();
     }
 #endif

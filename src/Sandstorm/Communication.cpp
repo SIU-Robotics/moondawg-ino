@@ -5,7 +5,7 @@
  * This file implements the communication protocol and preocession functions.
  *
  * Owner: Cameron Schwartzberg (BigBroccoli)
- * Contributors: Andrew Barnes (abarnes6)
+ * Contributors: Andrew Barnes (abarnes6), Marco Caliendo (MCal88)
  * Date Created: 10/9/2024
  */
 
@@ -15,11 +15,21 @@ namespace comm
 {
     // Static variables with internal linkage
     static motors::Container *g_motorContainer = nullptr;
+
+#ifdef USE_ENCODER_SYSTEM
+    static encoders::Container *g_encoderContainer = nullptr;
+    static uint8_t g_responseBuffer[4] = {0};
+#endif
+
     static char g_inputBuffer[MAX_INPUT_LENGTH + 1] = {0};
     static volatile bool g_newData = false;
 
     // Forward declarations - must be at the top
     static void receiveEvent(int numBytes);
+#ifdef USE_ENCODER_SYSTEM
+    void requestEvent();
+#endif
+
     static inline void processCommand(const int param1, const int param2)
     {
 #ifdef USE_DRIVE_SYSTEM
@@ -132,6 +142,43 @@ namespace comm
         }
     }
 
+#ifdef USE_ENCODER_SYSTEM
+    void requestEvent()
+    {
+        if (!g_encoderContainer) return;
+        
+        // Get the integer part of RPM (up to 255) and the fractional part
+        uint8_t rpmInt = static_cast<uint8_t>(std::min(g_encoderContainer->rpm, 255.0f));
+        uint8_t rpmFrac = static_cast<uint8_t>((g_encoderContainer->rpm - rpmInt) * 100);
+        
+        // Get direction as uint8_t
+        uint8_t direction = encoders::directionToUint8(g_encoderContainer->direction);
+        
+        // Fill the response buffer
+        g_responseBuffer[0] = rpmInt;
+        g_responseBuffer[1] = rpmFrac;
+        g_responseBuffer[2] = direction;
+        
+        // Simple checksum
+        g_responseBuffer[3] = rpmInt ^ rpmFrac ^ direction;
+        
+        // Send the prepared data
+        Wire.write(g_responseBuffer, sizeof(g_responseBuffer));
+    }
+
+    void i2cSetup(motors::Container &container, encoders::Container &encoderContainer)
+    {
+        g_motorContainer = &container;
+        g_encoderContainer = &encoderContainer;
+
+        // ESP32 specific I2C initialization
+        Wire.onReceive(receiveEvent);
+        Wire.onRequest(requestEvent);
+
+        // Configure ESP32 as I2C slave with specified address
+        Wire.begin(pin::I2C_ADDRESS);
+    }
+#else
     void i2cSetup(motors::Container &container)
     {
         g_motorContainer = &container;
@@ -142,4 +189,5 @@ namespace comm
         // Configure ESP32 as I2C slave with specified address
         Wire.begin(pin::I2C_ADDRESS);
     }
+#endif
 }
