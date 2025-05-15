@@ -30,25 +30,57 @@ namespace comm
     void requestEvent();
 #endif
 
-    static inline void processCommand(const int param1, const int param2)
+    static inline void processCommand(const int motor, const int value)
     {
 #ifdef USE_DRIVE_SYSTEM
-        motors::Set(g_motorContainer->driveMotor, param1);
-#endif
-#ifdef USE_TURN_SYSTEM
-        switch (param1)
+        switch (motor)
         {
         case 1: // FL
-            motors::Set(g_motorContainer->turnMotorFL, param2);
+            motors::Set(g_motorContainer->driveMotorFL, value);
             break;
         case 2: // FR
-            motors::Set(g_motorContainer->turnMotorFR, param2);
+            motors::Set(g_motorContainer->driveMotorFR, value);
             break;
         case 3: // RL
-            motors::Set(g_motorContainer->turnMotorRL, param2);
+            motors::Set(g_motorContainer->driveMotorRL, value);
             break;
         case 4: // RR
-            motors::Set(g_motorContainer->turnMotorRR, param2);
+            motors::Set(g_motorContainer->driveMotorRR, value);
+            break;
+        case 5: // FL Servo
+            motors::Set(g_motorContainer->turnMotorFL, value);
+            break;
+        case 6: // FR Servo
+            motors::Set(g_motorContainer->turnMotorFR, value);
+            break;
+        case 7: // RL Servo
+            motors::Set(g_motorContainer->turnMotorRL, value);
+            break;
+        case 8: // RR Servo
+            motors::Set(g_motorContainer->turnMotorRR, value);
+            break;
+        default:
+            break;
+        }
+#endif
+
+#ifdef USE_EXCAVATION_SYSTEM
+        switch (motor)
+        {
+        case 1: // Belt
+            motors::Set(g_motorContainer->beltMotor, value);
+            break;
+        case 2: // Auger
+            motors::Set(g_motorContainer->augerMotor, value);
+            break;
+        case 3: // Left Actuator
+            motors::Set(g_motorContainer->lActuator, value);
+            break;
+        case 4: // Right Actuator
+            motors::Set(g_motorContainer->rActuator, value);
+            break;
+        case 5: // Vibe motor
+            motors::Set(g_motorContainer->vibeMotor, value);
             break;
         default:
             break;
@@ -88,9 +120,6 @@ namespace comm
             break;
         case 2: // Vertical servo
             motors::Set(g_motorContainer->verticalServo, param2);
-            break;
-        case 3: // Arm servo
-            motors::Set(g_motorContainer->armServo, param2);
             break;
         default:
             break;
@@ -145,23 +174,24 @@ namespace comm
 #ifdef USE_ENCODER_SYSTEM
     void requestEvent()
     {
-        if (!g_encoderContainer) return;
-        
+        if (!g_encoderContainer)
+            return;
+
         // Get the integer part of RPM (up to 255) and the fractional part
         uint8_t rpmInt = static_cast<uint8_t>(std::min(g_encoderContainer->rpm, 255.0f));
         uint8_t rpmFrac = static_cast<uint8_t>((g_encoderContainer->rpm - rpmInt) * 100);
-        
+
         // Get direction as uint8_t
         uint8_t direction = encoders::directionToUint8(g_encoderContainer->direction);
-        
+
         // Fill the response buffer
         g_responseBuffer[0] = rpmInt;
         g_responseBuffer[1] = rpmFrac;
         g_responseBuffer[2] = direction;
-        
+
         // Simple checksum
         g_responseBuffer[3] = rpmInt ^ rpmFrac ^ direction;
-        
+
         // Send the prepared data
         Wire.write(g_responseBuffer, sizeof(g_responseBuffer));
     }

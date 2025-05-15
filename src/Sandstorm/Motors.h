@@ -27,14 +27,22 @@ namespace motors
         struct Container
         {
 #ifdef USE_DRIVE_SYSTEM
-                Servo driveMotor; // drive motor
-#endif
-
-#ifdef USE_TURN_SYSTEM
+                Servo driveMotorFL; // drive motor
+                Servo driveMotorFR; // drive motor
+                Servo driveMotorRL; // drive motor
+                Servo driveMotorRR; // drive motor
                 Servo turnMotorFL;
                 Servo turnMotorFR;
                 Servo turnMotorRL;
                 Servo turnMotorRR;
+#endif
+
+#ifdef USE_EXCAVATION_SYSTEM
+                Servo beltMotor;  // Motor for the excavation system
+                Servo augerMotor; // Motor for the excavation system
+                Servo lActuator;  // Actuator for the excavation system
+                Servo rActuator;  // Second actuator for the excavation system
+                Servo vibeMotor;  // Vibration motor for the excavation system
 #endif
 
 #ifdef USE_DIGGING_SYSTEM
@@ -51,7 +59,6 @@ namespace motors
 #ifdef USE_CAMERA_SYSTEM
                 Servo horizontalServo; // Servo for the horizontal camera servo
                 Servo verticalServo;   // Servo for the vertical camera servo
-                Servo armServo;        // Servo for the arm servo
 #endif
         };
 

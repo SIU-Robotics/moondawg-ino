@@ -95,7 +95,6 @@ void setup()
     // Note: These are initializaed to sepcific positions other than STOP
     motors::Setup(pin::HORIZONTAL_SERVO, motorContainer.horizontalServo, 180);
     motors::Setup(pin::VERTICAL_SERVO, motorContainer.verticalServo, 90);
-    motors::Setup(pin::ARM_SERVO, motorContainer.armServo, 0);
 #endif
 
 #ifdef USE_ENCODER_SYSTEM
@@ -107,34 +106,35 @@ void setup()
 void loop()
 {
 
-    #ifdef USE_ENCODER_SYSTEM
+#ifdef USE_ENCODER_SYSTEM
     // Current time for RPM calculations
     static uint32_t millisBefore = millis();
-    
-    if (millis() - millisBefore > 100)  // Update every 100ms for smoother readings
+
+    if (millis() - millisBefore > 100) // Update every 100ms for smoother readings
     {
         // Read encoders and update RPM and direction for each wheel
-        encoderContainer.rpm = encoders::getRPM(encoderContainer.motor_encoder, 
-                                              encoderContainer.lastCount,
-                                              encoderContainer.lastReadTime,
-                                              encoderContainer.direction);
-        
+        encoderContainer.rpm = encoders::getRPM(encoderContainer.motor_encoder,
+                                                encoderContainer.lastCount,
+                                                encoderContainer.lastReadTime,
+                                                encoderContainer.direction);
+
         // Debug output (optional)
         Serial.print("Motor RPM: ");
         Serial.print(encoderContainer.rpm);
         Serial.print(", Direction: ");
-        switch(encoderContainer.direction) {
-            case encoders::Direction::FORWARD:
-                Serial.println("FORWARD");
-                break;
-            case encoders::Direction::BACKWARD:
-                Serial.println("BACKWARD");
-                break;
-            case encoders::Direction::STOPPED:
-                Serial.println("STOPPED");
-                break;
+        switch (encoderContainer.direction)
+        {
+        case encoders::Direction::FORWARD:
+            Serial.println("FORWARD");
+            break;
+        case encoders::Direction::BACKWARD:
+            Serial.println("BACKWARD");
+            break;
+        case encoders::Direction::STOPPED:
+            Serial.println("STOPPED");
+            break;
         }
-        
+
         millisBefore = millis();
     }
 #endif

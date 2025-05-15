@@ -15,42 +15,33 @@
 namespace pin
 {
 
-#if defined(USE_DRIVE_SYSTEM) && defined(FRONT_LEFT)
+#if defined(USE_DRIVE_SYSTEM)
     // Drive motor pins
     constexpr uint8_t I2C_ADDRESS = 0x10; // Pin for the drive motor
-#elif defined(USE_DRIVE_SYSTEM) && defined(FRONT_RIGHT)
-    // Drive motor pins
-    constexpr uint8_t I2C_ADDRESS = 0x11; // Pin for the drive motor
-#elif defined(USE_DRIVE_SYSTEM) && defined(REAR_LEFT)
-    // Drive motor pins
-    constexpr uint8_t I2C_ADDRESS = 0x12; // Pin for the drive motor
-#elif defined(USE_DRIVE_SYSTEM) && defined(REAR_RIGHT)
-    // Drive motor pins
-    constexpr uint8_t I2C_ADDRESS = 0x13; // Pin for the drive motor
-#elif defined(USE_TURN_SYSTEM)
-    // Turn motor pins
-    constexpr uint8_t I2C_ADDRESS = 0x14; // Pin for the turn motor
-#elif defined(USE_DIGGING_SYSTEM)
-    // Digging mechanism pins
-    constexpr uint8_t I2C_ADDRESS = 0x20; // Pin for the digging motor
-#elif defined(USE_DEPOSIT_SYSTEM)
-    // Deposit system pins
-    constexpr uint8_t I2C_ADDRESS = 0x21; // Pin for the deposit motor
-#elif defined(USE_CAMERA_SYSTEM)
-    // Camera servo pins
-    constexpr uint8_t I2C_ADDRESS = 0x00; // Pin for the horizontal camera servo
+#elif defined(USE_EXCAVATION_SYSTEM)
+    // Excavation system pins
+    constexpr uint8_t I2C_ADDRESS = 0x11; // Pin for the excavation system
 #endif
 
 #ifdef USE_DRIVE_SYSTEM
     // Drive motor pins
-    constexpr uint8_t DRIVE_MOTOR = 2;
-#endif
-
-#ifdef USE_TURN_SYSTEM
-    constexpr uint8_t TURN_MOTOR_FL = 2;  // GREEN
+    constexpr uint8_t DRIVE_MOTOR_FL = 12;
+    constexpr uint8_t DRIVE_MOTOR_FR = 13;
+    constexpr uint8_t DRIVE_MOTOR_RL = 14;
+    constexpr uint8_t DRIVE_MOTOR_RR = 15;
+    constexpr uint8_t TURN_MOTOR_FL = 16; // GREEN
     constexpr uint8_t TURN_MOTOR_FR = 17; // BLUE
     constexpr uint8_t TURN_MOTOR_RL = 18; // YELLOW
-    constexpr uint8_t TURN_MOTOR_RR = 14; // RED
+    constexpr uint8_t TURN_MOTOR_RR = 19; // RED
+#endif
+
+#ifdef USE_EXCAVATION_SYSTEM
+    // Excavation system pins
+    constexpr uint8_t BELT_MOTOR = 12;      // Pin for the belt motor
+    constexpr uint8_t AUGER_MOTOR = 13;     // Pin for the auger motor
+    constexpr uint8_t L_ACTUATOR = 14;      // Pin for the left actuator
+    constexpr uint8_t R_ACTUATOR = 15;      // Pin for the right actuator
+    constexpr uint8_t VIBRATION_MOTOR = 16; // Pin for the vibration motor
 #endif
 
 #ifdef USE_DIGGING_SYSTEM
@@ -69,8 +60,7 @@ namespace pin
 #ifdef USE_CAMERA_SYSTEM
     // Camera servo pins
     constexpr uint8_t HORIZONTAL_SERVO = 2; // Pin for the horizontal camera servo
-    constexpr uint8_t VERTICAL_SERVO = 21;  // Pin for the vertical camera servo
-    constexpr uint8_t ARM_SERVO = 18;       // Pin for the arm servo
+    constexpr uint8_t VERTICAL_SERVO = 17;  // Pin for the vertical camera servo
 #endif
 
 #ifdef USE_ENCODER_SYSTEM
