@@ -44,22 +44,6 @@ namespace motors
                 Servo rActuator;  // Second actuator for the excavation system
                 Servo vibeMotor;  // Vibration motor for the excavation system
 #endif
-
-#ifdef USE_DIGGING_SYSTEM
-                Servo digMotor;  // Motor for the digging mechanism
-                Servo rActuator; // Actuator for the digging mechanism
-                Servo lActuator; // Second actuator for the digging mechanism
-#endif
-
-#ifdef USE_DEPOSIT_SYSTEM
-                Servo auger;    // Motor for the deposit system
-                Servo vibrator; // Motor for the deposit vibrator
-#endif
-
-#ifdef USE_CAMERA_SYSTEM
-                Servo horizontalServo; // Servo for the horizontal camera servo
-                Servo verticalServo;   // Servo for the vertical camera servo
-#endif
         };
 
         /*
