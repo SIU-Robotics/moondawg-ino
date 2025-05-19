@@ -7,6 +7,7 @@
  * Owner: Cameron Schwartzberg (BigBroccoli)
  * Contributors: Andrew Barnes (abarnes6), Marco Caliendo (MCal88)
  * Date Created: 2/18/2024
+ * Last Updated: May 16, 2025 - Switched from I2C to Serial communication
  */
 
 #include "Communication.h"
@@ -17,14 +18,11 @@ namespace comm
     static motors::Container *g_motorContainer = nullptr;
 
     static char g_inputBuffer[MAX_INPUT_LENGTH + 1] = {0};
+    static uint8_t g_bufferIndex = 0;
     static volatile bool g_newData = false;
-
-    // Forward declarations - must be at the top
-    static void receiveEvent(int numBytes);
 
     static inline void processCommand(const int motor, const int value)
     {
-#ifdef USE_DRIVE_SYSTEM
         switch (motor)
         {
         case 1: // FL
@@ -51,86 +49,83 @@ namespace comm
         case 8: // RR Servo
             motors::Set(g_motorContainer->turnMotorRR, value);
             break;
-        default:
-            break;
-        }
-#endif
-
-#ifdef USE_EXCAVATION_SYSTEM
-        switch (motor)
-        {
-        case 1: // Belt
+        case 9: // Belt
             motors::Set(g_motorContainer->beltMotor, value);
             break;
-        case 2: // Auger
+        case 10: // Auger
             motors::Set(g_motorContainer->augerMotor, value);
             break;
-        case 3: // Left Actuator
+        case 11: // Left Actuator
             motors::Set(g_motorContainer->lActuator, value);
             break;
-        case 4: // Right Actuator
+        case 12: // Right Actuator
             motors::Set(g_motorContainer->rActuator, value);
             break;
-        case 5: // Vibe motor
-            motors::Set(g_motorContainer->vibeMotor, value);
+        case 13: // Vibe motor
+            digitalWrite(pin::VIBRATION_MOTOR, value > 90 ? HIGH : LOW);
+            break;
+        case 14: // Camera Yaw
+            motors::Set(g_motorContainer->cameraYaw, value);
+            break;
+        case 15: // Camera Pitch
+            motors::Set(g_motorContainer->cameraPitch, value);
             break;
         default:
             break;
         }
-#endif
     }
 
-    static void receiveEvent(int numBytes)
+    // Function to process incoming serial data
+    void serialLoop()
     {
-        if (numBytes > MAX_INPUT_LENGTH)
+        while (Serial.available() > 0)
         {
-            numBytes = MAX_INPUT_LENGTH; // Prevent buffer overflow
-        }
+            char inChar = (char)Serial.read();
 
-        // Single byte command
-        if (numBytes == 1)
-        {
-            uint8_t cmd = Wire.read();
-            processCommand(cmd, -1);
-            return;
-        }
-
-        // Multi-byte command - reads as a block
-        else if (numBytes > 1)
-        {
-            int param1 = 0;
-            int param2 = 0;
-
-            // Read first byte as command
-            if (Wire.available())
+            // If newline or carriage return is received, process the command
+            if (inChar == '\n' || inChar == '\r')
             {
-                param1 = Wire.read();
+                if (g_bufferIndex > 0) // Only process if we have data
+                {
+                    g_inputBuffer[g_bufferIndex] = '\0'; // Null terminate
+
+                    // Parse the command - format: <motor>,<value>
+                    char *token = strtok(g_inputBuffer, ",");
+                    if (token != nullptr)
+                    {
+                        int motor = atoi(token);
+                        token = strtok(nullptr, ",");
+
+                        if (token != nullptr)
+                        {
+                            int value = atoi(token);
+                            processCommand(motor, value);
+                        }
+                        else
+                        {
+                            // Single parameter command
+                            processCommand(motor, -1);
+                        }
+                    }
+
+                    // Reset buffer for next command
+                    g_bufferIndex = 0;
+                }
             }
-
-            // Read second byte as param1 if available
-            if (Wire.available())
+            else if (g_bufferIndex < MAX_INPUT_LENGTH)
             {
-                param2 = Wire.read();
-            }
-
-            // Process the command with its parameters
-            processCommand(param1, param2);
-
-            // Discard any additional bytes
-            while (Wire.available())
-            {
-                Wire.read();
+                // Add character to buffer
+                g_inputBuffer[g_bufferIndex++] = inChar;
             }
         }
     }
-    void i2cSetup(motors::Container &container)
+
+    void serialSetup(motors::Container &container)
     {
         g_motorContainer = &container;
 
-        // ESP32 specific I2C initialization
-        Wire.onReceive(receiveEvent);
-
-        // Configure ESP32 as I2C slave with specified address
-        Wire.begin(pin::I2C_ADDRESS);
+        // Initialize Serial communication
+        Serial.begin(115200); // Match the baud rate in platformio.ini
+        Serial.println("Serial communication initialized");
     }
 }

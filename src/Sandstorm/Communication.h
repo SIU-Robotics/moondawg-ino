@@ -7,13 +7,14 @@
  * Owner: Cameron Schwartzberg (BigBroccoli)
  * Contributors: Andrew Barnes (abarnes6), Marco Caliendo (MCal88)
  * Date Created: 2/18/2024
+ * Last Updated: May 16, 2025 - Switched from I2C to Serial communication
  */
 
 #ifndef Communication_h
 #define Communication_h
 
 // Include custom header files
-#include <Wire.h>           // Required for I2C communication
+#include <Arduino.h>        // Required for Serial communication
 #include <algorithm>        // For std::min
 #include "PinDefinitions.h" // Holds all of the pin definitions for output signals
 #include "Motors.h"         // Contains motor-related functions
@@ -25,7 +26,8 @@ namespace comm
     constexpr uint8_t MAX_INPUT_LENGTH = 50;
     constexpr uint8_t MAX_ARRAY_SIZE = 10;
 
-    void i2cSetup(motors::Container &container);
+    void serialSetup(motors::Container &container);
+    void serialLoop(); // New function to process incoming serial data
 
     // This declaration is for internal use only
     static void processCommand(const int motor, const int value);

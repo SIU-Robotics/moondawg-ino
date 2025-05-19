@@ -23,15 +23,14 @@ namespace
     constexpr uint8_t MAX_ARRAY_SIZE = 10;   // Maximum size for token array
     constexpr uint8_t MAX_INPUT_LENGTH = 50; // Maxium length for input string
     constexpr uint8_t DEFAULT_POS_TURN = 90;
+    constexpr uint8_t DEFAULT_POS_CAMERA = 0;
 
     static motors::Container motorContainer{};
 }
 
 void setup()
 {
-    comm::i2cSetup(motorContainer);
-
-#if defined(USE_DRIVE_SYSTEM)
+    comm::serialSetup(motorContainer);
     motors::Setup(pin::DRIVE_MOTOR_FL, motorContainer.driveMotorFL, STOP);
     motors::Setup(pin::DRIVE_MOTOR_FR, motorContainer.driveMotorFR, STOP);
     motors::Setup(pin::DRIVE_MOTOR_RL, motorContainer.driveMotorRL, STOP);
@@ -40,18 +39,21 @@ void setup()
     motors::Setup(pin::TURN_MOTOR_FR, motorContainer.turnMotorFR, DEFAULT_POS_TURN);
     motors::Setup(pin::TURN_MOTOR_RL, motorContainer.turnMotorRL, DEFAULT_POS_TURN);
     motors::Setup(pin::TURN_MOTOR_RR, motorContainer.turnMotorRR, DEFAULT_POS_TURN);
-#elif defined(USE_EXCAVATION_SYSTEM)
     motors::Setup(pin::BELT_MOTOR, motorContainer.beltMotor, STOP);
     motors::Setup(pin::AUGER_MOTOR, motorContainer.augerMotor, STOP);
     motors::Setup(pin::L_ACTUATOR, motorContainer.lActuator, STOP);
     motors::Setup(pin::R_ACTUATOR, motorContainer.rActuator, STOP);
-    motors::Setup(pin::VIBRATION_MOTOR, motorContainer.vibeMotor, STOP);
-#endif
+    motors::Setup(pin::CAMERA_YAW_SERVO, motorContainer.cameraYaw, DEFAULT_POS_CAMERA);
+    motors::Setup(pin::CAMERA_PITCH_SERVO, motorContainer.cameraPitch, DEFAULT_POS_CAMERA);
+    // Set the vibration motor pin as output
+    pinMode(pin::VIBRATION_MOTOR, OUTPUT);
+    // Set the vibration motor to LOW (off) initially
+    digitalWrite(pin::VIBRATION_MOTOR, LOW);
 }
 
 void loop()
 {
-    // Process I2C communications from the Raspberry Pi
-    // The actual processing happens in the I2C receive callback
+    // Process Serial communications from the Raspberry Pi
+    comm::serialLoop();
     delay(10); // Small delay to prevent CPU hogging
 }
