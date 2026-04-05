@@ -23,7 +23,7 @@ namespace
     constexpr uint8_t MAX_ARRAY_SIZE = 10;   // Maximum size for token array
     constexpr uint8_t MAX_INPUT_LENGTH = 50; // Maxium length for input string
     constexpr uint8_t DEFAULT_POS_TURN = 90;
-    constexpr uint8_t DEFAULT_POS_CAMERA = 0;
+    constexpr uint8_t DEFAULT_POS_CAMERA = 90;
 
     static motors::Container motorContainer{};
 }

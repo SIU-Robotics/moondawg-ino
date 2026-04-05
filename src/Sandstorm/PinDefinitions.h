@@ -28,7 +28,7 @@ namespace pin
     constexpr uint8_t L_ACTUATOR = 23;      // Pin for the left actuator
     constexpr uint8_t R_ACTUATOR = 25;      // Pin for the right actuator
     constexpr uint8_t VIBRATION_MOTOR = 27; // Pin for the vibration motor
-    constexpr uint8_t CAMERA_YAW_SERVO = 34;
+    constexpr uint8_t CAMERA_YAW_SERVO = 32;
     constexpr uint8_t CAMERA_PITCH_SERVO = 35;
 }
 
