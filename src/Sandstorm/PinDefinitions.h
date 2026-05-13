@@ -15,19 +15,19 @@
 namespace pin
 {
     // Drive motor pins
-    constexpr uint8_t DRIVE_MOTOR_FL = 12;
-    constexpr uint8_t DRIVE_MOTOR_FR = 13;
-    constexpr uint8_t DRIVE_MOTOR_RL = 14;
-    constexpr uint8_t DRIVE_MOTOR_RR = 15;
-    constexpr uint8_t TURN_MOTOR_FL = 16;   // GREEN
-    constexpr uint8_t TURN_MOTOR_FR = 17;   // BLUE
-    constexpr uint8_t TURN_MOTOR_RL = 18;   // YELLOW
-    constexpr uint8_t TURN_MOTOR_RR = 19;   // WHITE
-    constexpr uint8_t BELT_MOTOR = 21;      // Pin for the belt motor
-    constexpr uint8_t AUGER_MOTOR = 22;     // Pin for the auger motor
-    constexpr uint8_t L_ACTUATOR = 23;      // Pin for the left actuator
-    constexpr uint8_t R_ACTUATOR = 25;      // Pin for the right actuator
-    constexpr uint8_t VIBRATION_MOTOR = 27; // Pin for the vibration motor
+    constexpr uint8_t DRIVE_MOTOR_FL = 12;  // White
+    constexpr uint8_t DRIVE_MOTOR_FR = 13;  // Blue
+    constexpr uint8_t DRIVE_MOTOR_RL = 14;  // Yellow
+    constexpr uint8_t DRIVE_MOTOR_RR = 15;  // Green
+    constexpr uint8_t TURN_MOTOR_FL = 16;   // White
+    constexpr uint8_t TURN_MOTOR_FR = 17;   // Blue
+    constexpr uint8_t TURN_MOTOR_RL = 18;   // Yellow
+    constexpr uint8_t TURN_MOTOR_RR = 19;   // Green
+    constexpr uint8_t BELT_MOTOR = 21;      // Pin for the belt motor Orange
+    constexpr uint8_t AUGER_MOTOR = 22;     // Pin for the auger motor Purple
+    constexpr uint8_t L_ACTUATOR = 33;      // Pin for the left actuator Brown
+    constexpr uint8_t R_ACTUATOR = 25;      // Pin for the right actuator Brown
+    constexpr uint8_t VIBRATION_MOTOR = 27; // Pin for the vibration motor Red
     constexpr uint8_t CAMERA_YAW_SERVO = 32;
     constexpr uint8_t CAMERA_PITCH_SERVO = 35;
 }

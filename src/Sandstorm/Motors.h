@@ -40,6 +40,7 @@ namespace motors
                 Servo rActuator;  // Second actuator for the excavation system
                 Servo cameraYaw;
                 Servo cameraPitch;
+                Servo vibe;
         };
 
         /*

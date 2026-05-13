@@ -62,7 +62,7 @@ namespace comm
             motors::Set(g_motorContainer->rActuator, value);
             break;
         case 13: // Vibe motor
-            digitalWrite(pin::VIBRATION_MOTOR, value > 90 ? HIGH : LOW);
+            motors::Set(g_motorContainer->vibe, value);
             break;
         case 14: // Camera Yaw
             motors::Set(g_motorContainer->cameraYaw, value);
