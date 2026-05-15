@@ -44,8 +44,11 @@ namespace comm
             motors::Set(g_motorContainer->turnMotorFR, value);
             break;
         case 7: // RL Servo
-            motors::Set(g_motorContainer->turnMotorRL, value);
-            break;
+            {
+                int rearLeftServoAngle= map(value, 0,180,40,140);
+                motors::Set(g_motorContainer->turnMotorRL, rearLeftServoAngle);
+                break;
+            }
         case 8: // RR Servo
             motors::Set(g_motorContainer->turnMotorRR, value);
             break;
