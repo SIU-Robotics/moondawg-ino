@@ -23,7 +23,8 @@ namespace
     constexpr uint8_t MAX_ARRAY_SIZE = 10;   // Maximum size for token array
     constexpr uint8_t MAX_INPUT_LENGTH = 50; // Maxium length for input string
     constexpr uint8_t DEFAULT_POS_TURN = 90;
-    constexpr uint8_t DEFAULT_POS_CAMERA = 0;
+    constexpr uint8_t DEFAULT_POS_CAMERA = 80;
+    constexpr uint8_t DEFAULT_VIBE_MOTOR = 90;
 
     static motors::Container motorContainer{};
 }
@@ -45,10 +46,7 @@ void setup()
     motors::Setup(pin::R_ACTUATOR, motorContainer.rActuator, STOP);
     motors::Setup(pin::CAMERA_YAW_SERVO, motorContainer.cameraYaw, DEFAULT_POS_CAMERA);
     motors::Setup(pin::CAMERA_PITCH_SERVO, motorContainer.cameraPitch, DEFAULT_POS_CAMERA);
-    // Set the vibration motor pin as output
-    pinMode(pin::VIBRATION_MOTOR, OUTPUT);
-    // Set the vibration motor to LOW (off) initially
-    digitalWrite(pin::VIBRATION_MOTOR, LOW);
+    motors::Setup(pin::VIBRATION_MOTOR, motorContainer.vibe, DEFAULT_VIBE_MOTOR);
 }
 
 void loop()

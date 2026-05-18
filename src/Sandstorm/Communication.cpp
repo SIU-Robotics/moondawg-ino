@@ -45,7 +45,12 @@ namespace comm
             break;
         case 7: // RL Servo
             motors::Set(g_motorContainer->turnMotorRL, value);
-            break;
+            // This code is for the servo that does not have range potintieometer
+            // {
+            //     int rearLeftServoAngle= map(value, 0,180,40,140);
+            //     motors::Set(g_motorContainer->turnMotorRL, rearLeftServoAngle);
+            //     break;
+            // }
         case 8: // RR Servo
             motors::Set(g_motorContainer->turnMotorRR, value);
             break;
@@ -62,7 +67,7 @@ namespace comm
             motors::Set(g_motorContainer->rActuator, value);
             break;
         case 13: // Vibe motor
-            digitalWrite(pin::VIBRATION_MOTOR, value > 90 ? HIGH : LOW);
+            motors::Set(g_motorContainer->vibe, value);
             break;
         case 14: // Camera Yaw
             motors::Set(g_motorContainer->cameraYaw, value);
