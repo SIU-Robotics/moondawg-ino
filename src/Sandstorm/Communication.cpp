@@ -44,11 +44,13 @@ namespace comm
             motors::Set(g_motorContainer->turnMotorFR, value);
             break;
         case 7: // RL Servo
-            {
-                int rearLeftServoAngle= map(value, 0,180,40,140);
-                motors::Set(g_motorContainer->turnMotorRL, rearLeftServoAngle);
-                break;
-            }
+            motors::Set(g_motorContainer->turnMotorRL, value);
+            // This code is for the servo that does not have range potintieometer
+            // {
+            //     int rearLeftServoAngle= map(value, 0,180,40,140);
+            //     motors::Set(g_motorContainer->turnMotorRL, rearLeftServoAngle);
+            //     break;
+            // }
         case 8: // RR Servo
             motors::Set(g_motorContainer->turnMotorRR, value);
             break;

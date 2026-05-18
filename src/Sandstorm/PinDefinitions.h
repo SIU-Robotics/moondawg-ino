@@ -21,7 +21,7 @@ namespace pin
     constexpr uint8_t DRIVE_MOTOR_RR = 15;  // Green
     constexpr uint8_t TURN_MOTOR_FL = 16;   // White
     constexpr uint8_t TURN_MOTOR_FR = 17;   // Blue
-    constexpr uint8_t TURN_MOTOR_RL = 18;   // Yellow
+    constexpr uint8_t TURN_MOTOR_RL = 4;   // Yellow
     constexpr uint8_t TURN_MOTOR_RR = 19;   // Green
     constexpr uint8_t BELT_MOTOR = 21;      // Pin for the belt motor Orange
     constexpr uint8_t AUGER_MOTOR = 22;     // Pin for the auger motor Purple
